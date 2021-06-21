@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".ProfileActivity">
 
     <FrameLayout
         android:id="@+id/fragment_frame"
@@ -24,6 +24,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_bar"
         android:background="@color/browser_actions_bg_grey"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,17 +9,14 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class SearchActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(bottomNavListener); // i think this will colour the chosen fragment.
-
+        setContentView(R.layout.activity_profile);
         // set the initial Fragment Frame (from activity_home.xml) to HomeFragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new SearchFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new ProfileFragment()).commit();
 
     } // end of onCreate method
 
