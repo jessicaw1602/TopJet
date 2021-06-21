@@ -19,39 +19,39 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(bottomNavListener); // i think this will colour the chosen fragment.
+        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                checkMenuItem(item);
+                return true;
+            }
+        });
 
         // set the initial Fragment Frame (from activity_home.xml) to HomeFragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new HomeFragment()).commit();
 
     } // end of onCreate method
 
-    // Check to see which bottom menu item the user is on.
-    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            // initially set the selected fragment to null
-            Fragment selectedFragment = null;
+    // Create a method to check which menu item the user is on.
+    private void checkMenuItem(MenuItem item){
+        // initially set the selected fragment to null
+        Fragment selectedFragment = null;
 
-            // use a switch statement to check which page the user is on, by id
-            switch (item.getItemId()){
-                case R.id.homeButton:
-                    selectedFragment = new HomeFragment();
-                    break;
+        // use a switch statement to check which page the user is on, by id
+        switch (item.getItemId()){
+            case R.id.homeButton:
+                selectedFragment = new HomeFragment();
+                break;
 
-                case R.id.searchButton:
-                    selectedFragment = new SearchFragment();
-                    break;
+            case R.id.searchButton:
+                selectedFragment = new SearchFragment();
+                break;
 
-                case R.id.profileButton:
-                    selectedFragment = new ProfileFragment();
-                    break;
-            }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, selectedFragment).commit();
-
-            return true;
+            case R.id.profileButton:
+                selectedFragment = new ProfileFragment();
+                break;
         }
-    }; // end of OnNavigationItemSelectedListener
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, selectedFragment).commit();
+    }
 
 }
