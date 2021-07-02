@@ -7,13 +7,85 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/profileFragment"
+        android:id="@+id/tvProfileIdentify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="188dp"
-        android:layout_marginLeft="188dp"
-        android:layout_marginTop="219dp"
+        android:layout_marginTop="32dp"
+        android:text="Identify as First Nation"
+        app:layout_constraintStart_toStartOf="@+id/tvProfilePassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfilePassword" />
+
+    <TextView
+        android:id="@+id/tvProfilePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Password"
+        app:layout_constraintStart_toStartOf="@+id/tvProfileUserName"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileUserName" />
+
+    <TextView
+        android:id="@+id/tvProfileFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginLeft="136dp"
+        android:layout_marginTop="44dp"
         android:text="Profile Fragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvProfileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="100dp"
+        android:text="Email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvProfileUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Username"
+        app:layout_constraintStart_toStartOf="@+id/tvProfileEmail"
+        app:layout_constraintTop_toBottomOf="@+id/tvProfileEmail" />
+
+    <TextView
+        android:id="@+id/tvGetProfileEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
+        android:layout_marginLeft="151dp"
+        android:text="email"
+        app:layout_constraintStart_toEndOf="@+id/tvProfileEmail"
+        app:layout_constraintTop_toTopOf="@+id/tvProfileEmail" />
+
+    <TextView
+        android:id="@+id/tvGetProfileUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="username"
+        app:layout_constraintStart_toStartOf="@+id/tvGetProfileEmail"
+        app:layout_constraintTop_toTopOf="@+id/tvProfileUserName" />
+
+    <TextView
+        android:id="@+id/tvGetProfilePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="password"
+        app:layout_constraintStart_toStartOf="@+id/tvGetProfileEmail"
+        app:layout_constraintTop_toTopOf="@+id/tvProfilePassword" />
+
+    <TextView
+        android:id="@+id/tvGetProfileIdentify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="identify"
+        app:layout_constraintStart_toStartOf="@+id/tvGetProfileEmail"
+        app:layout_constraintTop_toTopOf="@+id/tvProfileIdentify" />
 </androidx.constraintlayout.widget.ConstraintLayout>

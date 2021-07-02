@@ -34,13 +34,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivity"; // create Log.d
 
-    // Values for Firestore
+    // Values for FireStore
     private static final String KEY_EMAIL = "email";
     private static final String KEY_USERNAME = "username"; // these are the names for the fields in FireStore
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_IDENTIFY = "cbIdentify";
 
-    // Access Firestore database
+    // Access FireStore database
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private CollectionReference userRef = database.collection("Users");
 //    DocumentReference userRef = database.collection("Users").document();
