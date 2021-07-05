@@ -27,7 +27,7 @@ public class SearchFragment extends Fragment {
 
         // Retrieve the fragment from HomeActivity
         String email = getArguments().getString("email");
-        Log.d(TAG, email);
+        Log.d(TAG, "Search Fragment Email: " + email);
 
         return view;
     } // end of onCreate method

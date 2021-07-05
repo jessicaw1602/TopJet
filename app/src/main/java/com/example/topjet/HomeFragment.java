@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "btContent Button pressed");
-                goToSearchFragment();
+                goToSearchFragment(email);
             }
         }); // end of btContent onClickListener
 
@@ -80,14 +80,19 @@ public class HomeFragment extends Fragment {
     } // end of returnUsername method
 
     // TODO - fix up this method
-    private void goToSearchFragment(){
+    private void goToSearchFragment(String email){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         SearchFragment searchFragment = new SearchFragment(); // generate a new searchFragment
+
+        // send bundle for the Search Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        searchFragment.setArguments(bundle);
+
         fragmentTransaction.replace(R.id.fragment_frame, searchFragment); // replace the current frame with searchFragment
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
     } // end of goToSearchFragment method
 
 
