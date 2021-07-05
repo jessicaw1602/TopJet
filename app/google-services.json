@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "682055417590",
+    "project_id": "topjet-3ccd1",
+    "storage_bucket": "topjet-3ccd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682055417590:android:2f076ce9eb583a2b3af6d7",
+        "android_client_info": {
+          "package_name": "com.example.topjet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682055417590-3pks0jd0dhua1td5n9g51ejrkicamee9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD945uA7vUk7OIxTuCBRlMlZv3NH2QiGGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "682055417590-3pks0jd0dhua1td5n9g51ejrkicamee9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
