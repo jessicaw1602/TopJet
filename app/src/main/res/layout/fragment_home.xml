@@ -31,7 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,26 +39,30 @@
         android:layout_marginLeft="41dp"
         android:layout_marginTop="43dp"
         android:text="Events Near Me"
+        tools:srcCompat="@tools:sample/avatars"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btDiscussion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="46dp"
         android:text="Discussion Board"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
+        app:layout_constraintTop_toBottomOf="@+id/btEvents"
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="46dp"
         android:text="Content"
         app:layout_constraintStart_toStartOf="@+id/btDiscussion"
-        app:layout_constraintTop_toBottomOf="@+id/btDiscussion" />
+        app:layout_constraintTop_toBottomOf="@+id/btDiscussion"
+        tools:srcCompat="@tools:sample/avatars" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

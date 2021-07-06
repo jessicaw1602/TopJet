@@ -10,10 +10,76 @@
         android:id="@+id/searchFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="188dp"
-        android:layout_marginLeft="188dp"
-        android:layout_marginTop="219dp"
-        android:text="Search Fragment"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="28dp"
+        android:text="Check Out These Learnings"
+        android:textAlignment="gravity"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvArts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="96dp"
+        android:text="Arts"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCulture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:text="Culture"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/tvArts"
+        app:layout_constraintTop_toBottomOf="@+id/tvArts" />
+
+    <TextView
+        android:id="@+id/tvValues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:text="Values"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/tvCulture"
+        app:layout_constraintTop_toBottomOf="@+id/tvCulture" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvArts"
+        android:layout_width="411dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvArts">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCulture"
+        android:layout_width="411dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCulture" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvValues"
+        android:layout_width="411dp"
+        android:layout_height="122dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvValues" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -76,10 +76,8 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
     } // end of returnUsername method
 
-    // TODO - fix up this method
     private void goToSearchFragment(String email){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
