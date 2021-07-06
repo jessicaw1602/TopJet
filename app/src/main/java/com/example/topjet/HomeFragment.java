@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,7 @@ public class HomeFragment extends Fragment {
 
     private static final String KEY_USERNAME = "username"; // these are the names for the fields in FireStore
 
-    Button btEvents, btDiscussion, btContent;
+    ImageButton btEvents, btDiscussion, btContent;
     TextView tvWelcome;
 
     // Access FireStore
