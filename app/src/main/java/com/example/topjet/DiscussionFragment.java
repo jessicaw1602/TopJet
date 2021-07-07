@@ -53,6 +53,7 @@ public class DiscussionFragment extends Fragment {
     private static final String KEY_POST_TAG = "postTag";
     private static final String KEY_CONTENT = "content";
     private static final String KEY_SHORT_DESC = "shortDesc";
+    private static final String KEY_ID = "docId";
 
     EditText etSearchPosts;
     Button btAddPost;
@@ -89,7 +90,6 @@ public class DiscussionFragment extends Fragment {
         DiscussionAdapter.RecyclerViewClickListener listener = new DiscussionAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, String title) {
-                //TODO - go to the full page including the detailed description
                 Log.d(TAG, "DiscussionFragment title: " + title);
                 openDetailActivity(title, email);
             }
@@ -146,6 +146,7 @@ public class DiscussionFragment extends Fragment {
                 for (DocumentChange doc : value.getDocumentChanges()){
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         discussionList.add(doc.getDocument().toObject(DiscussionEntity.class));
+
                     }
                     discussionAdapter.notifyDataSetChanged();
                     rvDiscussionPosts.setAdapter(discussionAdapter);
@@ -167,6 +168,9 @@ public class DiscussionFragment extends Fragment {
                     // return email & password
                     String username = documentSnapshot.getString(KEY_USERNAME);
 
+//                    DocumentReference postRef = database.collection("Posts").document();
+//                    String docId = postRef.getId();
+
                     // Create the new Blog Post with the username
                     Map<String, Object> newPost = new HashMap<>();
                     newPost.put(KEY_TITLE, "My Story");
@@ -175,8 +179,11 @@ public class DiscussionFragment extends Fragment {
                     newPost.put(KEY_POST_TAG, "Stories");
                     newPost.put(KEY_SHORT_DESC, "This is the short description");
                     newPost.put(KEY_CONTENT, "My Story is about my childhood. This will be longgggggggggggggggggggggggggggggg sdfasfdasfsadfdasfsadfasfdsfadsfsas.");
+                    newPost.put(KEY_ID, "fPlnYrsTnkLq2zK7pAkG");
 
-                    database.collection("Posts").document("My Story | " + username).set(newPost)
+//                    database.collection("Posts").document(String.valueOf(getId())).set(newPost)
+                    database.collection("Posts").document("My Story").set(newPost)
+
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

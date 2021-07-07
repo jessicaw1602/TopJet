@@ -30,7 +30,6 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
         myListener = listener;
     }
 
-
     @NonNull
     @Override
     public DiscussionAdapter.DiscussionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,7 +49,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
         holder.tvShortDesc.setText(discussionEntity.getShortDesc());
 
         holder.itemView.setTag(discussionEntity.getTitle());
-        Log.d(TAG, "Title from Adapter: " + discussionEntity.getTitle());
+        Log.d(TAG, "DocId from Adapter: " + discussionEntity.getTitle());
     }
 
     @Override
@@ -77,7 +76,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
 
         @Override
         public void onClick(View v) {
-            myListener.onClick(v, (String) v.getTag());
+            myListener.onClick(v, (String)(v.getTag()));
             Log.d(TAG, "Discussion Adapter onClick: " + v.getTag().toString());
         }
 

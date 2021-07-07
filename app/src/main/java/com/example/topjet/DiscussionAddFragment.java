@@ -42,6 +42,7 @@ public class DiscussionAddFragment extends Fragment {
     private static final String KEY_POST_TAG = "postTag";
     private static final String KEY_CONTENT = "content";
     private static final String KEY_SHORT_DESC = "shortDesc";
+    private static final String KEY_ID = "docId";
 
     EditText etTitleName, etNewPostContent;
     Button btPost, btDiscardPost;
@@ -130,6 +131,10 @@ public class DiscussionAddFragment extends Fragment {
             String getDate = formatter.format(date);
             Log.d(TAG, "The current date is: " + getDate);
 
+
+            DocumentReference postRef = database.collection("Posts").document();
+            String docId = postRef.getId();
+
             // Create the new Blog Post with the username
             Map<String, Object> newPost = new HashMap<>();
             newPost.put(KEY_TITLE, titleName);
@@ -138,9 +143,10 @@ public class DiscussionAddFragment extends Fragment {
             newPost.put(KEY_POST_TAG, getTag);
             newPost.put(KEY_SHORT_DESC, shortDesc);
             newPost.put(KEY_CONTENT, postContent);
+            newPost.put(KEY_ID, docId);
 
             // Add the blog post into the database
-            database.collection("Posts").document(titleName + " | " + username).set(newPost)
+            database.collection("Posts").document(titleName).set(newPost)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

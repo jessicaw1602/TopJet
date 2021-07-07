@@ -1,14 +1,28 @@
 package com.example.topjet.Entities;
 
+import com.google.firebase.firestore.Exclude;
+
 public class DiscussionEntity {
 
-    private String id, title, username, date, postTag, shortDesc, content;
+    private String docId, title, username, date, postTag, shortDesc, content;
+
 
     // Constructors
     public DiscussionEntity(){}
 
     // Constructor without ID
     public DiscussionEntity(String title, String username, String date, String postTag, String shortDesc, String content) {
+        this.title = title;
+        this.username = username;
+        this.date = date;
+        this.postTag = postTag;
+        this.shortDesc = shortDesc;
+        this.content = content;
+    }
+
+    // Constructor with ID
+    public DiscussionEntity(String docId, String title, String username, String date, String postTag, String shortDesc, String content) {
+        this.docId = docId;
         this.title = title;
         this.username = username;
         this.date = date;
@@ -27,8 +41,8 @@ public class DiscussionEntity {
 
 
     // Setters
-    public void setId(String id) {
-        this.id = id;
+    public void setDocId(String docId) {
+        this.docId = docId;
     }
 
     public void setTitle(String title) {
@@ -56,8 +70,8 @@ public class DiscussionEntity {
     }
 
     // Getters
-    public String getId() {
-        return id;
+    public String getDocId() {
+        return docId;
     }
 
     public String getTitle() {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,19 +44,20 @@ public class DiscussionDetailFragment extends Fragment {
         Log.d(TAG, "DetailFragment email is: " + email);
 
         String title = getArguments().getString("title");
-        Log.d(TAG, "title received: " + title);
-        
+        Log.d(TAG, "docId received: " + title);
+
         tvDetailTitle = view.findViewById(R.id.tvDetailTitle);
         tvDetailUserNDate = view.findViewById(R.id.tvDetailUserNDate);
         tvDetailPostTag = view.findViewById(R.id.tvDetailPostTag);
         tvDetailContent = view.findViewById(R.id.tvDetailContent);
 
         // we want to connect to the database to retrieve the title and the other information
-//        database.collection("Posts").whereIn
-
-
-        /*
-                            // return all the elements
+        DocumentReference postRef = database.collection("Posts").document(title);
+        postRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()){
+                    // return all the elements
                     String detailTitle = documentSnapshot.getString(KEY_TITLE);
                     String detailUsername = documentSnapshot.getString(KEY_USERNAME);
                     String detailDate = documentSnapshot.getString(KEY_DATE);
@@ -69,7 +71,14 @@ public class DiscussionDetailFragment extends Fragment {
                     tvDetailContent.setText(detailContent);
 
                     Log.d(TAG, "Database Title: " + detailTitle);
-         */
+                } else {
+                    Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Unable to retrieve data");
+                }
+            }
+        }); // end of postRef.addOnSuccessListener
+
+
         return view;
     } // end of onCreate
 }
