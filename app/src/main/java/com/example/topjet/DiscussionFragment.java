@@ -1,6 +1,5 @@
 package com.example.topjet;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,13 +12,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.topjet.Entities.DiscussionEntity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,7 +28,6 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -70,18 +69,22 @@ public class DiscussionFragment extends Fragment {
 
         createDummyPost(email);
 
-        //TODO - get the date of the post and save it under the Date
         //TODO - Add comments
-        //TODO - Create a new Post (should be easy)
+        //TODO - Create a new Post (should be somewhat easy)
 
-        // TODO - Add a recyclerView
         etSearchPosts = view.findViewById(R.id.etSearchPosts);
         btAddPost = view.findViewById(R.id.btAddPost);
         rvDiscussionPosts = view.findViewById(R.id.rvDiscussionPosts);
 
+        btAddPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewPost(email);
+            }
+        }); // end of onClickListener
+
         rvDiscussionPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         rvDiscussionPosts.setHasFixedSize(true);
-
         discussionList = new ArrayList<DiscussionEntity>();
         discussionAdapter = new DiscussionAdapter(discussionList);
 
@@ -92,7 +95,28 @@ public class DiscussionFragment extends Fragment {
             }
         }; // end of DiscussionAdapter.RecyclerViewClickListener
 
+        retrieveAllPosts();
 
+        return view;
+    } // end of onCreate
+
+    // Go to another fragment
+    private void addNewPost(String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        DiscussionAddFragment discussionAddFragment = new DiscussionAddFragment(); // generate a new searchFragment
+
+        // send bundle for the Search Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        discussionAddFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, discussionAddFragment); // replace the current frame with searchFragment
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    private void retrieveAllPosts(){
         // Create a query to retrieve all the values from the database
         Query returnAllPosts = database
                 .collection("Posts")
@@ -111,9 +135,7 @@ public class DiscussionFragment extends Fragment {
             }
         }); // end of returnAllPosts.addSnapshot Listener
 
-        return view;
-    } // end of onCreate
-
+    } // end of retrieveAllPosts method
 
     // Inserting the dummy data in
     private void createDummyPost(String userEmail){
@@ -136,11 +158,11 @@ public class DiscussionFragment extends Fragment {
                     newPost.put(KEY_SHORT_DESC, "This is the short description");
                     newPost.put(KEY_CONTENT, "My Story is about my childhood. This will be longgggggggggggggggggggggggggggggg sdfasfdasfsadfdasfsadfasfdsfadsfsas.");
 
-                    database.collection("Posts").document().set(newPost)
+                    database.collection("Posts").document("My Story | " + username).set(newPost)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getActivity(), "User Created!", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "Created new Dummy Post");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

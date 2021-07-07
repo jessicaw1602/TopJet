@@ -1,4 +1,4 @@
-package com.example.topjet;
+package com.example.topjet.Entities;
 
 public class DiscussionEntity {
 
@@ -24,6 +24,7 @@ public class DiscussionEntity {
         this.postTag = postTag;
         this.shortDesc = shortDesc;
     }
+
 
     // Setters
     public void setId(String id) {

@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">TopJet</string>
     <string name="sign_up_here"><u>Sign up here!</u></string>
+
+    <string-array name="Tags">
+        <item>Discussion</item>
+        <item>Stories</item>
+        <item>QnA</item>
+        <item>Blog Post</item>
+        <item>Other</item>
+    </string-array>
+
 </resources>

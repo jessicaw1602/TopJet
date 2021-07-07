@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="40dp"
+        android:text="Add Discussion Fragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="124dp"
+        android:text="Title:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etTitleName"
+        android:layout_width="263dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginLeft="52dp"
+        android:ems="10"
+        android:hint="Add Title"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNewTitle"
+        app:layout_constraintStart_toEndOf="@+id/tvNewTitle"
+        app:layout_constraintTop_toTopOf="@+id/tvNewTitle" />
+
+    <TextView
+        android:id="@+id/tvNewContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Tags:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/tvNewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvNewTitle" />
+
+    <TextView
+        android:id="@+id/tvNewTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Post:"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/tvNewContent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNewContent" />
+
+    <EditText
+        android:id="@+id/etNewPostContent"
+        android:layout_width="367dp"
+        android:layout_height="248dp"
+        android:layout_marginTop="19dp"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/tvNewTags"
+        app:layout_constraintTop_toBottomOf="@+id/tvNewTags" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="264dp"
+        android:layout_height="44dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvNewContent"
+        app:layout_constraintStart_toStartOf="@+id/etTitleName"
+        app:layout_constraintTop_toTopOf="@+id/tvNewContent" />
+
+    <Button
+        android:id="@+id/btPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Post"
+        app:layout_constraintEnd_toEndOf="@+id/etNewPostContent"
+        app:layout_constraintTop_toBottomOf="@+id/etNewPostContent" />
+
+    <Button
+        android:id="@+id/btDiscardPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="172dp"
+        android:layout_marginRight="172dp"
+        android:text="Discard"
+        app:layout_constraintEnd_toStartOf="@+id/btPost"
+        app:layout_constraintStart_toStartOf="@+id/etNewPostContent"
+        app:layout_constraintTop_toBottomOf="@+id/etNewPostContent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
