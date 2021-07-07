@@ -61,8 +61,33 @@ public class HomeFragment extends Fragment {
             }
         }); // end of btContent onClickListener
 
+        btDiscussion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToDiscussionFragment(email);
+            }
+        }); // end of btDiscussion.setOnClickListener
+
+
         return view;
     } // end of onCreateView
+
+    // go to the discussion page
+    private void goToDiscussionFragment(String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        DiscussionFragment discussionFragment = new DiscussionFragment(); // generate a new searchFragment
+
+        // send bundle for the Search Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        discussionFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, discussionFragment); // replace the current frame with searchFragment
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    } // end of goToDiscussionFragment
+
 
     // return the username from the user's email
     private void returnUsername (String email){

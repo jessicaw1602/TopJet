@@ -39,12 +39,13 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String KEY_USERNAME = "username"; // these are the names for the fields in FireStore
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_IDENTIFY = "cbIdentify";
+    private static final String KEY_SCORE = "score";
+
 
     // Access FireStore database
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private CollectionReference userRef = database.collection("Users");
 //    DocumentReference userRef = database.collection("Users").document();
-
 
     EditText email, username, passwordOne, passwordTwo;
     CheckBox cbIdentify;
@@ -90,6 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
     } // end of checkInfo method
 
 
+    // TODO - Make sure that the username is also unique in addition to the email
     // Method for checking whether the username already exists in the database
     private void checkEmail(String getEmail, String getUsername, String getPassword, String getPasswordTwo, String getCheckBox) {
 
@@ -144,7 +146,8 @@ public class RegisterActivity extends AppCompatActivity {
         newUser.put(KEY_EMAIL, getEmail);
         newUser.put(KEY_USERNAME, getUsername);
         newUser.put(KEY_PASSWORD, getPassword);
-         newUser.put(KEY_IDENTIFY, getCheckBox);
+        newUser.put(KEY_IDENTIFY, getCheckBox);
+        newUser.put(KEY_SCORE, "0");
 
         // make reference to the first collection
         // to make reference to: database.document("Users/document")
