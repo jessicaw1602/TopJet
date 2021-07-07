@@ -70,7 +70,6 @@ public class DiscussionFragment extends Fragment {
         createDummyPost(email);
 
         //TODO - Add comments
-        //TODO - Create a new Post (should be somewhat easy)
 
         etSearchPosts = view.findViewById(R.id.etSearchPosts);
         btAddPost = view.findViewById(R.id.btAddPost);
@@ -86,19 +85,38 @@ public class DiscussionFragment extends Fragment {
         rvDiscussionPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         rvDiscussionPosts.setHasFixedSize(true);
         discussionList = new ArrayList<DiscussionEntity>();
-        discussionAdapter = new DiscussionAdapter(discussionList);
 
         DiscussionAdapter.RecyclerViewClickListener listener = new DiscussionAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(View view, String title) {
                 //TODO - go to the full page including the detailed description
+                Log.d(TAG, "DiscussionFragment title: " + title);
+                openDetailActivity(title, email);
             }
         }; // end of DiscussionAdapter.RecyclerViewClickListener
 
         retrieveAllPosts();
 
+        discussionAdapter = new DiscussionAdapter(discussionList, listener);
+
         return view;
     } // end of onCreate
+
+    private void openDetailActivity(String title, String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        DiscussionDetailFragment disDetailFragment = new DiscussionDetailFragment(); // generate a new searchFragment
+
+        // send bundle for the Search Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        bundle.putString("title", title);
+        disDetailFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, disDetailFragment); // replace the current frame with searchFragment
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     // Go to another fragment
     private void addNewPost(String email){

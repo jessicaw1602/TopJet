@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class DiscussionAddFragment extends Fragment {
 
-    private static final String TAG = "DiscussionAdFragment"; // create Log.d
+    private static final String TAG = "DiscussionAddFragment"; // create Log.d
 
     // Access FireStore
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -88,7 +88,6 @@ public class DiscussionAddFragment extends Fragment {
     } // end of onCreate
 
 
-
     // Save the post in the database
     private void createPost(String email){
 
@@ -104,47 +103,16 @@ public class DiscussionAddFragment extends Fragment {
                     // Retrieve the text from the xml file
                     String titleName = etTitleName.getText().toString();
                     String postContent = etNewPostContent.getText().toString();
-                    String shortDesc = (etNewPostContent.getText().toString()).substring(0,100); // cut the OG postContent into 100 chars
                     String getTag = spinner.getSelectedItem().toString();
                     Log.d(TAG, getTag);
 
-                    if (!titleName.isEmpty() && !postContent.isEmpty()){
-                        // get the date & time
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        Date date = new Date();
-                        String getDate = formatter.format(date);
-                        Log.d(TAG, "The current date is: " + getDate);
-
-                        // Create the new Blog Post with the username
-                        Map<String, Object> newPost = new HashMap<>();
-                        newPost.put(KEY_TITLE, titleName);
-                        newPost.put(KEY_USERNAME, username);
-                        newPost.put(KEY_DATE, getDate);
-                        newPost.put(KEY_POST_TAG, getTag);
-                        newPost.put(KEY_SHORT_DESC, shortDesc);
-                        newPost.put(KEY_CONTENT, postContent);
-
-                        // Add the blog post into the database
-                        database.collection("Posts").document(titleName + " | " + username).set(newPost)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        // go back to the Discussion page
-                                        goToDiscussionFragment(email);
-                                        Toast.makeText(getActivity(), "Post Created!", Toast.LENGTH_SHORT).show();
-
-                                        Log.d(TAG, "Created new Post");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(getActivity(), "Sorry, there was an Error!", Toast.LENGTH_SHORT).show();
-                                        Log.d(TAG, e.toString());
-                                    }
-                                });
-                    } else {
-                        Toast.makeText(getContext(), "One or more fields are empty", Toast.LENGTH_SHORT).show();
+                    // Check if the string is >= or <= 100 char
+                    if (postContent.length() <= 100){
+                        String shortDesc = (etNewPostContent.getText().toString()).substring(0,postContent.length()); // cut the OG postContent into 100 chars
+                        addPost(titleName, postContent, getTag, username, shortDesc, email);
+                    } else if (postContent.length() >= 100){
+                        String shortDesc = (etNewPostContent.getText().toString()).substring(0,100); // cut the OG postContent into 100 chars
+                        addPost(titleName, postContent, getTag, username, shortDesc, email);
                     }
                 } else {
                     Toast.makeText(getContext(), "Error! Please Try Again!", Toast.LENGTH_SHORT).show();
@@ -152,6 +120,47 @@ public class DiscussionAddFragment extends Fragment {
             }
         });
     } // end of the createPost method
+
+    // addPost
+    private void addPost(String titleName, String postContent, String getTag, String username, String shortDesc, String email){
+        if (!titleName.isEmpty() && !postContent.isEmpty()){
+            // get the date & time
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            Date date = new Date();
+            String getDate = formatter.format(date);
+            Log.d(TAG, "The current date is: " + getDate);
+
+            // Create the new Blog Post with the username
+            Map<String, Object> newPost = new HashMap<>();
+            newPost.put(KEY_TITLE, titleName);
+            newPost.put(KEY_USERNAME, username);
+            newPost.put(KEY_DATE, getDate);
+            newPost.put(KEY_POST_TAG, getTag);
+            newPost.put(KEY_SHORT_DESC, shortDesc);
+            newPost.put(KEY_CONTENT, postContent);
+
+            // Add the blog post into the database
+            database.collection("Posts").document(titleName + " | " + username).set(newPost)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // go back to the Discussion page
+                            goToDiscussionFragment(email);
+                            Toast.makeText(getActivity(), "Post Created!", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Created new Post");
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(), "Sorry, there was an Error!", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, e.toString());
+                        }
+                    });
+        } else {
+            Toast.makeText(getContext(), "One or more fields are empty", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     // go to the discussion page
     private void goToDiscussionFragment(String email){

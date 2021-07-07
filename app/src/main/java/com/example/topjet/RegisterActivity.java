@@ -41,7 +41,6 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String KEY_IDENTIFY = "cbIdentify";
     private static final String KEY_SCORE = "score";
 
-
     // Access FireStore database
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private CollectionReference userRef = database.collection("Users");

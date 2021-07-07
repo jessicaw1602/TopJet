@@ -67,7 +67,12 @@
         android:layout_width="367dp"
         android:layout_height="248dp"
         android:layout_marginTop="19dp"
-        android:inputType="textPersonName"
+        android:background="@android:color/holo_blue_light"
+        android:backgroundTint="@color/browser_actions_bg_grey"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="true"
+        android:singleLine="false"
+        app:layout_constraintEnd_toEndOf="@+id/spinner"
         app:layout_constraintStart_toStartOf="@+id/tvNewTags"
         app:layout_constraintTop_toBottomOf="@+id/tvNewTags" />
 
