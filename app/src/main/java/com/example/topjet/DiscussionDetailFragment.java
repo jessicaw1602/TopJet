@@ -15,9 +15,15 @@ import androidx.fragment.app.Fragment;
 
 import com.example.topjet.Entities.DiscussionEntity;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class DiscussionDetailFragment extends Fragment {
 
@@ -33,6 +39,7 @@ public class DiscussionDetailFragment extends Fragment {
     private static final String KEY_DATE = "date";
     private static final String KEY_POST_TAG = "postTag";
     private static final String KEY_CONTENT = "content";
+    private static final String KEY_ID = "docId";
 
     @Nullable
     @Override
@@ -51,18 +58,40 @@ public class DiscussionDetailFragment extends Fragment {
         tvDetailPostTag = view.findViewById(R.id.tvDetailPostTag);
         tvDetailContent = view.findViewById(R.id.tvDetailContent);
 
-        // we want to connect to the database to retrieve the title and the other information
-        DocumentReference postRef = database.collection("Posts").document(title);
-        postRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        // Check whether this would work
+        DocumentReference postRefs = database.collection("Posts").document(title);
+        postRefs.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()){
                     // return all the elements
-                    String detailTitle = documentSnapshot.getString(KEY_TITLE);
-                    String detailUsername = documentSnapshot.getString(KEY_USERNAME);
-                    String detailDate = documentSnapshot.getString(KEY_DATE);
-                    String detailPostTag = documentSnapshot.getString(KEY_POST_TAG);
-                    String detailContent = documentSnapshot.getString(KEY_CONTENT);
+                    String id = documentSnapshot.getString(KEY_ID);
+                    getData(id);
+                    Log.d(TAG, "ID DetailFragment: " + id);
+                } else {
+                    Log.d(TAG, "Unable to retrieve data");
+                }
+            }
+        }); // end of postRef.addOnSuccessListener
+
+        return view;
+    } // end of onCreate
+
+    // Code adapted from: https://stackoverflow.com/questions/46706433/firebase-firestore-get-data-from-collection
+    private void getData(String id){
+        CollectionReference postsRef = database.collection("Posts");
+
+        Query nameQuery = postsRef.whereEqualTo("docId", id);
+        nameQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for (DocumentChange docChange : value.getDocumentChanges()){
+                    // return all the elements
+                    String detailTitle = docChange.getDocument().getData().get(KEY_TITLE).toString();
+                    String detailUsername = docChange.getDocument().getData().get(KEY_USERNAME).toString();
+                    String detailDate = docChange.getDocument().getData().get(KEY_DATE).toString();
+                    String detailPostTag = docChange.getDocument().getData().get(KEY_POST_TAG).toString();
+                    String detailContent = docChange.getDocument().getData().get(KEY_CONTENT).toString();
 
                     // now set the TextView elements
                     tvDetailTitle.setText(detailTitle);
@@ -71,14 +100,10 @@ public class DiscussionDetailFragment extends Fragment {
                     tvDetailContent.setText(detailContent);
 
                     Log.d(TAG, "Database Title: " + detailTitle);
-                } else {
-                    Toast.makeText(getActivity(), "Error!", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "Unable to retrieve data");
                 }
             }
-        }); // end of postRef.addOnSuccessListener
+        }); // end of nameQuery.addSnapshotListener
 
-
-        return view;
-    } // end of onCreate
+    }
 }
+
