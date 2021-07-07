@@ -51,7 +51,7 @@ public class DiscussionFragment extends Fragment {
     private static final String KEY_TITLE = "title";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_DATE = "date";
-    private static final String KEY_TAG = "tag";
+    private static final String KEY_POST_TAG = "postTag";
     private static final String KEY_CONTENT = "content";
     private static final String KEY_SHORT_DESC = "shortDesc";
 
@@ -85,11 +85,18 @@ public class DiscussionFragment extends Fragment {
         discussionList = new ArrayList<DiscussionEntity>();
         discussionAdapter = new DiscussionAdapter(discussionList);
 
+        DiscussionAdapter.RecyclerViewClickListener listener = new DiscussionAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, String title) {
+                //TODO - go to the full page including the detailed description
+            }
+        }; // end of DiscussionAdapter.RecyclerViewClickListener
+
+
         // Create a query to retrieve all the values from the database
         Query returnAllPosts = database
                 .collection("Posts")
                 .orderBy("date", Query.Direction.DESCENDING);
-
         returnAllPosts.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -103,7 +110,6 @@ public class DiscussionFragment extends Fragment {
                 }
             }
         }); // end of returnAllPosts.addSnapshot Listener
-
 
         return view;
     } // end of onCreate
@@ -126,7 +132,7 @@ public class DiscussionFragment extends Fragment {
                     newPost.put(KEY_TITLE, "My Story");
                     newPost.put(KEY_USERNAME, username);
                     newPost.put(KEY_DATE, "16-Feb-2021");
-                    newPost.put(KEY_TAG, "Stories");
+                    newPost.put(KEY_POST_TAG, "Stories");
                     newPost.put(KEY_SHORT_DESC, "This is the short description");
                     newPost.put(KEY_CONTENT, "My Story is about my childhood. This will be longgggggggggggggggggggggggggggggg sdfasfdasfsadfdasfsadfasfdsfadsfsas.");
 

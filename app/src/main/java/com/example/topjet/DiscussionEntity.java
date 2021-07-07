@@ -2,19 +2,27 @@ package com.example.topjet;
 
 public class DiscussionEntity {
 
-    private String id, title, username, date, postTag, shortDescription, content;
+    private String id, title, username, date, postTag, shortDesc, content;
 
     // Constructors
     public DiscussionEntity(){}
 
     // Constructor without ID
-    public DiscussionEntity(String title, String username, String date, String postTag, String shortDescription, String content) {
+    public DiscussionEntity(String title, String username, String date, String postTag, String shortDesc, String content) {
         this.title = title;
         this.username = username;
         this.date = date;
         this.postTag = postTag;
-        this.shortDescription = shortDescription;
+        this.shortDesc = shortDesc;
         this.content = content;
+    }
+
+    public DiscussionEntity(String title, String username, String date, String postTag, String shortDesc) {
+        this.title = title;
+        this.username = username;
+        this.date = date;
+        this.postTag = postTag;
+        this.shortDesc = shortDesc;
     }
 
     // Setters
@@ -38,8 +46,8 @@ public class DiscussionEntity {
         this.postTag = postTag;
     }
 
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
     }
 
     public void setContent(String content) {
@@ -67,8 +75,8 @@ public class DiscussionEntity {
         return postTag;
     }
 
-    public String getShortDescription() {
-        return shortDescription;
+    public String getShortDesc() {
+        return shortDesc;
     }
 
     public String getContent() {

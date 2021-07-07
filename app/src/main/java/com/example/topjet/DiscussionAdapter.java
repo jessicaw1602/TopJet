@@ -15,24 +15,42 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
     private static final String TAG = "DiscussionAdapter";
 
     private List<DiscussionEntity> myDiscussion;
+    private RecyclerViewClickListener myListener;
 
-    // Constructor
-    public DiscussionAdapter(List<DiscussionEntity> discussion){
-        myDiscussion = discussion;
+    public interface RecyclerViewClickListener {
+        void onClick(View view, String title);
     }
 
-    public static class DiscussionViewHolder extends RecyclerView.ViewHolder{
+    // Constructor
+    public DiscussionAdapter(List<DiscussionEntity> discussion, RecyclerViewClickListener listener){
+        myDiscussion = discussion;
+        myListener = listener;
+    }
 
-        private TextView tvTitle, tvUserAndDate, tvPostTags, tvShortDesc;
+    public DiscussionAdapter(List<DiscussionEntity> myDiscussion) {
+        this.myDiscussion = myDiscussion;
+    }
 
-        public DiscussionViewHolder(@NonNull View itemView) {
+    public static class DiscussionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private TextView tvTitle, tvUserAndDate, tvPostTag, tvShortDesc;
+        private RecyclerViewClickListener myListener;
+
+        public DiscussionViewHolder(@NonNull View itemView, RecyclerViewClickListener listener) {
             super(itemView);
+            this.myListener = listener;
+            itemView.setOnClickListener(this);
 
             // Connect with the xml file of the layout file rv_discussion_single
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvUserAndDate = itemView.findViewById(R.id.tvUserAndDate);
-            tvPostTags = itemView.findViewById(R.id.tvPostTag);
+            tvPostTag = itemView.findViewById(R.id.tvPostTag);
             tvShortDesc = itemView.findViewById(R.id.tvContent);
+        }
+
+        @Override
+        public void onClick(View v) {
+            myListener.onClick(v, v.getTag().toString());
         }
 
     } // end of DiscussionViewHolder method
@@ -41,7 +59,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
     @Override
     public DiscussionAdapter.DiscussionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_discussion_single, parent, false);
-        return new DiscussionViewHolder(v); // this is the view that will be created and must match from DiscussionViewHolder
+        return new DiscussionViewHolder(v, myListener); // this is the view that will be created and must match from DiscussionViewHolder
     }
 
     @Override
@@ -52,8 +70,8 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
         // Assign each discussionEntity with the
         holder.tvTitle.setText(discussionEntity.getTitle());
         holder.tvUserAndDate.setText(discussionEntity.getUsername() + " | " + discussionEntity.getDate());
-        holder.tvPostTags.setText(discussionEntity.getPostTag());
-        holder.tvShortDesc.setText(discussionEntity.getShortDescription());
+        holder.tvPostTag.setText(discussionEntity.getPostTag());
+        holder.tvShortDesc.setText(discussionEntity.getShortDesc());
 
         holder.itemView.setTag(discussionEntity.getTitle());
     }
