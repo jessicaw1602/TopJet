@@ -4,13 +4,14 @@ public class CommentEntity {
 
     // What would a comment section have?
 
-    String docId, username, date, comment;
+    String docId, postId, username, date, comment;
 
     // Constructors
     public CommentEntity(){}
 
-    public CommentEntity(String docId, String username, String date, String comment) {
+    public CommentEntity(String docId, String postId, String username, String date, String comment) {
         this.docId = docId;
+        this.postId = postId;
         this.username = username;
         this.date = date;
         this.comment = comment;
@@ -28,6 +29,10 @@ public class CommentEntity {
         this.docId = docId;
     }
 
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -43,6 +48,10 @@ public class CommentEntity {
     // Getters
     public String getDocId() {
         return docId;
+    }
+
+    public String getPostId() {
+        return postId;
     }
 
     public String getUsername() {

@@ -72,8 +72,6 @@ public class DiscussionFragment extends Fragment {
 
         createDummyPost(email);
 
-        //TODO - Add comments
-
         etSearchPosts = view.findViewById(R.id.etSearchPosts);
         btAddPost = view.findViewById(R.id.btAddPost);
         rvDiscussionPosts = view.findViewById(R.id.rvDiscussionPosts);
@@ -107,7 +105,7 @@ public class DiscussionFragment extends Fragment {
     private void openDetailActivity(String title, String email){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        DiscussionDetailFragment disDetailFragment = new DiscussionDetailFragment(); // generate a new searchFragment
+        DiscussionDetailFragment disDetailFragment = new DiscussionDetailFragment();
 
         // send bundle for the Search Fragment
         Bundle bundle = new Bundle();
@@ -115,7 +113,7 @@ public class DiscussionFragment extends Fragment {
         bundle.putString("title", title);
         disDetailFragment.setArguments(bundle);
 
-        fragmentTransaction.replace(R.id.fragment_frame, disDetailFragment); // replace the current frame with searchFragment
+        fragmentTransaction.replace(R.id.fragment_frame, disDetailFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -183,26 +181,20 @@ public class DiscussionFragment extends Fragment {
                     newPost.put(KEY_CONTENT, "My Story is about my childhood. This will be longgggggggggggggggggggggggggggggg sdfasfdasfsadfdasfsadfasfdsfadsfsas.");
                     newPost.put(KEY_ID, "fPlnYrsTnkLq2zK7pAkG");
 
-//                    database.collection("Posts").document(String.valueOf(getId())).set(newPost)
                     database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG").set(newPost)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG, "Created new Dummy Post");
 
-                                    // TODO - add the new Collection here i think
+                                    // Create a new Comment
+                                    CommentEntity commentEntity = new CommentEntity("tAFzIxIHk6mV1YqMWuIV", "fPlnYrsTnkLq2zK7pAkG", username, "08/07/2021 18:20:50", "I really enjoyed your post. Thank you for sharing!");
 
-                                    DocumentReference commentRef = database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG")
-                                            .collection("Comments").document();
+                                    CollectionReference comments = database.collection("fPlnYrsTnkLq2zK7pAkG");
+                                    comments.document("tAFzIxIHk6mV1YqMWuIV").set(commentEntity);
 
-                                    String docId = commentRef.getId();
-                                    Log.d(TAG, "The docID of the commentRef is: " + docId);
-
-                                    CommentEntity commentEntity = new CommentEntity(docId, username, "08/07/2021 18:20:50", "I really enjoyed your post. Thank you for sharing!");
-
-                                    database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG")
-                                            .collection("Comments").document(docId).set(commentEntity);
-
+//                                    database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG")
+//                                            .collection("Comments").document("tAFzIxIHk6mV1YqMWuIV").set(commentEntity);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -219,6 +211,25 @@ public class DiscussionFragment extends Fragment {
 
 
 }
+
+/*
+// Use this code for creating a new comment
+// This code is used to show How to create a new sub-collection of a post & then save the docId as the new document's Id
+
+                                    DocumentReference commentRef = database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG")
+                                            .collection("Comments").document();
+
+                                    String docId = commentRef.getId();
+                                    Log.d(TAG, "The docID of the commentRef is: " + docId);
+
+                                    CommentEntity commentEntity = new CommentEntity(docId, "fPlnYrsTnkLq2zK7pAkG", username, "08/07/2021 18:20:50", "I really enjoyed your post. Thank you for sharing!");
+
+                                    database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG")
+                                            .collection("Comments").document(docId).set(commentEntity);
+
+                                }
+ */
+
 
 /* // Creating User query
                 database.collection("Posts")

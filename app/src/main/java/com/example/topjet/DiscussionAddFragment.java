@@ -20,8 +20,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.topjet.Entities.CommentEntity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -151,6 +153,7 @@ public class DiscussionAddFragment extends Fragment {
                         @Override
                         public void onSuccess(Void aVoid) {
                             // go back to the Discussion page
+
                             goToDiscussionFragment(email);
                             Toast.makeText(getActivity(), "Post Created!", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "Created new Post");
