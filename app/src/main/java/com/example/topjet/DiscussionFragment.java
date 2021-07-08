@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.topjet.Entities.CommentEntity;
 import com.example.topjet.Entities.DiscussionEntity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,7 +45,7 @@ public class DiscussionFragment extends Fragment {
 
     // Access FireStore database
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private CollectionReference userRef = database.collection("Users");
+    private CollectionReference postRef = database.collection("Posts");
 
     // Values for FireStore
     private static final String KEY_TITLE = "title";
@@ -54,6 +55,7 @@ public class DiscussionFragment extends Fragment {
     private static final String KEY_CONTENT = "content";
     private static final String KEY_SHORT_DESC = "shortDesc";
     private static final String KEY_ID = "docId";
+    private static final String KEY_COMMENT = "comment";
 
     EditText etSearchPosts;
     Button btAddPost;
@@ -182,12 +184,25 @@ public class DiscussionFragment extends Fragment {
                     newPost.put(KEY_ID, "fPlnYrsTnkLq2zK7pAkG");
 
 //                    database.collection("Posts").document(String.valueOf(getId())).set(newPost)
-                    database.collection("Posts").document("My Story").set(newPost)
-
+                    database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG").set(newPost)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d(TAG, "Created new Dummy Post");
+
+                                    // TODO - add the new Collection here i think
+
+                                    DocumentReference commentRef = database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG")
+                                            .collection("Comments").document();
+
+                                    String docId = commentRef.getId();
+                                    Log.d(TAG, "The docID of the commentRef is: " + docId);
+
+                                    CommentEntity commentEntity = new CommentEntity(docId, username, "08/07/2021 18:20:50", "I really enjoyed your post. Thank you for sharing!");
+
+                                    database.collection("Posts").document("fPlnYrsTnkLq2zK7pAkG")
+                                            .collection("Comments").document(docId).set(commentEntity);
+
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

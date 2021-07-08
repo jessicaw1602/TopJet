@@ -146,7 +146,7 @@ public class DiscussionAddFragment extends Fragment {
             newPost.put(KEY_ID, docId);
 
             // Add the blog post into the database
-            database.collection("Posts").document(titleName).set(newPost)
+            database.collection("Posts").document(docId).set(newPost)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

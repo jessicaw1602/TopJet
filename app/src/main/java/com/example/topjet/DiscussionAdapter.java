@@ -21,7 +21,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
     private RecyclerViewClickListener myListener;
 
     public interface RecyclerViewClickListener {
-        void onClick(View view, String title);
+        void onClick(View view, String docId);
     }
 
     // Constructor
@@ -48,8 +48,8 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
         holder.tvPostTag.setText(discussionEntity.getPostTag());
         holder.tvShortDesc.setText(discussionEntity.getShortDesc());
 
-        holder.itemView.setTag(discussionEntity.getTitle());
-        Log.d(TAG, "DocId from Adapter: " + discussionEntity.getTitle());
+        holder.itemView.setTag(discussionEntity.getDocId());
+        Log.d(TAG, "DocId from Adapter: " + discussionEntity.getDocId());
     }
 
     @Override
