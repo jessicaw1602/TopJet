@@ -136,7 +136,7 @@ public class CommentFragment extends Fragment {
 
                         Toast.makeText(getContext(), "Posted!", Toast.LENGTH_SHORT).show();
 
-                        goToDiscussionFragment(email);
+                        goToDiscussionDetailFragment(email, postId);
 
                     } else {
                         Toast.makeText(getContext(), "Error! Please Try Again!", Toast.LENGTH_SHORT).show();
@@ -150,19 +150,22 @@ public class CommentFragment extends Fragment {
 
     } // end of addComment method
 
-    private void goToDiscussionFragment(String email){
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            DiscussionFragment discussionFragment = new DiscussionFragment();
+    private void goToDiscussionDetailFragment(String email, String postId){
+        Log.d(TAG, "The post id that will be sent to goToDetailPage is: " + postId);
 
-            // send bundle for the Search Fragment
-            Bundle bundle = new Bundle();
-            bundle.putString("email", email);
-        discussionFragment.setArguments(bundle);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        DiscussionDetailFragment detailFragment = new DiscussionDetailFragment();
 
-            fragmentTransaction.replace(R.id.fragment_frame, discussionFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+        // send bundle for the Search Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        bundle.putString("postId", postId);
+        detailFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, detailFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
     } // end of goToDiscussionFragment method
 

@@ -110,7 +110,7 @@ public class DiscussionFragment extends Fragment {
         // send bundle for the Search Fragment
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
-        bundle.putString("title", title);
+        bundle.putString("postId", title);
         disDetailFragment.setArguments(bundle);
 
         fragmentTransaction.replace(R.id.fragment_frame, disDetailFragment);

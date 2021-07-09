@@ -65,7 +65,7 @@ public class DiscussionDetailFragment extends Fragment {
         String email = getArguments().getString("email");
         Log.d(TAG, "DetailFragment email is: " + email);
 
-        String postId = getArguments().getString("title");
+        String postId = getArguments().getString("postId");
         Log.d(TAG, "postId received: " + postId);
 
         tvDetailTitle = view.findViewById(R.id.tvDetailTitle);
@@ -90,10 +90,10 @@ public class DiscussionDetailFragment extends Fragment {
                     String id = documentSnapshot.getString(KEY_ID);
                     Log.d(TAG, "ID DetailFragment: " + id);
 
-                    getData(id); // query the documents based on the docId
+                    getData(postId); // query the documents based on the docId
 
                     // now connect to the database to retrieve the comments of the specific post
-                    retrieveComment(id);
+                    retrieveComment(postId);
 
                 } else {
                     Log.d(TAG, "Unable to retrieve data");
