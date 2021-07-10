@@ -89,25 +89,44 @@ public class ViewContentFragment extends Fragment {
         // retrieve all the values from the database, where heading = Collection Reference
         retrieveData(email, heading);
 
-        btNext.setOnClickListener(new View.OnClickListener() {
+            btNext.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pageCounter++;
+                    getContent(email); // go to the next page. Now page counter = 2
+                    Log.d(TAG, "new page counter is: " + pageCounter);
+                }
+            }); // end of btNext.setOnClickListener
+
+        btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getContent(email); // go to the next page. Now page counter = 2
+                if (pageCounter == 0){
+                    // go back to SearchFragment
+                    goToSearchFragment(email);
+                } else if (pageCounter >= 1 && pageCounter < maxPages){
+                    Log.d(TAG, "The initial pageCounter is: " + pageCounter);
+
+                    pageCounter-=1;
+
+                    Log.d(TAG, "The after pageCounter is: " + pageCounter);
+
+                    getContent(email); // go to the next page. Now page counter = 2
+                }
             }
-        }); // end of btNext.setOnClickListener
+        }); // end of btBack.setOnClickListener
 
             return view;
         } // end of onCreate method
 
-
     private void retrieveData (String email, String heading) {
-        database.collection(heading).get() // return all the values
+        database.collection(heading).get() // return all the values from the collection
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                // Log.d(TAG, document.getId() + " => " + document.getData());
 
                                 // Create a new Comment
                                 ContentEntity contentEntity = new ContentEntity();
@@ -121,7 +140,7 @@ public class ViewContentFragment extends Fragment {
                                 String imageOne = document.getString(KEY_IV_ONE);
                                 String imageTwo = document.getString(KEY_IV_TWO);
 
-                                Log.d(TAG, "Page Number is " + pageNumId);
+                                // Log.d(TAG, "Page Number is " + pageNumId);
 
                                 // create an array list to store all the values in it.
                                 contentList.add(new ContentEntity(pageNumId, topicArea, heading, title, paraOne, paraTwo, imageOne, imageTwo));
@@ -142,11 +161,10 @@ public class ViewContentFragment extends Fragment {
 
     // As the user goes through the content
     private void getContent(String email){
-//        for (int i = 0; i < contentList.size(); i++) {
-//            System.out.println(contentList.get(i));
-//        }
+        Log.d(TAG, "The initial pageCounter is: " + pageCounter);
+
             if (pageCounter < maxPages){ // if 0 < 8 (which is true) then
-                currentPage = contentList.get(pageCounter); // get the object at the first index
+                currentPage = contentList.get(pageCounter); // get the object at the first index = 0
 
                 // StorageReference storageRef = storage.getReference(currentPage.getPageNumId()).child(currentPage.getPageNumId() + ".png");
                 // No longer using StorageReference, and instead we are using drawable, as you cannot retrieve multiple images from Storage
@@ -169,8 +187,6 @@ public class ViewContentFragment extends Fragment {
                 ivOne.setImageResource(imageIdOne);
                 ivTwo.setImageResource(imageIdTwo);
 
-                pageCounter++; // increment the page number. Go to page 2;
-
             } else {
                 Log.d(TAG, "Finished Reading!! Congratulations :)");
                 btNext.setText("Go To Quiz.");
@@ -181,7 +197,6 @@ public class ViewContentFragment extends Fragment {
                     }
                 }); // end of onClickListener
             }
-
     } // end of getContent method
 
     private void finishReading(String email){ //TODO - we also want to be able to pass the topicArea in
@@ -201,5 +216,19 @@ public class ViewContentFragment extends Fragment {
 
     } // end of finishReading method
 
+    private void goToSearchFragment (String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        SearchFragment searchFragment = new SearchFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        searchFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, searchFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+    } // end of goToSearchFragment
 
 }

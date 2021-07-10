@@ -188,6 +188,7 @@ public class SearchFragment extends Fragment {
         fragmentTransaction.replace(R.id.fragment_frame, viewContent);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }
+
+    } // end of openViewContent page
 }
 
