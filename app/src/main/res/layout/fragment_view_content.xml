@@ -69,26 +69,17 @@
             app:layout_constraintTop_toBottomOf="@+id/tvParaOne"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <ImageView
-            android:id="@+id/ivTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            app:layout_constraintStart_toStartOf="@+id/ivOne"
-            app:layout_constraintTop_toBottomOf="@+id/ivOne"
-            tools:srcCompat="@tools:sample/avatars" />
-
         <TextView
             android:id="@+id/tvParaTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="Paragraph 2"
             app:layout_constraintStart_toStartOf="@+id/tvParaOne"
-            app:layout_constraintTop_toBottomOf="@+id/ivTwo" />
+            app:layout_constraintTop_toBottomOf="@+id/ivOne" />
 
         <ImageView
-            android:id="@+id/ivThree"
+            android:id="@+id/ivTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
@@ -96,23 +87,16 @@
             app:layout_constraintTop_toBottomOf="@+id/tvParaTwo"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <ImageView
-            android:id="@+id/ivFour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            app:layout_constraintStart_toStartOf="@+id/ivThree"
-            app:layout_constraintTop_toBottomOf="@+id/ivThree"
-            tools:srcCompat="@tools:sample/avatars" />
-
         <Button
             android:id="@+id/btNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:text="Next"
-            app:layout_constraintStart_toStartOf="@+id/ivFour"
-            app:layout_constraintTop_toBottomOf="@+id/ivFour" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivTwo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

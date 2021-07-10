@@ -68,7 +68,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
             itemView.setOnClickListener(this);
 
             // Connect with the xml file of the layout file rv_discussion_single
-            tvTitle = itemView.findViewById(R.id.tvTitle);
+            tvTitle = itemView.findViewById(R.id.tvTopicArea);
             tvUserAndDate = itemView.findViewById(R.id.tvUserAndDate);
             tvPostTag = itemView.findViewById(R.id.tvPostTag);
             tvShortDesc = itemView.findViewById(R.id.tvContent);

@@ -18,7 +18,7 @@ public class ContentEntity {
     }
 
     // Including the images...
-    public ContentEntity(String pageNumId, String topicArea, String heading,  String title, String paraOne, String paraTwo, String ivOne, String ivTwo) {
+    public ContentEntity(String pageNumId, String topicArea, String heading, String title, String paraOne, String paraTwo, String ivOne, String ivTwo) {
         this.pageNumId = pageNumId;
         this.topicArea = topicArea;
         this.heading = heading;
@@ -94,6 +94,4 @@ public class ContentEntity {
     public String getIvTwo() {
         return ivTwo;
     }
-
-
 }

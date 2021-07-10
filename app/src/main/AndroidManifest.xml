@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TopJet">
-        <activity android:name=".ViewContentActivity"></activity>
+        <activity android:name=".QuizActivity"></activity>
+        <activity android:name=".ViewContentActivity" />
         <activity android:name=".CommentActivity" />
         <activity android:name=".DiscussionDetailActivity" />
         <activity android:name=".DiscussionAddActivity" />
