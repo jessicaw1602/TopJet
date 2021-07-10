@@ -38,7 +38,7 @@ public class ViewContentFragment extends Fragment {
 
     TextView tvTopic, tvHeading, tvContentTitle, tvParaOne, tvParaTwo;
     ImageView ivOne, ivTwo;
-    Button btNext;
+    Button btNext, btBack;
 
     private List<ContentEntity> contentList; // this will be used to store all the retrieved data here...
 
@@ -79,13 +79,14 @@ public class ViewContentFragment extends Fragment {
         tvParaOne = view.findViewById(R.id.tvParaOne);
         tvParaTwo = view.findViewById(R.id.tvParaTwo);
         btNext = view.findViewById(R.id.btNext);
+        btBack = view.findViewById(R.id.btBack);
 
         // For the images...
         ivOne = view.findViewById(R.id.ivOne);
         ivTwo = view.findViewById(R.id.ivTwo);
 
         contentList = new ArrayList<>();
-        // retrieve all the values from the database, where heading is the Collection Reference
+        // retrieve all the values from the database, where heading = Collection Reference
         retrieveData(email, heading);
 
         btNext.setOnClickListener(new View.OnClickListener() {
@@ -100,9 +101,6 @@ public class ViewContentFragment extends Fragment {
 
 
     private void retrieveData (String email, String heading) {
-        // TODO - change the collectionPath "Arts Symbols" from the recyclerview
-        // getCollectionName = the heading, in our case i.e. 'Symbols'
-
         database.collection(heading).get() // return all the values
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
