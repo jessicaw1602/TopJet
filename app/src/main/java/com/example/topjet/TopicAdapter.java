@@ -47,7 +47,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
         holder.ivIcon.setImageResource(topicEntity.getIcons());
 
         holder.itemView.setTag(topicEntity.getNames());
-        Log.d(TAG, "Name from TopicAdapter: " + topicEntity.getNames());
+        // Log.d(TAG, "Name from TopicAdapter: " + topicEntity.getNames());
         // Should return Symbols, Materials, Land, Family, Ceremony, Language, Dreamtime, Sacred Sites, Spirituality
     }
 

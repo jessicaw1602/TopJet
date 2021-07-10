@@ -17,7 +17,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.topjet.Entities.ContentEntity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,7 +46,7 @@ public class ViewContentFragment extends Fragment {
     private int pageCounter = 0; // will be used to count the current page
     private int maxPages; // number of pages listed in the contentList
 
-    // I currently only have 2 images so far...
+    // Max is 2 images per page
     private static final String KEY_PAGE_NUM_ID = "pageNumId";
     private static final String KEY_HEADING = "heading";
     private static final String KEY_TOPIC_AREA = "topicArea";
@@ -66,6 +70,9 @@ public class ViewContentFragment extends Fragment {
         String email = getArguments().getString("email");
         Log.d(TAG, "ViewContentFragment Email: " + email);
 
+        String heading = getArguments().getString("heading");
+        Log.d(TAG, "ViewContentFragment heading: " + heading); // will pass in 'Symbols', 'Materials',
+
         tvTopic = view.findViewById(R.id.tvTopic);
         tvHeading = view.findViewById(R.id.tvHeading);
         tvContentTitle = view.findViewById(R.id.tvContentTitle);
@@ -78,8 +85,8 @@ public class ViewContentFragment extends Fragment {
         ivTwo = view.findViewById(R.id.ivTwo);
 
         contentList = new ArrayList<>();
-        // retrieve all the values from the database...
-        retrieveData(email);
+        // retrieve all the values from the database, where heading is the Collection Reference
+        retrieveData(email, heading);
 
         btNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,14 +95,15 @@ public class ViewContentFragment extends Fragment {
             }
         }); // end of btNext.setOnClickListener
 
-
             return view;
         } // end of onCreate method
 
 
-    private void retrieveData (String email) {
+    private void retrieveData (String email, String heading) {
         // TODO - change the collectionPath "Arts Symbols" from the recyclerview
-        database.collection("Arts Symbols").get() // return all the values
+        // getCollectionName = the heading, in our case i.e. 'Symbols'
+
+        database.collection(heading).get() // return all the values
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -136,13 +144,12 @@ public class ViewContentFragment extends Fragment {
 
     // As the user goes through the content
     private void getContent(String email){
-        for (int i = 0; i < contentList.size(); i++) {
-            System.out.println(contentList.get(i));
-        }
+//        for (int i = 0; i < contentList.size(); i++) {
+//            System.out.println(contentList.get(i));
+//        }
             if (pageCounter < maxPages){ // if 0 < 8 (which is true) then
                 currentPage = contentList.get(pageCounter); // get the object at the first index
 
-                // TODO - will have to replace "Arts Symbols" -> get the text of the RecyclerView heading and pass the variable here
                 // StorageReference storageRef = storage.getReference(currentPage.getPageNumId()).child(currentPage.getPageNumId() + ".png");
                 // No longer using StorageReference, and instead we are using drawable, as you cannot retrieve multiple images from Storage
 

@@ -37,9 +37,6 @@ public class SearchFragment extends Fragment {
 
     private TopicAdapter artAdapter, cultureAdapter, valueAdapter;
 
-    //TODO - delete later
-    Button btArts;
-
     private static final String TAG = "SearchFragment";
 
     // Access FireStore
@@ -107,8 +104,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View view, String topicName) {
                 Log.d(TAG, "DiscussionFragment title: " + topicName);
-                // TODO - finish off this
-//                openDetailActivity(topicName, email);
+                getCollectionName (topicName, email);
             }
         }; // end of DiscussionAdapter.RecyclerViewClickListener
 
@@ -120,29 +116,78 @@ public class SearchFragment extends Fragment {
         rvCulture.setAdapter(cultureAdapter);
         rvValues.setAdapter(valueAdapter);
 
-        //TODO - delete this later - this will show the Arts > Symbol info...
-        btArts = view.findViewById(R.id.btArts);
-        btArts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create Bundle
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                ViewContentFragment viewContent = new ViewContentFragment();
-
-                // send bundle for the Search Fragment
-                Bundle bundle = new Bundle();
-                bundle.putString("email", email);
-                viewContent.setArguments(bundle);
-
-                fragmentTransaction.replace(R.id.fragment_frame, viewContent);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        }); // end of setOnClickListener
-
         return view;
     } // end of onCreate method
 
+    private void getCollectionName(String topicName, String email){
+        String heading;
+
+        // do a switch statement to determine which collection to go to...
+        switch(topicName){
+            case "Symbols":
+                heading = "Arts Symbols";
+                Log.d(TAG, "The Collection Reference is: " + heading);
+                openViewContent(heading, email);
+                break;
+
+            case "Materials":
+                heading = "Arts Materials";
+                openViewContent(heading, email);
+                break;
+
+            case "Land":
+                heading = "Culture Land";
+                openViewContent(heading, email);
+                break;
+
+            case "Family and Kinship":
+                heading = "Culture Family and Kinship";
+                openViewContent(heading, email);
+                break;
+
+            case "Ceremony":
+                heading = "Culture Ceremony";
+                openViewContent(heading, email);
+                break;
+
+            case "Language":
+                heading = "Culture Language";
+                openViewContent(heading, email);
+                break;
+
+            case "Dreamtime Stories":
+                heading = "Values Dreamtime";
+                openViewContent(heading, email);
+                break;
+
+            case "Sacred Sites":
+                heading = "Values Sites";
+                openViewContent(heading, email);
+                break;
+
+            case "Spirituality":
+                heading = "Values Spirituality";
+                openViewContent(heading, email);
+                break;
+
+        } // end of switch statement
+
+    } // end of openViewContent method
+
+    private void openViewContent(String heading, String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        ViewContentFragment viewContent = new ViewContentFragment();
+
+        // send bundle to ViewContentFragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        bundle.putString("heading", heading); //topicName will be the 'heading' in the collection
+        viewContent.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, viewContent);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 }
 
