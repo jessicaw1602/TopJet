@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.topjet">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TopJet">
-        <activity android:name=".CommentActivity"></activity>
+        <activity android:name=".QuizActivity"></activity>
+        <activity android:name=".ViewContentActivity" />
+        <activity android:name=".CommentActivity" />
         <activity android:name=".DiscussionDetailActivity" />
         <activity android:name=".DiscussionAddActivity" />
         <activity android:name=".DiscussionActivity" />
