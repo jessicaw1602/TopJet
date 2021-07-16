@@ -71,7 +71,7 @@ public class ViewContentFragment extends Fragment {
         Log.d(TAG, "ViewContentFragment Email: " + email);
 
         String heading = getArguments().getString("heading");
-        Log.d(TAG, "ViewContentFragment heading: " + heading); // will pass in 'Symbols', 'Materials',
+        Log.d(TAG, "ViewContentFragment heading: " + heading); // will pass in "Arts Symbols", "Arts Materials"
 
         tvTopic = view.findViewById(R.id.tvTopic);
         tvHeading = view.findViewById(R.id.tvHeading);
@@ -93,7 +93,7 @@ public class ViewContentFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     pageCounter++;
-                    getContent(email); // go to the next page. Now page counter = 2
+                    getContent(email, heading); // go to the next page. Now page counter = 2
                     Log.d(TAG, "new page counter is: " + pageCounter);
                 }
             }); // end of btNext.setOnClickListener
@@ -111,7 +111,7 @@ public class ViewContentFragment extends Fragment {
 
                     Log.d(TAG, "The after pageCounter is: " + pageCounter);
 
-                    getContent(email); // go to the next page. Now page counter = 2
+                    getContent(email, heading); // go to the next page. Now page counter = 1
                 }
             }
         }); // end of btBack.setOnClickListener
@@ -149,7 +149,7 @@ public class ViewContentFragment extends Fragment {
                             Log.d(TAG, "The number of pages is: " + maxPages);
 
                             // Retrieve all the images and set text
-                            getContent(email);
+                            getContent(email, heading);
 
                         } else {
                             Log.d(TAG, "Unsuccessful in Retrieving Data");
@@ -160,7 +160,7 @@ public class ViewContentFragment extends Fragment {
     } // end of retrieveData method
 
     // As the user goes through the content
-    private void getContent(String email){
+    private void getContent(String email, String heading){
         Log.d(TAG, "The initial pageCounter is: " + pageCounter);
 
             if (pageCounter < maxPages){ // if 0 < 8 (which is true) then
@@ -193,13 +193,13 @@ public class ViewContentFragment extends Fragment {
                 btNext.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        finishReading(email);
+                        finishReading(email, heading);
                     }
                 }); // end of onClickListener
             }
     } // end of getContent method
 
-    private void finishReading(String email){ //TODO - we also want to be able to pass the topicArea in
+    private void finishReading(String email, String heading){ //TODO - we also want to be able to pass the topicArea in
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         QuizFragment quizFragment = new QuizFragment();

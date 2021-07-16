@@ -62,13 +62,11 @@ public class SearchFragment extends Fragment {
         topicValueList = new ArrayList<TopicEntity>();
 
         // set Horizontal RecyclerView Layout
-        LinearLayoutManager artLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        LinearLayoutManager cultureLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        LinearLayoutManager valueLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        rvArts.setLayoutManager(artLayout);
-        rvCulture.setLayoutManager(cultureLayout);
-        rvValues.setLayoutManager(valueLayout);
+        rvArts.setLayoutManager(layout);
+        rvCulture.setLayoutManager(layout);
+        rvValues.setLayoutManager(layout);
         rvArts.setHasFixedSize(true);
         rvCulture.setHasFixedSize(true);
         rvValues.setHasFixedSize(true);
