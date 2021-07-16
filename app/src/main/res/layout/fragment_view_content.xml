@@ -62,9 +62,11 @@
 
         <ImageView
             android:id="@+id/ivOne"
-            android:layout_width="360dp"
-            android:layout_height="180dp"
-            android:layout_marginTop="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="@+id/tvParaOne"
             app:layout_constraintTop_toBottomOf="@+id/tvParaOne"
             tools:srcCompat="@tools:sample/avatars" />
@@ -83,6 +85,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="@+id/tvParaTwo"
             app:layout_constraintTop_toBottomOf="@+id/tvParaTwo"
             tools:srcCompat="@tools:sample/avatars" />

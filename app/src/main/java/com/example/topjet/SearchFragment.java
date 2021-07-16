@@ -75,9 +75,9 @@ public class SearchFragment extends Fragment {
         rvValues.setItemAnimator(new DefaultItemAnimator());
 
         //TODO - replace these images with icons for each particular topic
-        int[] artIcons = {R.drawable.ic_baseline_home_24, R.drawable.ic_baseline_person_24};
-        int[] cultureIcons = {R.drawable.ic_baseline_search_24, R.drawable.ic_baseline_home_24, R.drawable.ic_baseline_person_24, R.drawable.ic_launcher_background};
-        int[] valueIcons = {R.drawable.ic_baseline_home_24, R.drawable.ic_baseline_person_24, R.drawable.ic_baseline_search_24};
+        int[] artIcons = {R.drawable.content_arts_symbols, R.drawable.content_arts_material};
+        int[] cultureIcons = {R.drawable.content_culture_land, R.drawable.content_culture_family, R.drawable.content_culture_ceremony,R.drawable.content_culture_language};
+        int[] valueIcons = {R.drawable.content_values_dreamtime, R.drawable.content_values_sacred, R.drawable.content_values_spirituality};
 
         String[] artNames = {"Symbols", "Materials"};
         String[] cultureNames = {"Land", "Family and Kinship", "Ceremony", "Language"};
