@@ -70,6 +70,13 @@ public class HomeFragment extends Fragment {
             }
         }); // end of btDiscussion.setOnClickListener
 
+        btEvents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToEventsFragment(email);
+            }
+        }); // end of btDiscussion.setOnClickListener
+
 
         return view;
     } // end of onCreateView
@@ -120,6 +127,22 @@ public class HomeFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     } // end of goToSearchFragment method
+
+    private void goToEventsFragment(String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        GameFragment gameFragment = new GameFragment(); // generate a new searchFragment
+
+        // send bundle for the Game Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        gameFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, gameFragment); // replace the current frame with gameFragment
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        System.out.println("gameFragment works!");
+    }
 
 
 }
