@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.app.AlertDialog;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,9 +31,11 @@ public class GameFragment extends Fragment {
     Button didgeridooButton;
     Button headbandButton;
     Button ceremonyButton;
-    TextView tvDid;
-    TextView tvCeremony;
-    TextView tvHead;
+
+    EditText userInputOne;
+    EditText userInputTwo;
+    EditText userInputThree;
+    Button checkAnswersButton;
 
     Button uluruButton;
     Button bodyButton;
@@ -82,9 +85,11 @@ public class GameFragment extends Fragment {
         didgeridooButton = view.findViewById(R.id.didgeridooButton);
         headbandButton = view.findViewById(R.id.headbandButton);
         ceremonyButton = view.findViewById(R.id.ceremonyButton);
-        tvCeremony = view.findViewById(R.id.tvCeremony);
-        tvDid = view.findViewById(R.id.tvDid);
-        tvHead = view.findViewById(R.id.tvHead);
+
+        userInputOne = view.findViewById(R.id.tvInputOne);
+        userInputTwo = view.findViewById(R.id.tvInputTwo);
+        userInputThree = view.findViewById(R.id.tvInputThree);
+        checkAnswersButton = view.findViewById(R.id.checkAnswerButton);
 
         uluruButton = view.findViewById(R.id.uluruButton);
         bodyButton = view.findViewById(R.id.bodyButton);
@@ -97,6 +102,7 @@ public class GameFragment extends Fragment {
         nextButton = view.findViewById(R.id.nextButton);
         ivGame = view.findViewById(R.id.ivGame);
         tvTitle = view.findViewById(R.id.tvTitle);
+
 
         didgeridooButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,20 +137,55 @@ public class GameFragment extends Fragment {
             }
         });
 
+        userInputOne.setVisibility(View.GONE);
+        userInputTwo.setVisibility(View.GONE);
+        userInputThree.setVisibility(View.GONE);
+        checkAnswersButton.setVisibility(View.GONE);
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pageCounter++;
                 switch(pageCounter){
                     case 1:
+                        ivGame.setImageResource(R.drawable.ceremony);
+                        tvTitle.setText("Name the objects:");
+                        didgeridooButton.setVisibility(View.GONE);
+                        headbandButton.setVisibility(View.GONE);
+                        ceremonyButton.setVisibility(View.GONE);
+
+                        userInputOne.setVisibility(View.VISIBLE);
+                        userInputTwo.setVisibility(View.VISIBLE);
+                        userInputThree.setVisibility(View.VISIBLE);
+                        checkAnswersButton.setVisibility(View.VISIBLE);
+
+                        checkAnswersButton.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                String getUserInputOne = userInputOne.getText().toString();
+                                String getUserInputTwo = userInputTwo.getText().toString();
+                                String getUserInputThree = userInputThree.getText().toString();
+                                if(getUserInputOne.equals("didgeridoo") && getUserInputTwo.equals("headband") &&
+                                        getUserInputThree.equals("smoking ceremony")){
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
+                                }else{
+                                    makeAlert("Sorry!", "Please try again.", "Ok");
+                                }
+                            }
+                        });
+                        break;
+                    case 2:
                         ivGame.setImageResource(R.drawable.uluru);
                         tvTitle.setText("Uluru");
                         didgeridooButton.setVisibility(View.GONE);
                         headbandButton.setVisibility(View.GONE);
                         ceremonyButton.setVisibility(View.GONE);
-                        tvDid.setVisibility(View.GONE);
-                        tvHead.setVisibility(View.GONE);
-                        tvCeremony.setVisibility(View.GONE);
+                        checkAnswersButton.setVisibility(View.GONE);
+
+                        userInputOne.setVisibility(View.GONE);
+                        userInputTwo.setVisibility(View.GONE);
+                        userInputThree.setVisibility(View.GONE);
+                        checkAnswersButton.setVisibility(View.GONE);
 
                         uluruButton.setVisibility(View.VISIBLE);
                         bodyButton.setVisibility(View.VISIBLE);
@@ -181,18 +222,51 @@ public class GameFragment extends Fragment {
                             }
                         });
                         break;
-                    case 2:
+
+                    case 3:
+                        ivGame.setImageResource(R.drawable.uluru);
+                        tvTitle.setText("Name the objects:");
+                        userInputOne.setVisibility(View.VISIBLE);
+                        userInputTwo.setVisibility(View.VISIBLE);
+                        userInputThree.setVisibility(View.VISIBLE);
+                        checkAnswersButton.setVisibility(View.VISIBLE);
+                        uluruButton.setVisibility(View.GONE);
+                        bodyButton.setVisibility(View.GONE);
+                        spearButton.setVisibility(View.GONE);
+
+                        checkAnswersButton.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                String getUserInputOne = userInputOne.getText().toString();
+                                String getUserInputTwo = userInputTwo.getText().toString();
+                                String getUserInputThree = userInputThree.getText().toString();
+                                if(getUserInputOne.equals("uluru") && getUserInputTwo.equals("spear") &&
+                                        getUserInputThree.equals("body art")){
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
+                                }else{
+                                    makeAlert("Sorry!", "Please try again.", "Ok");
+                                }
+                            }
+                        });
+                        break;
+
+                    case 4:
                         ivGame.setImageResource(R.drawable.wallpaint);
                         tvTitle.setText("Wallpainting");
                         uluruButton.setVisibility(View.GONE);
                         bodyButton.setVisibility(View.GONE);
                         spearButton.setVisibility(View.GONE);
 
+                        userInputOne.setVisibility(View.GONE);
+                        userInputTwo.setVisibility(View.GONE);
+                        userInputThree.setVisibility(View.GONE);
+                        checkAnswersButton.setVisibility(View.GONE);
+
                         ochreButton.setVisibility(View.VISIBLE);
                         artButton.setVisibility(View.VISIBLE);
                         stencilButton.setVisibility(View.VISIBLE);
 
-                    ochreButton.setOnClickListener(new View.OnClickListener() {
+                        ochreButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Log.d(TAG, "Ochre button works!");
@@ -222,15 +296,47 @@ public class GameFragment extends Fragment {
                         }
                     });
                     break;
-                    case 3:
+                    case 5:
+                        ivGame.setImageResource(R.drawable.wallpaint);
+                        tvTitle.setText("Name the objects:");
+                        userInputOne.setVisibility(View.VISIBLE);
+                        userInputTwo.setVisibility(View.VISIBLE);
+                        userInputThree.setVisibility(View.VISIBLE);
+                        checkAnswersButton.setVisibility(View.VISIBLE);
+                        ochreButton.setVisibility(View.GONE);
+                        artButton.setVisibility(View.GONE);
+                        stencilButton.setVisibility(View.GONE);
+
+                        checkAnswersButton.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                String getUserInputOne = userInputOne.getText().toString();
+                                String getUserInputTwo = userInputTwo.getText().toString();
+                                String getUserInputThree = userInputThree.getText().toString();
+                                if(getUserInputOne.equals("ochre") && getUserInputTwo.equals("hand stencil") &&
+                                        getUserInputThree.equals("rock art")){
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
+                                }else{
+                                    makeAlert("Sorry!", "Please try again.", "Ok");
+                                }
+                            }
+                        });
+                        break;
+                    case 6:
                         ivGame.setImageResource(R.drawable.hut);
                         tvTitle.setText("Hut Depression");
+
+                        userInputOne.setVisibility(View.GONE);
+                        userInputTwo.setVisibility(View.GONE);
+                        userInputThree.setVisibility(View.GONE);
+                        checkAnswersButton.setVisibility(View.GONE);
+
                         break;
-                    case 4:
+                    case 7:
                         ivGame.setImageResource(R.drawable.grindstone);
                         tvTitle.setText("Grindstone");
                         break;
-                    case 5:
+                    case 8:
                         ivGame.setImageResource(R.drawable.serpent);
                         tvTitle.setText("Rainbow Serpent");
                         break;
