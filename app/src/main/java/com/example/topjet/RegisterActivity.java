@@ -154,7 +154,6 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        //TODO - make them see the home screen or MainActivity
                         Toast.makeText(RegisterActivity.this, "User Created!", Toast.LENGTH_SHORT).show();
                     }
                 })

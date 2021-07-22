@@ -62,11 +62,13 @@ public class SearchFragment extends Fragment {
         topicValueList = new ArrayList<TopicEntity>();
 
         // set Horizontal RecyclerView Layout
-        LinearLayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager artLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager cultureLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager valuesLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        rvArts.setLayoutManager(layout);
-        rvCulture.setLayoutManager(layout);
-        rvValues.setLayoutManager(layout);
+        rvArts.setLayoutManager(artLayout);
+        rvCulture.setLayoutManager(cultureLayout);
+        rvValues.setLayoutManager(valuesLayout);
         rvArts.setHasFixedSize(true);
         rvCulture.setHasFixedSize(true);
         rvValues.setHasFixedSize(true);
@@ -74,7 +76,6 @@ public class SearchFragment extends Fragment {
         rvCulture.setItemAnimator(new DefaultItemAnimator());
         rvValues.setItemAnimator(new DefaultItemAnimator());
 
-        //TODO - replace these images with icons for each particular topic
         int[] artIcons = {R.drawable.content_arts_symbols, R.drawable.content_arts_material};
         int[] cultureIcons = {R.drawable.content_culture_land, R.drawable.content_culture_family, R.drawable.content_culture_ceremony,R.drawable.content_culture_language};
         int[] valueIcons = {R.drawable.content_values_dreamtime, R.drawable.content_values_sacred, R.drawable.content_values_spirituality};

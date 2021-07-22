@@ -30,8 +30,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO - when the user clicks on the button to go to the next page, then it will transition...
-
 public class ViewContentFragment extends Fragment {
 
     private static final String TAG = "ViewContent";
@@ -106,11 +104,8 @@ public class ViewContentFragment extends Fragment {
                     goToSearchFragment(email);
                 } else if (pageCounter >= 1 && pageCounter < maxPages){
                     Log.d(TAG, "The initial pageCounter is: " + pageCounter);
-
                     pageCounter-=1;
-
                     Log.d(TAG, "The after pageCounter is: " + pageCounter);
-
                     getContent(email, heading); // go to the next page. Now page counter = 1
                 }
             }
@@ -167,7 +162,7 @@ public class ViewContentFragment extends Fragment {
                 currentPage = contentList.get(pageCounter); // get the object at the first index = 0
 
                 // StorageReference storageRef = storage.getReference(currentPage.getPageNumId()).child(currentPage.getPageNumId() + ".png");
-                // No longer using StorageReference, and instead we are using drawable, as you cannot retrieve multiple images from Storage
+                // No longer using StorageReference. Instead we are using drawable, as you cannot retrieve multiple images from Storage
 
                 int imageIdOne = getResources().getIdentifier(
                         "@drawable/" + currentPage.getPageNumId().toLowerCase() + "1",
@@ -204,7 +199,6 @@ public class ViewContentFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         QuizFragment quizFragment = new QuizFragment();
 
-        // send bundle for the Search Fragment
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
 //        bundle.putString("topicArea", ) // TODO - finish this off.
