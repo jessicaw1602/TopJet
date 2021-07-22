@@ -40,7 +40,9 @@ import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/* Code adapted from: https://www.youtube.com/watch?v=pjFcJ6EB8Dg */
+/* Code adapted from: https://www.youtube.com/watch?v=pjFcJ6EB8Dg &&
+https://developers.google.com/maps/documentation/places/web-service/search?hl=en_GB */
+
 public class MapActivity extends AppCompatActivity {
 
     private static final String TAG = "MapActivity";
@@ -85,12 +87,16 @@ public class MapActivity extends AppCompatActivity {
                 String searchTag = getTag.replaceAll(" ", "+").toLowerCase();
 
                 // now produce the google search
-                String mapUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
-                        + "?location=" + currentLatitude + "," + currentLongitude + "&radius=6000"
-                        + "&type=" + searchTag
+                String mapUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+                        + "location=" + currentLatitude + "," + currentLongitude + "&radius=1500"
+                        + "&type=art_gallery" // will return the art_gallery places https://developers.google.com/maps/documentation/places/web-service/supported_types
                         // + "&sensor=true"
+                        + "&keyword=aboriginal"
                         + "&key=" + getResources().getString(R.string.google_place_key);
 
+                /*
+                https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=art_gallery&keyword=aboriginal&key=AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y
+                 */
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 Handler handler = new Handler(Looper.getMainLooper());
 
