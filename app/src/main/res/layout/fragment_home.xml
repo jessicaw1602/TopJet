@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,10 +18,77 @@
         android:id="@+id/homeFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="188dp"
-        android:layout_marginLeft="188dp"
-        android:layout_marginTop="219dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:layout_marginTop="16dp"
         android:text="Home Fragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Welcome,"
+        android:textAlignment="gravity"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btEvents"
+        android:layout_width="280dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="4dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:text="Events Near Me"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
+        app:srcCompat="@drawable/game_home" />
+
+    <ImageButton
+        android:id="@+id/btDiscussion"
+        android:layout_width="280dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:text="Discussion Board"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btEvents"
+        app:srcCompat="@drawable/blog_home" />
+
+    <ImageButton
+        android:id="@+id/btContent"
+        android:layout_width="280dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="4dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:text="Content"
+        app:layout_constraintStart_toStartOf="@+id/btDiscussion"
+        app:layout_constraintTop_toBottomOf="@+id/btDiscussion"
+        app:srcCompat="@drawable/learnings_quizzes_home" />
+
+    <ImageButton
+        android:id="@+id/btMaps"
+        android:layout_width="280dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="4dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:text="Content"
+        app:layout_constraintStart_toStartOf="@+id/btContent"
+        app:layout_constraintTop_toBottomOf="@+id/btContent"
+        app:srcCompat="@drawable/game_home" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

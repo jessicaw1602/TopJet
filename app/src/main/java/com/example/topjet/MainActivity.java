@@ -26,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity"; // create Log.d
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_USERNAME = "username";
+
 
     EditText email, password;
     Button login, signup;
 
-    // Access Firestore database
+    // Access FireStore database
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
     private CollectionReference userRef = database.collection("Users");
 
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
                 userLogin(getEmail, getPassword);
                 Log.d(TAG, "login button pressed");
+
             }
         }); // end of login.setOnClickListener
 
@@ -88,7 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
                         if (email.equals(getEmail) && password.equals(getPassword)){
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                            intent.putExtra(HomeActivity.INTENT_EMAIL, email); // pass the email to HomeActivity
                             startActivity(intent);
+                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MainActivity.this, "Wrong username or password!", Toast.LENGTH_SHORT).show();
                         }

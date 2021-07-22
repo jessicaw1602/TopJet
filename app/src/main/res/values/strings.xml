@@ -1,4 +1,22 @@
 <resources>
     <string name="app_name">TopJet</string>
-    <string name ="sign_up_here"><u>Sign up here!</u></string>
+    <string name="sign_up_here"><u>Sign up here!</u></string>
+    <string name="google_place_key">AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y</string>
+
+    <string-array name="Tags">
+        <item>Discussion</item>
+        <item>Stories</item>
+        <item>Q &amp; A</item>
+        <item>Blog Post</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="MapLocations">
+        <item>Indigenous Events Near Me</item>
+        <item>Aboriginal Art Galleries</item>
+        <item>Aboriginal Culture &amp; Education Centres</item>
+        <item>Indigenous Cultural Walks Near Me</item>
+        <item>Aboriginal Culture and Resource Centres</item>
+    </string-array>
+
 </resources>
