@@ -22,8 +22,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Map;
-
 // handles retrieving the data from FireStore server
 public class HomeFragment extends Fragment {
 
@@ -31,8 +29,8 @@ public class HomeFragment extends Fragment {
 
     private static final String KEY_USERNAME = "username"; // these are the names for the fields in FireStore
 
-    //TODO - fix up the buttons and link it with the correct fragment
-    ImageButton btEvents, btDiscussion, btContent, btMaps;
+
+    ImageButton btEvents, btDiscussion, btContent;
     TextView tvWelcome;
 
     // Access FireStore
@@ -47,7 +45,6 @@ public class HomeFragment extends Fragment {
         btEvents = view.findViewById(R.id.btEvents);
         btDiscussion = view.findViewById(R.id.btDiscussion);
         btContent = view.findViewById(R.id.btContent);
-        btMaps = view.findViewById(R.id.btMaps);
         tvWelcome = view.findViewById(R.id.tvWelcome);
 
         // Retrieve the fragment from HomeActivity
@@ -73,50 +70,16 @@ public class HomeFragment extends Fragment {
             }
         }); // end of btDiscussion.setOnClickListener
 
-        btMaps.setOnClickListener(new View.OnClickListener() {
+        btEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToMapFragment(email);
+                goToEventsFragment(email);
             }
-        }); // end of btMaps.setOnClickListener
+        }); // end of btDiscussion.setOnClickListener
+
 
         return view;
     } // end of onCreateView
-
-    // return the username from the user's email
-    private void returnUsername (String email){
-        // Connect to FireStore
-        DocumentReference userRef = database.collection("Users").document(email);
-        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()){
-                    String keyUsername = documentSnapshot.getString(KEY_USERNAME);
-                    tvWelcome.setText("Welcome, " + keyUsername);
-                }
-            }
-        });
-    } // end of returnUsername method
-
-    private void goToMapFragment (String email){
-//        FragmentManager fragmentManager = getFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        MapFragment mapFragment = new MapFragment(); // generate a new searchFragment
-//
-//        // send bundle for the Search Fragment
-//        Bundle bundle = new Bundle();
-//        bundle.putString("email", email);
-//        mapFragment.setArguments(bundle);
-//
-//        fragmentTransaction.replace(R.id.fragment_frame, mapFragment); // replace the current frame with searchFragment
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-
-        //TODO - check if this code works
-        Intent intent = new Intent (getActivity(), MapActivity.class);
-        startActivity(intent);
-
-    } // end of goToMapFragment
 
     // go to the discussion page
     private void goToDiscussionFragment(String email){
@@ -134,6 +97,22 @@ public class HomeFragment extends Fragment {
         fragmentTransaction.commit();
     } // end of goToDiscussionFragment
 
+
+    // return the username from the user's email
+    private void returnUsername (String email){
+        // Connect to FireStore
+        DocumentReference userRef = database.collection("Users").document(email);
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()){
+                    String keyUsername = documentSnapshot.getString(KEY_USERNAME);
+                    tvWelcome.setText("Welcome, " + keyUsername);
+                }
+            }
+        });
+    } // end of returnUsername method
+
     private void goToSearchFragment(String email){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -148,6 +127,22 @@ public class HomeFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     } // end of goToSearchFragment method
+
+    private void goToEventsFragment(String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        GameFragment gameFragment = new GameFragment(); // generate a new searchFragment
+
+        // send bundle for the Game Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        gameFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, gameFragment); // replace the current frame with gameFragment
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        System.out.println("gameFragment works!");
+    }
 
 
 }
