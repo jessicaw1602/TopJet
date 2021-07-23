@@ -46,6 +46,8 @@ public class DiscussionAddFragment extends Fragment {
     private static final String KEY_SHORT_DESC = "shortDesc";
     private static final String KEY_ID = "docId";
 
+    private static final String KEY_SCORE = "docId"; // to update the user's score
+
     EditText etTitleName, etNewPostContent;
     Button btPost, btDiscardPost;
     Spinner spinner;
@@ -102,6 +104,7 @@ public class DiscussionAddFragment extends Fragment {
                 if (documentSnapshot.exists()){
                     // return the username
                     String username = documentSnapshot.getString(KEY_USERNAME);
+                    String userScore = documentSnapshot.getString(KEY_SCORE);
 
                     // Retrieve the text from the xml file
                     String titleName = etTitleName.getText().toString();
@@ -111,11 +114,11 @@ public class DiscussionAddFragment extends Fragment {
 
                     // Check if the string is >= or <= 100 char
                     if (postContent.length() <= 100){
-                        String shortDesc = (etNewPostContent.getText().toString()).substring(0,postContent.length()); // cut the OG postContent into 100 chars
-                        addPost(titleName, postContent, getTag, username, shortDesc, email);
+                        String shortDesc = (etNewPostContent.getText().toString()).substring(0,postContent.length()); // only get whatever text is available
+                        addPost(titleName, postContent, getTag, username, shortDesc, email, userScore);
                     } else if (postContent.length() >= 100){
                         String shortDesc = (etNewPostContent.getText().toString()).substring(0,100); // cut the OG postContent into 100 chars
-                        addPost(titleName, postContent, getTag, username, shortDesc, email);
+                        addPost(titleName, postContent, getTag, username, shortDesc, email, userScore);
                     }
                 } else {
                     Toast.makeText(getContext(), "Error! Please Try Again!", Toast.LENGTH_SHORT).show();
@@ -125,7 +128,7 @@ public class DiscussionAddFragment extends Fragment {
     } // end of the createPost method
 
     // addPost
-    private void addPost(String titleName, String postContent, String getTag, String username, String shortDesc, String email){
+    private void addPost(String titleName, String postContent, String getTag, String username, String shortDesc, String email, String userScore){
         if (!titleName.isEmpty() && !postContent.isEmpty()){
             // get the date & time
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -133,7 +136,7 @@ public class DiscussionAddFragment extends Fragment {
             String getDate = formatter.format(date);
             Log.d(TAG, "The current date is: " + getDate);
 
-
+            // Create a new Collection and document path
             DocumentReference postRef = database.collection("Posts").document();
             String docId = postRef.getId();
 
@@ -157,6 +160,12 @@ public class DiscussionAddFragment extends Fragment {
                             goToDiscussionFragment(email);
                             Toast.makeText(getActivity(), "Post Created!", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "Created new Post");
+
+                            // Now we want to update the user's score.
+                            int userScores = Integer.parseInt(userScore);
+                            int updateUserScore = userScores + 5;
+                            String updateScore = String.valueOf(updateUserScore);
+                            database.collection("Users").document(email).update(KEY_SCORE, updateScore);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

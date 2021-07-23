@@ -8,8 +8,7 @@ public class QuizEntity {
     // Constructor
     public QuizEntity(){}
 
-    public QuizEntity(String questionNo, String question, String answerOne, String answerTwo, String answerThree, String answerFour, String correctAnswer) {
-        this.questionNo = questionNo;
+    public QuizEntity(String question, String answerOne, String answerTwo, String answerThree, String answerFour, String correctAnswer) {
         this.question = question;
         this.answerOne = answerOne;
         this.answerTwo = answerTwo;

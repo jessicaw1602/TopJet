@@ -111,8 +111,8 @@ public class ViewContentFragment extends Fragment {
             }
         }); // end of btBack.setOnClickListener
 
-            return view;
-        } // end of onCreate method
+        return view;
+    } // end of onCreate method
 
     private void retrieveData (String email, String heading) {
         database.collection(heading).get() // return all the values from the collection
@@ -194,14 +194,14 @@ public class ViewContentFragment extends Fragment {
             }
     } // end of getContent method
 
-    private void finishReading(String email, String heading){ //TODO - we also want to be able to pass the topicArea in
+    private void finishReading(String email, String heading){
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         QuizFragment quizFragment = new QuizFragment();
 
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
-//        bundle.putString("topicArea", ) // TODO - finish this off.
+        bundle.putString("topicArea", heading);
         quizFragment.setArguments(bundle);
 
         fragmentTransaction.replace(R.id.fragment_frame, quizFragment);

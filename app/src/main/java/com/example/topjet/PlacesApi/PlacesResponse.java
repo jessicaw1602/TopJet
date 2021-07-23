@@ -11,7 +11,7 @@ import java.util.List;
 // Returns the list of PlacesModel that we sent to via the API Request
 public class PlacesResponse {
 
-    @SerializedName("result")
+    @SerializedName("results")
     @Expose
     private List<PlacesModel> mapPlaceList;
 
@@ -21,7 +21,7 @@ public class PlacesResponse {
     }
 
     // Getter
-    private List<PlacesModel> getMapPlaceList(){
+    public List<PlacesModel> getMapPlaceList(){
         return mapPlaceList;
     }
 

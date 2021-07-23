@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     private static final String KEY_USERNAME = "username"; // these are the names for the fields in FireStore
 
 
-    ImageButton btEvents, btDiscussion, btContent;
+    ImageButton btEvents, btDiscussion, btContent, btMaps;
     TextView tvWelcome;
 
     // Access FireStore
@@ -46,6 +46,7 @@ public class HomeFragment extends Fragment {
         btDiscussion = view.findViewById(R.id.btDiscussion);
         btContent = view.findViewById(R.id.btContent);
         tvWelcome = view.findViewById(R.id.tvWelcome);
+        btMaps = view.findViewById(R.id.btMaps);
 
         // Retrieve the fragment from HomeActivity
         String email = getArguments().getString("email");
@@ -77,6 +78,13 @@ public class HomeFragment extends Fragment {
             }
         }); // end of btDiscussion.setOnClickListener
 
+        btMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),MapActivity.class);
+                startActivity(intent);
+            }
+        }); // end of btMaps.setOnClickListener
 
         return view;
     } // end of onCreateView

@@ -155,6 +155,9 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(RegisterActivity.this, "User Created!", Toast.LENGTH_SHORT).show();
+                        // After the user has successfully made an account, we then want them to login from the MainActivity
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
