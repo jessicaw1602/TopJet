@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -58,7 +59,7 @@ public class GameFragment extends Fragment {
     private int pageCounter = 0; // will be used to count the current page
     private int maxPages = 5; // number of pages listed in the contentList
 
-
+    // enable action bar
 
     @Nullable
     @Override
@@ -72,7 +73,8 @@ public class GameFragment extends Fragment {
 
         String heading = getArguments().getString("heading");
         Log.d(TAG, "GameFragment heading: " + heading);
-
+        //enable action bar
+        setHasOptionsMenu(true);
         /*// Retrieve bundles
         String email = getArguments().getString("email");
         Log.d(TAG, "The user's email is: " + email);
@@ -380,6 +382,22 @@ public class GameFragment extends Fragment {
                 })
                 .show();
 
+    }
+    //Action bar back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+
+                break;
+            case R.id.fragment_frame:
+
+                return true;
+            default:
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 //    // As the user goes through the content

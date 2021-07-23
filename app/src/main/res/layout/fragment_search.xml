@@ -13,16 +13,14 @@
             android:id="@+id/searchFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginBottom="24dp"
             android:text="Check Out These Learnings"
             android:textAlignment="gravity"
             android:textColor="@color/black"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="28dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvArts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvArts"
@@ -30,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="104dp"
             android:text="Arts"
             android:textColor="@color/black"
             android:textSize="25dp"

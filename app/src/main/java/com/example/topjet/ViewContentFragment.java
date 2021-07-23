@@ -3,6 +3,7 @@ package com.example.topjet;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -82,6 +83,9 @@ public class ViewContentFragment extends Fragment {
         // For the images...
         ivOne = view.findViewById(R.id.ivOne);
         ivTwo = view.findViewById(R.id.ivTwo);
+
+        //enable actionbar
+        setHasOptionsMenu(true);
 
         contentList = new ArrayList<>();
         // retrieve all the values from the database, where heading = Collection Reference
@@ -224,5 +228,20 @@ public class ViewContentFragment extends Fragment {
         fragmentTransaction.commit();
 
     } // end of goToSearchFragment
+    //Action bar back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
 
+                break;
+//            case R.id.fragment_frame:
+//                getTargetFragment();
+//                return true;
+            default:
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

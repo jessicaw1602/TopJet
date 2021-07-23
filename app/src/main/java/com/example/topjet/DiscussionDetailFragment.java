@@ -3,6 +3,7 @@ package com.example.topjet;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -79,6 +80,9 @@ public class DiscussionDetailFragment extends Fragment {
         rvShowComment.setLayoutManager(new LinearLayoutManager(getContext()));
         commentList = new ArrayList<CommentEntity>();
         commentAdapter = new CommentAdapter(commentList);
+
+        //Enable Action bar
+        setHasOptionsMenu(true);
 
         // Retrieve the title and get the docId of the post.
         DocumentReference postRefs = database.collection("Posts").document(postId);
@@ -212,5 +216,22 @@ public class DiscussionDetailFragment extends Fragment {
         }); // end of nameQuery.addSnapshotListener
 
     }
+    //Action bar back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+
+                break;
+            case R.id.fragment_frame:
+
+                return true;
+            default:
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
 

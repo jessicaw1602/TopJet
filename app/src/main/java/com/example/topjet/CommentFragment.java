@@ -3,6 +3,7 @@ package com.example.topjet;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -80,6 +81,9 @@ public class CommentFragment extends Fragment {
         rvShowComments.setLayoutManager(new LinearLayoutManager(getContext()));
         commentList = new ArrayList<CommentEntity>();
         commentAdapter = new CommentAdapter(commentList);
+
+        //enable action bar
+        setHasOptionsMenu(true);
 
         // Show all the recyclerview comments
         retrieveComment(postId);
@@ -201,5 +205,20 @@ public class CommentFragment extends Fragment {
                 }); // end of returnComments.get()
 
     } // end of retrieveAllPosts method
+    //Action bar back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
 
+                break;
+            case R.id.fragment_frame:
+
+                return true;
+            default:
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

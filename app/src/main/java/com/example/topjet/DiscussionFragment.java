@@ -3,6 +3,7 @@ package com.example.topjet;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -86,6 +87,9 @@ public class DiscussionFragment extends Fragment {
         rvDiscussionPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         rvDiscussionPosts.setHasFixedSize(true);
         discussionList = new ArrayList<DiscussionEntity>();
+
+        //Action bar
+        setHasOptionsMenu(true);
 
         DiscussionAdapter.RecyclerViewClickListener listener = new DiscussionAdapter.RecyclerViewClickListener() {
             @Override
@@ -209,8 +213,24 @@ public class DiscussionFragment extends Fragment {
         }); // end of addOnSuccessListener method
     } // end of createDummyPost method
 
+    //Action bar back button
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
 
+                break;
+            case R.id.fragment_frame:
+
+                return true;
+            default:
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
 
 /*
 // Use this code for creating a new comment

@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -55,6 +57,9 @@ public class SearchFragment extends Fragment {
         rvArts = view.findViewById(R.id.rvArts);
         rvCulture = view.findViewById(R.id.rvCulture);
         rvValues = view.findViewById(R.id.rvValues);
+
+        // Enable Action bar
+        setHasOptionsMenu(true);
 
         // Create new ArrayLists
         topicArtList = new ArrayList<TopicEntity>();
@@ -189,5 +194,21 @@ public class SearchFragment extends Fragment {
         fragmentTransaction.commit();
 
     } // end of openViewContent page
+    //Action bar go back button function
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                    // Navigate to settings screen
+                break;
+            case R.id.fragment_frame:
+                    // Save profile changes
+                return true;
+            default:
+                return false;
+            }
+            return super.onOptionsItemSelected(item);
+        }
 }
 
