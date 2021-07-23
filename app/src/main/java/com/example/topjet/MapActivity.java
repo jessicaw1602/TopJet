@@ -60,17 +60,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /* Code adapted from: https://www.youtube.com/watch?v=5QkB1-ln8H0&t=141s &&
-https://developers.google.com/maps/documentation/places/web-service/search?hl=en_GB */
+https://developers.google.com/maps/documentation/places/web-service/search?hl=en_GB &&
+https://developers.google.com/maps/documentation/android-sdk/start */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "MapActivity";
+//    String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=art_gallery&keyword=aboriginal&key=AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y";
 
     Spinner mapSpinner;
     Button btMapSearch;
-    SupportMapFragment mapFragment;
-    GoogleMap mMap;
+
+    // Main elements for the maps activity
+    private GoogleMap mMap;
+    private SupportMapFragment mapFragment;
+
+
     Marker allMarkers;
     FusedLocationProviderClient locationProvider;
     double currentLatitude = 0;
@@ -80,7 +85,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     PlacesResponse placesResponse;
     List<PlacesModel> getPlaceModelList;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,18 +92,49 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mapSpinner = findViewById(R.id.mapSpinner);
         btMapSearch = findViewById(R.id.btnMapSearch);
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
-
-        // Create an instance for retrofit API
-        placesService = PlacesRetrofit.getPlacesRetrofit().create(PlacesService.class);
-        getPlaceModelList = new ArrayList<>();
 
         // Set the Spinner Adapter
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_2, getResources().getStringArray(R.array.MapLocations));
-
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.MapLocations));
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mapSpinner.setAdapter(spinnerAdapter);
+
+        /* https://stackoverflow.com/questions/20096177/error-inflating-class-fragment-in-mapfragment/20096245*/
+        if (mMap == null){
+            // Obtain the SupportMapFragment and get notified when map is ready to be used
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().
+                    findFragmentById(R.id.mapFragment);
+            mapFragment.getMapAsync(this);
+
+            if (mMap !=null){
+                // The Map is verified.
+            }
+        } else {
+            // if unsuccessful
+            Toast.makeText(MapActivity.this, "Error In generating Map", Toast.LENGTH_SHORT).show();
+        }
+
+
+    } // end of onCreate
+
+    // This is where we can ad markers or lines add listeners or move the camera.
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+    } // end of onMapReady
+
+}
+
+/*
+        // Create an instance for retrofit API
+        placesService = PlacesRetrofit.getPlacesRetrofit().create(PlacesService.class);
+        getPlaceModelList = new ArrayList<>();
 
         // initialise fused client location provider i.e. currentLocation.getLatitude(), currentLocation.getLongitude()
         locationProvider = LocationServices.getFusedLocationProviderClient(this);
@@ -107,148 +142,5 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN); // set the GoogleMap to Normal/Terrain
 
         assert mapFragment != null;
-        //TODO - i need to inflate the fragment first...
         mapFragment.getMapAsync(this);
-
-
-    } // end of onCreate
-
-    private void getPlaces(String place) {
-        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=art_gallery&keyword=aboriginal&key=AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y";
-        if (ActivityCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            // replace the location with the current location.
-            placesService.getNearByPlaces(url).enqueue(new Callback<PlacesResponse>() {
-                @Override
-                public void onResponse(Call<PlacesResponse> call, Response<PlacesResponse> response) {
-                    if (response.isSuccessful()) {
-                        getPlaceModelList.clear(); // clear the array
-                        mMap.clear(); // clear Google Maps
-
-                        for (int i = 0; i < response.body().getMapPlaceList().size(); i++) {
-                            getPlaceModelList.add(response.body().getMapPlaceList().get(i));
-                            allMarkers(response.body().getMapPlaceList().get(i), i);
-
-                        } // end of for Statement
-
-                    } else {
-                        Log.d(TAG, "Error" + response.errorBody());
-                        Toast.makeText(MapActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-
-                    } // end of if-else statement
-
-                }
-
-                @Override
-                public void onFailure(Call<PlacesResponse> call, Throwable t) {
-                    Log.d(TAG, "Failure");
-                }
-            }); // end of enqueue
-
-        }
-        // TODO - check what isLocationPermissionOk
-//        if (isLocationPermissionOk){} // end of if-else statement
-
-    } // end of getPlaces method
-
-    /* Code Adapted from: https://stackoverflow.com/questions/18053156/set-image-from-drawable-as-marker-in-google-map-version-2 */
-    private void allMarkers(PlacesModel placesModel, int position) {
-        MarkerOptions markerOptions = new MarkerOptions()
-                .position(new LatLng(placesModel.getGeometry().getLocation().getLat(),
-                        placesModel.getGeometry().getLocation().getLng()))
-                .title(placesModel.getName())
-                .snippet(placesModel.getVicinity());
-        markerOptions.icon(getIcon());
-        mMap.addMarker(markerOptions).setTag(position);
-
-
-    } // end of allMarkers method
-
-    /* Code Adapted from: https://stackoverflow.com/questions/18053156/set-image-from-drawable-as-marker-in-google-map-version-2 */
-    private BitmapDescriptor getIcon() {
-        Drawable drawable = getResources().getDrawable(R.drawable.profile_location);
-//        BitmapDescriptor markerIcon = getMarkerIconFromDrawable(drawable);
-
-        Canvas canvas = new Canvas();
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        canvas.setBitmap(bitmap);
-
-        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-        drawable.draw(canvas);
-
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 44) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                getGeoLocation();
-            }
-        }
-    } // end of onRequestPermissionsResult
-
-    //TODO
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        googleMap = mMap;
-        setUpGoogleMap();
-    }
-
-    private void setUpGoogleMap() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setTiltGesturesEnabled(true);
-        mMap.setOnMarkerClickListener(this::onMarkerClick);
-    } // end of setUpGoogleMap method
-
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-    @Override
-    public boolean onMarkerClick(@NonNull Marker marker) {
-        return false;
-    }
-
-
-}
-
-/*
-        btMapSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // get the text of the spinner
-                String getTag = mapSpinner.getSelectedItem().toString();
-                // i might have to replace the spaces with '+'
-                String searchTag = getTag.replaceAll(" ", "+").toLowerCase();
-
-                // now produce the google search
-                String mapUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-                        + "location=" + currentLatitude + "," + currentLongitude + "&radius=1500"
-                        + "&type=art_gallery" // will return the art_gallery places https://developers.google.com/maps/documentation/places/web-service/supported_types
-                        // + "&sensor=true"
-                        + "&keyword=aboriginal"
-                        + "&key=" + getResources().getString(R.string.google_place_key);
-
-                /*
-                https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=art_gallery&keyword=aboriginal&key=AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y
-                 */
-
-//            }
-//                    }); // end of btMapSearch.setOnClickListener
-
-// */
+ */
