@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +46,8 @@ public class HomeActivity extends AppCompatActivity {
 
         // set the initial Fragment Frame (from activity_home.xml) to HomeFragment
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, homeFragment).commit();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new HomeFragment()).commit();
 
     } // end of onCreate method
@@ -80,5 +83,4 @@ public class HomeActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, selectedFragment).commit();
 
     } // end of checkMenuItem method
-
 }

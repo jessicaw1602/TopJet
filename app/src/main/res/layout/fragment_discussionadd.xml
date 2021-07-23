@@ -25,14 +25,16 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="124dp"
         android:text="Title:"
+        android:textStyle="bold"
         android:textSize="20dp"
+        android:textColor="#FF9E3E"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etTitleName"
         android:layout_width="263dp"
-        android:layout_height="39dp"
+        android:layout_height="50dp"
         android:layout_marginStart="52dp"
         android:layout_marginLeft="52dp"
         android:ems="10"
@@ -49,6 +51,8 @@
         android:layout_marginTop="40dp"
         android:text="Tags:"
         android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#FF9E3E"
         app:layout_constraintStart_toStartOf="@+id/tvNewTitle"
         app:layout_constraintTop_toBottomOf="@+id/tvNewTitle" />
 
@@ -59,6 +63,8 @@
         android:layout_marginTop="40dp"
         android:text="Post:"
         android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#FF9E3E"
         app:layout_constraintStart_toStartOf="@+id/tvNewContent"
         app:layout_constraintTop_toBottomOf="@+id/tvNewContent" />
 
@@ -90,6 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:text="Post"
+        android:backgroundTint="#FF9E3E"
         app:layout_constraintEnd_toEndOf="@+id/etNewPostContent"
         app:layout_constraintTop_toBottomOf="@+id/etNewPostContent" />
 
@@ -101,6 +108,7 @@
         android:layout_marginEnd="172dp"
         android:layout_marginRight="172dp"
         android:text="Discard"
+        android:backgroundTint="#FF9E3E"
         app:layout_constraintEnd_toStartOf="@+id/btPost"
         app:layout_constraintStart_toStartOf="@+id/etNewPostContent"
         app:layout_constraintTop_toBottomOf="@+id/etNewPostContent" />

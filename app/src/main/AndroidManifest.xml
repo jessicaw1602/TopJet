@@ -22,8 +22,8 @@
         <activity android:name=".DiscussionAddActivity" />
         <activity android:name=".DiscussionActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".SearchActivity" />
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".SearchActivity"/>
+        <activity android:name=".HomeActivity"/>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
