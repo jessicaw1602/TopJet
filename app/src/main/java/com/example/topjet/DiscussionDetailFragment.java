@@ -148,7 +148,6 @@ public class DiscussionDetailFragment extends Fragment {
     }
 
     // Retrieve only the posts that are from the document.
-    //TODO - change this - so that it is only a TextView... NOT A RECYCLERVIEW
     private void retrieveComment(String postDocId){
         Log.d(TAG, "docId returned: " + postDocId);
 
@@ -173,7 +172,6 @@ public class DiscussionDetailFragment extends Fragment {
                         String postId = commentMap.get("postId").toString();
                         commentList.add(new CommentEntity(docId, postId, username, date, comment));
 
-                        // TODO - we only want to return 1 comment, and then provide a button at
                         for(int i = 0; i < (commentList.size() - (commentList.size() - 1)); i++){
                             commentList.add(new CommentEntity(docId, postId, username, date, comment));
                         }

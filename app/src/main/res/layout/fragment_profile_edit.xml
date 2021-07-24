@@ -20,9 +20,9 @@
         android:id="@+id/tvEditUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="24dp"
         android:text="Username"
-        app:layout_constraintStart_toStartOf="@+id/tvEditProfileEmail"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/tvEditProfileEmail" />
 
     <TextView
@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvEditProfileIdentify" />
 
     <TextView
-        android:id="@+id/tvEditProfileEmail"
+        android:id="@+id/tvEditEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="31dp"
@@ -45,24 +45,27 @@
         app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <TextView
-        android:id="@+id/tvGetProfileUsername"
+    <EditText
+        android:id="@+id/etProfileUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="25dp"
+        android:minHeight="48dp"
         android:text="username"
+        app:layout_constraintBottom_toBottomOf="@+id/tvEditUserName"
         app:layout_constraintStart_toEndOf="@+id/tvEditUserName"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProfileEmail" />
 
-    <TextView
-        android:id="@+id/tvGetProfilePassword"
+    <EditText
+        android:id="@+id/etEditPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
+        android:minHeight="48dp"
         android:text="password"
         app:layout_constraintStart_toEndOf="@+id/tvEditPassword"
         app:layout_constraintTop_toBottomOf="@+id/tvEditProfileIdentify" />
@@ -82,23 +85,20 @@
         android:id="@+id/tvEditProfileIdentify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
         android:text="Identify as First Nation"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/tvEditIdentify" />
 
     <TextView
-        android:id="@+id/tvGetProfileEmail"
+        android:id="@+id/tvEditProfileEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="43dp"
-        android:layout_marginLeft="43dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
         android:layout_marginTop="28dp"
         android:text="email"
-        app:layout_constraintBottom_toBottomOf="@+id/tvEditProfileEmail"
-        app:layout_constraintStart_toEndOf="@+id/tvEditProfileEmail"
+        app:layout_constraintStart_toEndOf="@+id/tvEditEmail"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <ImageView
@@ -127,11 +127,11 @@
         android:id="@+id/btEditProfileEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="131dp"
-        android:layout_marginLeft="131dp"
-        android:layout_marginTop="102dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginLeft="136dp"
+        android:layout_marginTop="48dp"
         android:text="Edit Profile"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvGetProfilePassword" />
+        app:layout_constraintTop_toBottomOf="@+id/etEditPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

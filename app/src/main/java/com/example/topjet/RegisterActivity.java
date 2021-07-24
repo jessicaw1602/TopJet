@@ -90,7 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
     } // end of checkInfo method
 
 
-    // TODO - Make sure that the username is also unique in addition to the email
     // Method for checking whether the username already exists in the database
     private void checkEmail(String getEmail, String getUsername, String getPassword, String getPasswordTwo, String getCheckBox) {
 
