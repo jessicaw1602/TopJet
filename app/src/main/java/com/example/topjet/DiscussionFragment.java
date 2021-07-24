@@ -222,17 +222,13 @@ public class DiscussionFragment extends Fragment implements SearchView.OnQueryTe
     //Action bar back button + sort by in menu option
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.sortByOldestToNewest || item.getItemId() == R.id.sortByNewestToOldest){
             switch (item.getItemId()) {
                 case R.id.sortByOldestToNewest:
-                    discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_NEWEST, filteredList);
+                    discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_NEWEST);
                     return true;
                 case R.id.sortByNewestToOldest:
-                    discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_OLDEST, filteredList);
+                    discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_OLDEST);
                     return true;
-            }
-        } else {
-            switch (item.getItemId()){
                 case android.R.id.home:
                     getActivity().onBackPressed();
                     break;
@@ -240,7 +236,6 @@ public class DiscussionFragment extends Fragment implements SearchView.OnQueryTe
                     return true;
                 default:
                     return false;
-            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -252,7 +247,6 @@ public class DiscussionFragment extends Fragment implements SearchView.OnQueryTe
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(this);
 
-
         item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
@@ -263,7 +257,6 @@ public class DiscussionFragment extends Fragment implements SearchView.OnQueryTe
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 // If the menu item is collapsed
                 discussionAdapter.setFilter(filteredList);
-
                 return true;
             }
         }); // end of item.setOnActionExpandListener
