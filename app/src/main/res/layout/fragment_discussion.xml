@@ -27,12 +27,12 @@
         android:id="@+id/btAddPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="254dp"
+        android:layout_marginLeft="254dp"
         android:layout_marginTop="16dp"
         android:backgroundTint="#FF9E3E"
         android:text="Add Post"
-        app:layout_constraintStart_toEndOf="@+id/etSearchPosts"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -47,18 +47,4 @@
         app:layout_constraintTop_toBottomOf="@+id/btAddPost"
         app:layout_constraintVertical_bias="0.0" />
 
-    <EditText
-        android:id="@+id/etSearchPosts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Search"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/rvDiscussionPosts"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +31,7 @@ import java.util.List;
 /* IMAGE RECYCLERVIEW CODE ADAPTED FROM: https://www.youtube.com/watch?v=Ph3Ek6cLS4M */
 
 public class SearchFragment extends Fragment {
+    private static final String TAG = "SearchFragment";
 
     // Initialise RecyclerView
     private RecyclerView rvArts, rvCulture, rvValues;
@@ -39,7 +42,18 @@ public class SearchFragment extends Fragment {
 
     private TopicAdapter artAdapter, cultureAdapter, valueAdapter;
 
-    private static final String TAG = "SearchFragment";
+    private TextView tvArtsProgress, tvCultureProgress, tvValuesProgress; // this is used to display the % done
+    private ProgressBar artsProgressBar, cultureProgressBar, valuesProgressBar;
+
+    // Count how many quizzes the user has completed
+    int artsCounter = 0;
+    int cultureCounter = 0;
+    int valuesCounter = 0;
+
+    // set the total number of quizzes by each category
+    int artsTotal = 2;
+    int cultureTotal = 4;
+    int valuesTotal = 3;
 
     // Access FireStore
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -58,6 +72,14 @@ public class SearchFragment extends Fragment {
         rvCulture = view.findViewById(R.id.rvCulture);
         rvValues = view.findViewById(R.id.rvValues);
 
+        artsProgressBar = view.findViewById(R.id.artsProgressBar);
+        cultureProgressBar = view.findViewById(R.id.cultureProgressBar);
+        valuesProgressBar = view.findViewById(R.id.valuesProgressBar);
+
+        tvArtsProgress = view.findViewById(R.id.tvArtsProgress);
+        tvCultureProgress = view.findViewById(R.id.tvCultureProgress);
+        tvValuesProgress = view.findViewById(R.id.tvValuesProgress);
+
         // Enable Action bar
         setHasOptionsMenu(true);
 
@@ -66,62 +88,87 @@ public class SearchFragment extends Fragment {
         topicCultureList = new ArrayList<TopicEntity>();
         topicValueList = new ArrayList<TopicEntity>();
 
-        // set Horizontal RecyclerView Layout
-        LinearLayoutManager artLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        LinearLayoutManager cultureLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        LinearLayoutManager valuesLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
-        rvArts.setLayoutManager(artLayout);
-        rvCulture.setLayoutManager(cultureLayout);
-        rvValues.setLayoutManager(valuesLayout);
-        rvArts.setHasFixedSize(true);
-        rvCulture.setHasFixedSize(true);
-        rvValues.setHasFixedSize(true);
-        rvArts.setItemAnimator(new DefaultItemAnimator());
-        rvCulture.setItemAnimator(new DefaultItemAnimator());
-        rvValues.setItemAnimator(new DefaultItemAnimator());
-
-        int[] artIcons = {R.drawable.content_arts_symbols, R.drawable.content_arts_material};
-        int[] cultureIcons = {R.drawable.content_culture_land, R.drawable.content_culture_family, R.drawable.content_culture_ceremony,R.drawable.content_culture_language};
-        int[] valueIcons = {R.drawable.content_values_dreamtime, R.drawable.content_values_sacred, R.drawable.content_values_spirituality};
-
-        String[] artNames = {"Symbols", "Materials"};
-        String[] cultureNames = {"Land", "Family and Kinship", "Ceremony", "Language"};
-        String[] valueNames = {"Dreamtime Stories", "Sacred Sites", "Spirituality"};
-
-        for (int i = 0; i < artIcons.length; i++){
-            TopicEntity topicEntities = new TopicEntity(artIcons[i], artNames[i]);
-            topicArtList.add(topicEntities);
-        }
-
-        for (int i = 0; i < cultureIcons.length; i++){
-            TopicEntity topicEntities = new TopicEntity(cultureIcons[i], cultureNames[i]);
-            topicCultureList.add(topicEntities);
-        }
-
-        for (int i = 0; i < valueIcons.length; i++){
-            TopicEntity topicEntities = new TopicEntity(valueIcons[i], valueNames[i]);
-            topicValueList.add(topicEntities);
-        }
-
-        TopicAdapter.RecyclerViewClickListener listener = new TopicAdapter.RecyclerViewClickListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View view, String topicName) {
-                Log.d(TAG, "DiscussionFragment title: " + topicName);
-                getCollectionName (topicName, email);
+            public void run() {
+
+                // set Horizontal RecyclerView Layout
+                LinearLayoutManager artLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager cultureLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager valuesLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+
+                rvArts.setLayoutManager(artLayout);
+                rvCulture.setLayoutManager(cultureLayout);
+                rvValues.setLayoutManager(valuesLayout);
+                rvArts.setHasFixedSize(true);
+                rvCulture.setHasFixedSize(true);
+                rvValues.setHasFixedSize(true);
+                rvArts.setItemAnimator(new DefaultItemAnimator());
+                rvCulture.setItemAnimator(new DefaultItemAnimator());
+                rvValues.setItemAnimator(new DefaultItemAnimator());
+
+                int[] artIcons = {R.drawable.content_arts_symbols, R.drawable.content_arts_material};
+                int[] cultureIcons = {R.drawable.content_culture_land, R.drawable.content_culture_family, R.drawable.content_culture_ceremony,R.drawable.content_culture_language};
+                int[] valueIcons = {R.drawable.content_values_dreamtime, R.drawable.content_values_sacred, R.drawable.content_values_spirituality};
+
+                String[] artNames = {"Symbols", "Materials"};
+                String[] cultureNames = {"Land", "Family and Kinship", "Ceremony", "Language"};
+                String[] valueNames = {"Dreamtime Stories", "Sacred Sites", "Spirituality"};
+
+                // Display all the information.
+                for (int i = 0; i < artIcons.length; i++){
+                    TopicEntity topicEntities = new TopicEntity(artIcons[i], artNames[i]);
+                    topicArtList.add(topicEntities);
+                }
+
+                for (int i = 0; i < cultureIcons.length; i++){
+                    TopicEntity topicEntities = new TopicEntity(cultureIcons[i], cultureNames[i]);
+                    topicCultureList.add(topicEntities);
+                }
+
+                for (int i = 0; i < valueIcons.length; i++){
+                    TopicEntity topicEntities = new TopicEntity(valueIcons[i], valueNames[i]);
+                    topicValueList.add(topicEntities);
+                }
+
+                TopicAdapter.RecyclerViewClickListener listener = new TopicAdapter.RecyclerViewClickListener() {
+                    @Override
+                    public void onClick(View view, String topicName) {
+                        Log.d(TAG, "DiscussionFragment title: " + topicName);
+                        getCollectionName (topicName, email);
+                    }
+                }; // end of DiscussionAdapter.RecyclerViewClickListener
+
+                artAdapter = new TopicAdapter(topicArtList, listener);
+                cultureAdapter = new TopicAdapter(topicCultureList, listener);
+                valueAdapter = new TopicAdapter(topicValueList, listener);
+
+                rvArts.setAdapter(artAdapter);
+                rvCulture.setAdapter(cultureAdapter);
+                rvValues.setAdapter(valueAdapter);
             }
-        }; // end of DiscussionAdapter.RecyclerViewClickListener
+        }).start(); // end of new Thread
 
-        artAdapter = new TopicAdapter(topicArtList, listener);
-        cultureAdapter = new TopicAdapter(topicCultureList, listener);
-        valueAdapter = new TopicAdapter(topicValueList, listener);
-
-        rvArts.setAdapter(artAdapter);
-        rvCulture.setAdapter(cultureAdapter);
-        rvValues.setAdapter(valueAdapter);
+        // View the progress of each of the text
+        getProgress();
 
         return view;
     } // end of onCreate method
+
+    private void getProgress() {
+
+        artsProgressBar.setMax(2);
+        cultureProgressBar.setMax(4);
+        valuesProgressBar.setMax(3);
+
+        // set the progress bar...
+        // To do this, we want to get the database values...
+        artsProgressBar.setProgress(1);
+        cultureProgressBar.setProgress(1);
+        valuesProgressBar.setProgress(1);
+
+
+    } // end of getProgress method
 
     private void getCollectionName(String topicName, String email){
         String heading;

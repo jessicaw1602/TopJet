@@ -3,15 +3,19 @@ package com.example.topjet;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -37,10 +41,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DiscussionFragment extends Fragment {
+/*  Filtered Query code is adapted from: https://www.tutorialsbuzz.com/2020/09/android-filter-recyclerview-searchView-java.html */
+public class DiscussionFragment extends Fragment implements SearchView.OnQueryTextListener{
 
     private DiscussionAdapter discussionAdapter;
     private List<DiscussionEntity> discussionList;
+    private List<DiscussionEntity> filteredList;
 
     private static final String TAG = "DiscussionFragment"; // create Log.d
 
@@ -58,7 +64,6 @@ public class DiscussionFragment extends Fragment {
     private static final String KEY_ID = "docId";
     private static final String KEY_COMMENT = "comment";
 
-    EditText etSearchPosts;
     Button btAddPost;
     RecyclerView rvDiscussionPosts;
 
@@ -73,7 +78,6 @@ public class DiscussionFragment extends Fragment {
 
         createDummyPost(email);
 
-        etSearchPosts = view.findViewById(R.id.etSearchPosts);
         btAddPost = view.findViewById(R.id.btAddPost);
         rvDiscussionPosts = view.findViewById(R.id.rvDiscussionPosts);
 
@@ -87,6 +91,8 @@ public class DiscussionFragment extends Fragment {
         rvDiscussionPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         rvDiscussionPosts.setHasFixedSize(true);
         discussionList = new ArrayList<DiscussionEntity>();
+        filteredList = new ArrayList<DiscussionEntity>();
+        filteredList = discussionList; // set the filtered list to the discussionList
 
         //Action bar
         setHasOptionsMenu(true);
@@ -179,7 +185,7 @@ public class DiscussionFragment extends Fragment {
                     Map<String, Object> newPost = new HashMap<>();
                     newPost.put(KEY_TITLE, "My Story");
                     newPost.put(KEY_USERNAME, username);
-                    newPost.put(KEY_DATE, "16-Feb-2021");
+                    newPost.put(KEY_DATE, "16/02/2021 18:28:18");
                     newPost.put(KEY_POST_TAG, "Stories");
                     newPost.put(KEY_SHORT_DESC, "This is the short description");
                     newPost.put(KEY_CONTENT, "My Story is about my childhood. This will be longgggggggggggggggggggggggggggggg sdfasfdasfsadfdasfsadfasfdsfadsfsas.");
@@ -213,22 +219,82 @@ public class DiscussionFragment extends Fragment {
         }); // end of addOnSuccessListener method
     } // end of createDummyPost method
 
-    //Action bar back button
+    @Override
+    public void onCreateOptionsMenu (Menu menu, MenuInflater menuInflater){
+        menuInflater.inflate(R.menu.search_menu, menu); // inflate the menu bar
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+
+        item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                // If the menu item is collapsed
+                discussionAdapter.setFilter(filteredList);
+
+                return true;
+            }
+        }); // end of item.setOnActionExpandListener
+
+
+    } // end of onCreateOptionsMenu
+
+
+    //Action bar back button + sort by in menu option
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 getActivity().onBackPressed();
-
                 break;
             case R.id.fragment_frame:
-
+                return true;
+            case R.id.sortByOldestToNewest:
+                discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_NEWEST);
+                return true;
+            case R.id.sortByNewestToOldest:
+                discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_OLDEST);
                 return true;
             default:
                 return false;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<DiscussionEntity> discussionFiltered = filter(filteredList, newText);
+        discussionAdapter.setFilter(discussionFiltered);
+        return true;
+    } // end of onQueryTextChange
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    private List<DiscussionEntity> filter (List<DiscussionEntity> filteredModel, String query){
+        query = query.toLowerCase(); // query = user input
+
+        final List<DiscussionEntity> discussionFiltered = new ArrayList<>();
+        for (DiscussionEntity discussionFilter: filteredModel){
+
+            String textOne = discussionFilter.getTitle().toLowerCase(); // this will need to be filtered by date
+            String textTwo = discussionFilter.getPostTag().toLowerCase();
+            String textThree = discussionFilter.getShortDesc().toLowerCase();
+            String textFour = discussionFilter.getUsername().toLowerCase();
+
+            if (textOne.contains(query) || textTwo.contains(query) || textThree.contains(query) || textFour.contains(query)){
+                discussionFiltered.add(discussionFilter);
+            }
+        }
+        return discussionFiltered;
+    } // end of filter method
 }
 
 

@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.topjet.Entities.DiscussionEntity;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.DiscussionViewHolder> {
@@ -18,7 +22,11 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
     private static final String TAG = "DiscussionAdapter";
 
     private List<DiscussionEntity> myDiscussion;
+    private List<DiscussionEntity> discussionFiltered;
     private RecyclerViewClickListener myListener;
+
+    public static final int SORT_METHOD_BY_NEWEST = 1;
+    public static final int SORT_METHOD_BY_OLDEST = 2;
 
     public interface RecyclerViewClickListener {
         void onClick(View view, String docId);
@@ -27,6 +35,7 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
     // Constructor
     public DiscussionAdapter(List<DiscussionEntity> discussion, RecyclerViewClickListener listener){
         myDiscussion = discussion;
+        discussionFiltered = discussion;
         myListener = listener;
     }
 
@@ -81,5 +90,31 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
         }
 
     } // end of DiscussionViewHolder method
+
+    // Get the filtered objects for the DiscussionFragment
+    public void setFilter(List<DiscussionEntity> discussionFilter){
+        myDiscussion = new ArrayList<>();
+        myDiscussion.addAll(discussionFilter);
+        notifyDataSetChanged();
+    } // end of setFilter method
+
+    public void sort(final int sortMethod) {
+        if (discussionFiltered.size() > 0) {
+            Collections.sort(discussionFiltered, new Comparator<DiscussionEntity>() {
+                @Override
+                public int compare(DiscussionEntity first, DiscussionEntity second) {
+                    if(sortMethod == SORT_METHOD_BY_NEWEST) { // sort by newest
+                        return first.getDate().compareTo(second.getDate());
+                    } else if(sortMethod == SORT_METHOD_BY_OLDEST) { // sort by oldest
+                        return second.getDate().compareTo(first.getDate());
+
+
+                    }
+                    return second.getTitle().compareTo(first.getTitle());
+                }
+            });
+        }
+        notifyDataSetChanged();
+    } // end of sort method
 
 }
