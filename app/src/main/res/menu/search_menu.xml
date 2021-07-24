@@ -5,6 +5,7 @@
     <item
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="sort"
+        android:enabled="true"
         app:showAsAction="always">
         <menu>
             <item

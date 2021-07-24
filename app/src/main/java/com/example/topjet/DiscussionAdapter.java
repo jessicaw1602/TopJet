@@ -98,19 +98,17 @@ public class DiscussionAdapter extends RecyclerView.Adapter<DiscussionAdapter.Di
         notifyDataSetChanged();
     } // end of setFilter method
 
-    public void sort(final int sortMethod) {
-        if (discussionFiltered.size() > 0) {
-            Collections.sort(discussionFiltered, new Comparator<DiscussionEntity>() {
+    public void sort(final int sortMethod, List<DiscussionEntity> discussionFilter) {
+        if (discussionFilter.size() > 0) {
+            Collections.sort(discussionFilter, new Comparator<DiscussionEntity>() {
                 @Override
                 public int compare(DiscussionEntity first, DiscussionEntity second) {
                     if(sortMethod == SORT_METHOD_BY_NEWEST) { // sort by newest
                         return first.getDate().compareTo(second.getDate());
                     } else if(sortMethod == SORT_METHOD_BY_OLDEST) { // sort by oldest
                         return second.getDate().compareTo(first.getDate());
-
-
                     }
-                    return second.getTitle().compareTo(first.getTitle());
+                    return first.getDate().compareTo(second.getDate());
                 }
             });
         }

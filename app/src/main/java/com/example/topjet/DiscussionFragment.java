@@ -219,12 +219,34 @@ public class DiscussionFragment extends Fragment implements SearchView.OnQueryTe
         }); // end of addOnSuccessListener method
     } // end of createDummyPost method
 
+    //Action bar back button + sort by in menu option
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sortByOldestToNewest:
+                discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_NEWEST, filteredList);
+                return true;
+            case R.id.sortByNewestToOldest:
+                discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_OLDEST, filteredList);
+                return true;
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                break;
+            case R.id.fragment_frame:
+                return true;
+            default:
+            return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onCreateOptionsMenu (Menu menu, MenuInflater menuInflater){
         menuInflater.inflate(R.menu.search_menu, menu); // inflate the menu bar
         final MenuItem item = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(this);
+
 
         item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
@@ -243,28 +265,6 @@ public class DiscussionFragment extends Fragment implements SearchView.OnQueryTe
 
 
     } // end of onCreateOptionsMenu
-
-
-    //Action bar back button + sort by in menu option
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                getActivity().onBackPressed();
-                break;
-            case R.id.fragment_frame:
-                return true;
-            case R.id.sortByOldestToNewest:
-                discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_NEWEST);
-                return true;
-            case R.id.sortByNewestToOldest:
-                discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_OLDEST);
-                return true;
-            default:
-                return false;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public boolean onQueryTextChange(String newText) {
