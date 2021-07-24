@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,7 +20,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class ProfileFragment extends Fragment {
+public class ProfileEditFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment"; // create Log.d
 
@@ -28,8 +29,9 @@ public class ProfileFragment extends Fragment {
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_IDENTIFY = "cbIdentify";
 
-    TextView tvGetProfileEmail, tvGetProfileUsername, tvGetProfilePassword, tvGetProfileIdentify;
-    Button btEditProfile;
+    TextView tvEditProfileEmail, tvEditProfileIdentify, tvEditIdentify;
+    EditText etProfileUsername, etEditPassword;
+    Button btEditProfileEdit;
 
     // Access FireStore
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -38,33 +40,36 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
 
-        // Retrieve the fragment from HomeActivity
+        // Retrieve the fragment from Profile Fragment
         String email = getArguments().getString("email");
-        // I feel so silly {again}, i put this behind the return statement and was wondering why this line of code wasn't working.
-        Log.d(TAG, "ProfileFragment email is: " + email);
+        Log.d(TAG, "ProfileEditFragment email is: " + email);
 
-        tvGetProfileEmail = view.findViewById(R.id.tvGetProfileEmail);
-        tvGetProfileUsername = view.findViewById(R.id.tvGetProfileUsername);
-        tvGetProfilePassword = view.findViewById(R.id.tvGetProfilePassword);
-        tvGetProfileIdentify = view.findViewById(R.id.tvEditIdentify);
-        btEditProfile = view.findViewById(R.id.btEditProfileEdit);
+        // Things that can't be edited
+        tvEditProfileEmail = view.findViewById(R.id.tvEditProfileEmail);
+        tvEditProfileIdentify = view.findViewById(R.id.tvEditIdentify);
+        tvEditIdentify = view.findViewById(R.id.tvEditIdentify);
 
-        // now that we have the username, we want to access Firebase and get all the information relating back to the user.
+        // Things that we can edit
+        etEditPassword = view.findViewById(R.id.etEditPassword);
+        etProfileUsername = view.findViewById(R.id.etProfileUsername);
+        btEditProfileEdit = view.findViewById(R.id.btEditProfileEdit);
+
         retrieveUserInfo(email);
 
-        btEditProfile.setOnClickListener(new View.OnClickListener() {
+        // now we want to be able to retrieve the values from the database
+        btEditProfileEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToEditProfile(email);
+                // Go back to Profile Fragment
+                goToProfileFragment(email);
             }
         }); // end of btEditProfile.setOnClickListener
 
         return view;
     } // end of onCreate
 
-    // Retrieve user information from FireStore
     public void retrieveUserInfo(String email){
         // Connect to FireStore
         DocumentReference userRef = database.collection("Users").document(email);
@@ -72,36 +77,43 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()){
-                    // now  the credentials
+                    // now retrieve the credentials
                     String keyEmail = documentSnapshot.getString(KEY_EMAIL);
                     String keyUsername = documentSnapshot.getString(KEY_USERNAME);
                     String keyPassword = documentSnapshot.getString(KEY_PASSWORD);
                     String keyIdentify = documentSnapshot.getString(KEY_IDENTIFY);
 
-                    tvGetProfileEmail.setText(keyEmail);
-                    tvGetProfileUsername.setText(keyUsername);
-                    tvGetProfilePassword.setText("********");
-                    tvGetProfileIdentify.setText(keyIdentify);
-                    Log.d(TAG, keyEmail); // check to see whether the code works or not.
+                    Log.d(TAG, "username is: " + keyUsername);
+
+                    tvEditProfileEmail.setText(keyEmail);
+                    tvEditProfileIdentify.setText(keyIdentify);
+                    etProfileUsername.setText(keyUsername);
+                    etEditPassword.setText(keyPassword);
                 }
             }
         }); // end of FireStore connection
     } // end of retrieveUserInfo method
 
-    private void goToEditProfile(String email) {
+    private void goToProfileFragment(String email) {
+
+        String getUsernameEdit = etProfileUsername.getText().toString();
+        String getPasswordEdit = etEditPassword.getText().toString();
+
+        // now make the changes to the database
+        database.collection("Users").document(email).update(KEY_USERNAME, getUsernameEdit);
+        database.collection("Users").document(email).update(KEY_PASSWORD, getPasswordEdit);
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ProfileEditFragment profileEditFragment = new ProfileEditFragment(); // generate a new searchFragment
+        ProfileFragment profileFragment = new ProfileFragment(); // generate a new searchFragment
 
         Bundle bundle = new Bundle();
         bundle.putString("email", email);
-        profileEditFragment.setArguments(bundle);
+        profileFragment.setArguments(bundle);
 
-        fragmentTransaction.replace(R.id.fragment_frame, profileEditFragment);
+        fragmentTransaction.replace(R.id.fragment_frame, profileFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }// end of goToEditProfile method
 
-
+    } // end of goToProfileFragment method
 }
-

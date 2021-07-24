@@ -12,11 +12,9 @@
     </string-array>
 
     <string-array name="MapLocations">
-        <item>Indigenous Events Near Me</item>
-        <item>Aboriginal Art Galleries</item>
-        <item>Aboriginal Culture &amp; Education Centres</item>
-        <item>Indigenous Cultural Walks Near Me</item>
-        <item>Aboriginal Culture and Resource Centres</item>
+        <item>museums</item>
+        <item>art galleries</item>
+
     </string-array>
 
 </resources>
