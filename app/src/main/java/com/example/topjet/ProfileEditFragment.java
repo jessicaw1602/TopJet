@@ -89,19 +89,20 @@ public class ProfileEditFragment extends Fragment {
                     tvEditProfileIdentify.setText(keyIdentify);
                     etProfileUsername.setText(keyUsername);
                     etEditPassword.setText(keyPassword);
-
-                    String getUsernameEdit = etProfileUsername.getText().toString();
-                    String getPasswordEdit = etEditPassword.getText().toString();
-
-                    // now make the changes to the database
-                    database.collection("Users").document(email).update(KEY_USERNAME, getUsernameEdit);
-                    database.collection("Users").document(email).update(KEY_PASSWORD, getPasswordEdit);
                 }
             }
         }); // end of FireStore connection
     } // end of retrieveUserInfo method
 
     private void goToProfileFragment(String email) {
+
+        String getUsernameEdit = etProfileUsername.getText().toString();
+        String getPasswordEdit = etEditPassword.getText().toString();
+
+        // now make the changes to the database
+        database.collection("Users").document(email).update(KEY_USERNAME, getUsernameEdit);
+        database.collection("Users").document(email).update(KEY_PASSWORD, getPasswordEdit);
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         ProfileFragment profileFragment = new ProfileFragment(); // generate a new searchFragment
