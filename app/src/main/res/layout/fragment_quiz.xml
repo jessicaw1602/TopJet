@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,13 +7,17 @@
 
     <TextView
         android:id="@+id/tvQuizHeading"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginLeft="116dp"
-        android:layout_marginTop="53dp"
+        android:layout_marginTop="36dp"
+        android:gravity="center_horizontal"
         android:text="Quiz Heading"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,79 +32,125 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvQuizHeading" />
 
+
     <TextView
         android:id="@+id/tvQuizScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="292dp"
-        android:layout_marginLeft="292dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:text="Score:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuizHeading" />
-
-    <TextView
-        android:id="@+id/tvQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:text="Question"
-        app:layout_constraintStart_toStartOf="@+id/tvQuizQuesCounter"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuizQuesCounter" />
-
-    <TextView
-        android:id="@+id/tvShowAns"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Question"
         app:layout_constraintEnd_toEndOf="@+id/tvQuizHeading"
-        app:layout_constraintStart_toStartOf="@+id/tvQuizHeading"
-        app:layout_constraintTop_toBottomOf="@+id/radio" />
-
-    <RadioGroup
-        android:id="@+id/radio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        app:layout_constraintStart_toStartOf="@+id/tvQuestion"
-        app:layout_constraintTop_toBottomOf="@+id/tvQuestion">
-
-        <RadioButton
-            android:id="@+id/choiceOne"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </RadioButton>
-
-        <RadioButton
-            android:id="@+id/choiceTwo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></RadioButton>
-
-        <RadioButton
-            android:id="@+id/choiceThree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></RadioButton>
-
-        <RadioButton
-            android:id="@+id/choiceFour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></RadioButton>
-
-    </RadioGroup>
+        app:layout_constraintHorizontal_bias="0.961"
+        app:layout_constraintStart_toEndOf="@+id/tvQuizQuesCounter"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuizHeading" />
 
     <Button
         android:id="@+id/btSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#FF9E3E"
         android:gravity="center"
         android:text="Submit Answer"
-        app:layout_constraintEnd_toEndOf="@+id/tvQuizHeading"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvQuizHeading"
-        app:layout_constraintTop_toBottomOf="@+id/radio" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+
+    <TextView
+        android:id="@+id/tvShowAns"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Question"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btSubmit"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="348dp"
+        android:layout_height="440dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/rounded_corner_2"
+        android:backgroundTint="#FF9E3E"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuizHeading"
+        >
+
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="280dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="Question"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tvQuizQuesCounter"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuizQuesCounter" />
+
+        <Button
+            android:id="@+id/choiceOne"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:textSize="12dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rounded_corner_quiz"
+            android:backgroundTint="@color/white"
+            android:textColor="#FF9E3E"
+            android:textStyle="bold"
+            android:gravity="left|center_vertical"/>
+
+        <Button
+            android:id="@+id/choiceTwo"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:textSize="12dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_corner_quiz"
+            android:textColor="#FF9E3E"
+            android:textStyle="bold"
+            android:gravity="left|center_vertical"/>
+
+        <Button
+            android:id="@+id/choiceThree"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:textSize="12dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_corner_quiz"
+            android:backgroundTint="@color/white"
+            android:textColor="#FF9E3E"
+            android:textStyle="bold"
+            android:gravity="left|center_vertical"/>
+
+        <Button
+            android:id="@+id/choiceFour"
+            android:layout_width="280dp"
+            android:layout_height="60dp"
+            android:textSize="12dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corner_quiz"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#FF9E3E"
+            android:textStyle="bold"
+            android:gravity="left|center_vertical"/>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

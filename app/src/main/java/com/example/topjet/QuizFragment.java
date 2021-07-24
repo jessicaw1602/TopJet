@@ -75,8 +75,8 @@ public class QuizFragment extends Fragment {
     private int maxQuestions;
     private boolean answered = false;
 
-    private RadioGroup radioGroup;
-    private RadioButton answerOne, answerTwo, answerThree, answerFour;
+    //    private RadioGroup radioGroup;
+    private Button answerOne, answerTwo, answerThree, answerFour;
     private TextView quizHeading, questionNum, question, score, showAnswer;
     private Button submitAns;
     private ColorStateList originalTextColour;
@@ -87,7 +87,7 @@ public class QuizFragment extends Fragment {
         // inflate Fragment's view
         View view = inflater.inflate(R.layout.fragment_quiz, container, false);
 
-        radioGroup = view.findViewById(R.id.radio);
+//        radioGroup = view.findViewById(R.id.radio);
         answerOne = view.findViewById(R.id.choiceOne);
         answerTwo = view.findViewById(R.id.choiceTwo);
         answerThree = view.findViewById(R.id.choiceThree);
@@ -99,6 +99,9 @@ public class QuizFragment extends Fragment {
         score = view.findViewById(R.id.tvQuizScore);
         showAnswer = view.findViewById(R.id.tvShowAns); // will show whether the user's answer is correct or incorrect
         submitAns = view.findViewById(R.id.btSubmit);
+
+        //set submit answer button to invisible
+        submitAns.setVisibility((View.GONE));
 
         // Retrieve bundles
         String email = getArguments().getString("email");
@@ -120,7 +123,7 @@ public class QuizFragment extends Fragment {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 
@@ -145,80 +148,246 @@ public class QuizFragment extends Fragment {
                         } // end of if-else statement
                     }
                 }); // end of database query
-
-        submitAns.setOnClickListener(new View.OnClickListener() {
+        answerOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // We first want to check whether the user has answered the question or not.
-                if (!answered){ // if the user has answered (true)
-                    // check which option of the radio group they have chosen
-                    if (answerOne.isChecked() || answerTwo.isChecked()
-                            || answerThree.isChecked() || answerFour.isChecked()){
-                        // we want to check whether the answer is correct or incorrect
-                        RadioButton selected = (RadioButton) view.findViewById(radioGroup.getCheckedRadioButtonId()); // returns an int of the ID
-                        answered = true;
-                        String getCorrectAns = currentQuestion.getCorrectAnswer();
-                        String btnString = selected.getText().toString();
-
-                        // Check whether the user's answer is correct
-                        if (btnString.equals(getCorrectAns)){ // if answer is correct
-                            testScore++;
-                            score.setText("Score: " + testScore);
-                            showCorrectAnswer();
-                            showAnswer.setText("Good Job! Your answer is correct!");
-                        } else { // if wrong
-                            showAnswer.setText("Sorry, your answer is incorrect");
-                            showCorrectAnswer();
+                if (answerOne.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
+                    testScore++;
+                    score.setText("Score: " + testScore);
+                    showCorrectAnswer();
+                    showAnswer.setText("Good Job! Your answer is correct!");
+                } else { // if wrong
+                    showAnswer.setText("Sorry, your answer is incorrect");
+                    showCorrectAnswer();
+                }
+                Log.d(TAG, "The question counter in the submit button: " + questionCounter);
+                if (questionCounter < maxQuestions) {
+                    submitAns.setVisibility((View.VISIBLE));
+                    submitAns.setText("Next");
+                    submitAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showNextQuestion(email, quizTopicArea);
+                            submitAns.setVisibility((View.GONE));
                         }
-                        Log.d(TAG, "The question counter in the submit button: " + questionCounter);
-                        if (questionCounter < maxQuestions){
-                            submitAns.setText("Next");
-                        } else { // if the test has finished
-                            submitAns.setText("Finished");
+                    });
+                } else { // if the test has finished
+                    submitAns.setVisibility((View.VISIBLE));
+                    submitAns.setText("Finished");
+                    submitAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
                             finishQuiz(email, quizTopicArea);
                         }
-
-                    } else {
-                        Toast.makeText(getContext(),"Please select an answer", Toast.LENGTH_SHORT);
-                    }
-                } else {
-                    showNextQuestion(email, quizTopicArea);
-                } // end of outer if-else statement
+                    });
+                }
             }
-        }); // end of submitAns.setOnClickListener
-
+        });
+        answerTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (answerTwo.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
+                    testScore++;
+                    score.setText("Score: " + testScore);
+                    showCorrectAnswer();
+                    showAnswer.setText("Good Job! Your answer is correct!");
+                } else { // if wrong
+                    showAnswer.setText("Sorry, your answer is incorrect");
+                    showCorrectAnswer();
+                }
+                Log.d(TAG, "The question counter in the submit button: " + questionCounter);
+                if (questionCounter < maxQuestions) {
+                    submitAns.setVisibility((View.VISIBLE));
+                    submitAns.setText("Next");
+                    submitAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showNextQuestion(email, quizTopicArea);
+                            submitAns.setVisibility((View.GONE));
+                        }
+                    });
+                } else { // if the test has finished
+                    submitAns.setVisibility((View.VISIBLE));
+                    submitAns.setText("Finished");
+                    submitAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finishQuiz(email, quizTopicArea);
+                        }
+                    });
+                }
+            }
+        });
+        answerThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (answerThree.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
+                    testScore++;
+                    score.setText("Score: " + testScore);
+                    showCorrectAnswer();
+                    showAnswer.setText("Good Job! Your answer is correct!");
+                } else { // if wrong
+                    showAnswer.setText("Sorry, your answer is incorrect");
+                    showCorrectAnswer();
+                }
+                Log.d(TAG, "The question counter in the submit button: " + questionCounter);
+                if (questionCounter < maxQuestions) {
+                    submitAns.setVisibility((View.VISIBLE));
+                    submitAns.setText("Next");
+                    submitAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showNextQuestion(email, quizTopicArea);
+                            submitAns.setVisibility((View.GONE));
+                        }
+                    });
+                } else { // if the test has finished
+                    submitAns.setVisibility((View.VISIBLE));
+                    submitAns.setText("Finished");
+                    submitAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finishQuiz(email, quizTopicArea);
+                        }
+                    });
+                }
+            }
+        });
+        answerFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (answerFour.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
+                    testScore++;
+                    score.setText("Score: " + testScore);
+                    showCorrectAnswer();
+                    showAnswer.setText("Good Job! Your answer is correct!");
+                } else { // if wrong
+                    showAnswer.setText("Sorry, your answer is incorrect");
+                    showCorrectAnswer();
+                }
+                Log.d(TAG, "The question counter in the submit button: " + questionCounter);
+                if (questionCounter < maxQuestions) {
+                    submitAns.setVisibility((View.VISIBLE));
+                    submitAns.setText("Next");
+                    submitAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showNextQuestion(email, quizTopicArea);
+                            submitAns.setVisibility((View.GONE));
+                        }
+                    });
+                } else { // if the test has finished
+                    submitAns.setVisibility((View.VISIBLE));
+                    submitAns.setText("Finished");
+                    submitAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finishQuiz(email, quizTopicArea);
+                        }
+                    });
+                }
+            }
+        });
+//        submitAns.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // We first want to check whether the user has answered the question or not.
+//                if (!answered){ // if the user has answered (true)
+//                    // check which option of the radio group they have chosen
+//                    if (answerOne.isChecked() || answerTwo.isChecked()
+//                            || answerThree.isChecked() || answerFour.isChecked()){
+//                        // we want to check whether the answer is correct or incorrect
+//                        RadioButton selected = (RadioButton) view.findViewById(radioGroup.getCheckedRadioButtonId()); // returns an int of the ID
+//                        answered = true;
+//                        String getCorrectAns = currentQuestion.getCorrectAnswer();
+//                        String btnString = selected.getText().toString();
+//
+//                        // Check whether the user's answer is correct
+//                        if (btnString.equals(getCorrectAns)){ // if answer is correct
+//                            testScore++;
+//                            score.setText("Score: " + testScore);
+//                            showCorrectAnswer();
+//                            showAnswer.setText("Good Job! Your answer is correct!");
+//                        } else { // if wrong
+//                            showAnswer.setText("Sorry, your answer is incorrect");
+//                            showCorrectAnswer();
+//                        }
+//                        Log.d(TAG, "The question counter in the submit button: " + questionCounter);
+//                        if (questionCounter < maxQuestions){
+//                            submitAns.setText("Next");
+//                        } else { // if the test has finished
+//                            submitAns.setText("Finished");
+//                            finishQuiz(email, quizTopicArea);
+//                        }
+//
+//                    } else {
+//                        Toast.makeText(getContext(),"Please select an answer", Toast.LENGTH_SHORT);
+//                    }
+//                } else {
+//                    showNextQuestion(email, quizTopicArea);
+//                } // end of outer if-else statement
+//            }
+//        }); // end of submitAns.setOnClickListener
         return view;
     } // end of onCreateView
 
     private void showCorrectAnswer() {
-        String answer = currentQuestion.getCorrectAnswer();
-        if (answerOne.getText().equals(answer)){
+        String correctAnswer = currentQuestion.getCorrectAnswer();
+
+        if (answerOne.getText().equals(correctAnswer)) {
             answerOne.setTextColor(Color.GREEN);
-            answerTwo.setTextColor(Color.RED);
-            answerThree.setTextColor(Color.RED);
-            answerFour.setTextColor(Color.RED);
-        } else if (answerTwo.getText().equals(answer)){
+        } else if (!answerOne.getText().equals(correctAnswer)) {
             answerOne.setTextColor(Color.RED);
+            if (answerTwo.getText().equals(correctAnswer)) {
+                answerTwo.setTextColor(Color.GREEN);
+            } else if (answerThree.getText().equals(correctAnswer)) {
+                answerThree.setTextColor(Color.GREEN);
+            } else if (answerFour.getText().equals(correctAnswer)) {
+                answerFour.setTextColor(Color.GREEN);
+            }
+        }
+        if (answerTwo.getText().equals(correctAnswer)) {
             answerTwo.setTextColor(Color.GREEN);
-            answerThree.setTextColor(Color.RED);
-            answerFour.setTextColor(Color.RED);
-        } else if (answerThree.getText().equals(answer)){
-            answerOne.setTextColor(Color.RED);
+        } else if (!answerTwo.getText().equals(correctAnswer)) {
             answerTwo.setTextColor(Color.RED);
+            if (answerOne.getText().equals(correctAnswer)) {
+                answerOne.setTextColor(Color.GREEN);
+            } else if (answerThree.getText().equals(correctAnswer)) {
+                answerThree.setTextColor(Color.GREEN);
+            } else if (answerFour.getText().equals(correctAnswer)) {
+                answerFour.setTextColor(Color.GREEN);
+            }
+        }
+        if (answerThree.getText().equals(correctAnswer)) {
             answerThree.setTextColor(Color.GREEN);
-            answerFour.setTextColor(Color.RED);
-        } else if (answerFour.getText().equals(answer)){
-            answerFour.setTextColor(Color.GREEN);
-            answerOne.setTextColor(Color.RED);
-            answerTwo.setTextColor(Color.RED);
+        } else if (!answerThree.getText().equals(correctAnswer)) {
             answerThree.setTextColor(Color.RED);
+            if (answerTwo.getText().equals(correctAnswer)) {
+                answerTwo.setTextColor(Color.GREEN);
+            } else if (answerOne.getText().equals(correctAnswer)) {
+                answerOne.setTextColor(Color.GREEN);
+            } else if (answerFour.getText().equals(correctAnswer)) {
+                answerFour.setTextColor(Color.GREEN);
+            }
+        }
+        if (answerFour.getText().equals(correctAnswer)) {
+            answerFour.setTextColor(Color.GREEN);
+        } else if (!answerFour.getText().equals(correctAnswer)) {
+            answerFour.setTextColor(Color.RED);
+            if (answerTwo.getText().equals(correctAnswer)) {
+                answerTwo.setTextColor(Color.GREEN);
+            } else if (answerThree.getText().equals(correctAnswer)) {
+                answerThree.setTextColor(Color.GREEN);
+            } else if (answerOne.getText().equals(correctAnswer)) {
+                answerOne.setTextColor(Color.GREEN);
+            }
         }
     } // end of showCorrectAnswer method
 
     private void showNextQuestion(String email, String quizTopicArea) {
         // Clear all the text and checks
         showAnswer.setText(""); // we don't want to show whether the user's answer is correct/incorrect yet
-        radioGroup.clearCheck(); // clear all the checked answers
+        //radioGroup.clearCheck(); // clear all the checked answers
         // Set the colours of the text to black
         answerOne.setTextColor(originalTextColour);
         answerTwo.setTextColor(originalTextColour);
@@ -227,7 +396,7 @@ public class QuizFragment extends Fragment {
         Log.d(TAG, "You are in the showNextQuestion method");
 
         Log.d(TAG, "The question counter is: " + questionCounter);
-        if (questionCounter < maxQuestions){ // if user hasn't finished the quiz
+        if (questionCounter < maxQuestions) { // if user hasn't finished the quiz
             Log.d(TAG, "max questions in showNextQuestion is: " + maxQuestions);
 
             currentQuestion = listOfQuizQues.get(questionCounter);
@@ -255,7 +424,7 @@ public class QuizFragment extends Fragment {
         userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()){
+                if (documentSnapshot.exists()) {
                     // return the username
                     String currentUsersScore = documentSnapshot.getString(KEY_USER_SCORE);
                     int currentUserScore = Integer.parseInt(currentUsersScore);
