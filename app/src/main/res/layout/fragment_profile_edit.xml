@@ -12,7 +12,7 @@
         android:layout_marginStart="136dp"
         android:layout_marginLeft="136dp"
         android:layout_marginTop="44dp"
-        android:text="Profile Fragment"
+        android:text="Edit Profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -130,7 +130,7 @@
         android:layout_marginStart="136dp"
         android:layout_marginLeft="136dp"
         android:layout_marginTop="48dp"
-        android:text="Edit Profile"
+        android:text="Make Changes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEditPassword" />
 

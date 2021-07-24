@@ -86,9 +86,16 @@ public class ProfileEditFragment extends Fragment {
                     Log.d(TAG, "username is: " + keyUsername);
 
                     tvEditProfileEmail.setText(keyEmail);
+                    tvEditProfileIdentify.setText(keyIdentify);
                     etProfileUsername.setText(keyUsername);
                     etEditPassword.setText(keyPassword);
-                    tvEditProfileIdentify.setText(keyIdentify);
+
+                    String getUsernameEdit = etProfileUsername.getText().toString();
+                    String getPasswordEdit = etEditPassword.getText().toString();
+
+                    // now make the changes to the database
+                    database.collection("Users").document(email).update(KEY_USERNAME, getUsernameEdit);
+                    database.collection("Users").document(email).update(KEY_PASSWORD, getPasswordEdit);
                 }
             }
         }); // end of FireStore connection
