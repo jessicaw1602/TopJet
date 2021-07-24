@@ -222,20 +222,25 @@ public class DiscussionFragment extends Fragment implements SearchView.OnQueryTe
     //Action bar back button + sort by in menu option
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sortByOldestToNewest:
-                discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_NEWEST, filteredList);
-                return true;
-            case R.id.sortByNewestToOldest:
-                discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_OLDEST, filteredList);
-                return true;
-            case android.R.id.home:
-                getActivity().onBackPressed();
-                break;
-            case R.id.fragment_frame:
-                return true;
-            default:
-            return false;
+        if (item.getItemId() == R.id.sortByOldestToNewest || item.getItemId() == R.id.sortByNewestToOldest){
+            switch (item.getItemId()) {
+                case R.id.sortByOldestToNewest:
+                    discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_NEWEST, filteredList);
+                    return true;
+                case R.id.sortByNewestToOldest:
+                    discussionAdapter.sort(DiscussionAdapter.SORT_METHOD_BY_OLDEST, filteredList);
+                    return true;
+            }
+        } else {
+            switch (item.getItemId()){
+                case android.R.id.home:
+                    getActivity().onBackPressed();
+                    break;
+                case R.id.fragment_frame:
+                    return true;
+                default:
+                    return false;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
