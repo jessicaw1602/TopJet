@@ -155,6 +155,7 @@ public class GameFragment extends Fragment {
                         didgeridooButton.setVisibility(View.GONE);
                         headbandButton.setVisibility(View.GONE);
                         ceremonyButton.setVisibility(View.GONE);
+                        nextButton.setVisibility(View.GONE);
 
                         userInputOne.setVisibility(View.VISIBLE);
                         userInputTwo.setVisibility(View.VISIBLE);
@@ -170,6 +171,8 @@ public class GameFragment extends Fragment {
                                 if(getUserInputOne.equals("didgeridoo") && getUserInputTwo.equals("headband") &&
                                         getUserInputThree.equals("smoking ceremony")){
                                     makeAlert("Correct!", "Please proceed to the next image.", "Ok");
+                                    nextButton.setVisibility(View.VISIBLE);
+                                    checkAnswersButton.setVisibility(View.GONE);
                                 }else{
                                     makeAlert("Sorry!", "Please try again.", "Ok");
                                 }
@@ -232,6 +235,8 @@ public class GameFragment extends Fragment {
                         userInputTwo.setVisibility(View.VISIBLE);
                         userInputThree.setVisibility(View.VISIBLE);
                         checkAnswersButton.setVisibility(View.VISIBLE);
+                        nextButton.setVisibility(View.GONE);
+
                         uluruButton.setVisibility(View.GONE);
                         bodyButton.setVisibility(View.GONE);
                         spearButton.setVisibility(View.GONE);
@@ -244,6 +249,8 @@ public class GameFragment extends Fragment {
                                 String getUserInputThree = userInputThree.getText().toString();
                                 if(getUserInputOne.equals("uluru") && getUserInputTwo.equals("spear") &&
                                         getUserInputThree.equals("body art")){
+                                    nextButton.setVisibility(View.VISIBLE);
+                                    checkAnswersButton.setVisibility(View.GONE);
                                     makeAlert("Correct!", "Please proceed to the next image.", "Ok");
                                 }else{
                                     makeAlert("Sorry!", "Please try again.", "Ok");
@@ -305,6 +312,8 @@ public class GameFragment extends Fragment {
                         userInputTwo.setVisibility(View.VISIBLE);
                         userInputThree.setVisibility(View.VISIBLE);
                         checkAnswersButton.setVisibility(View.VISIBLE);
+                        nextButton.setVisibility(View.GONE);
+
                         ochreButton.setVisibility(View.GONE);
                         artButton.setVisibility(View.GONE);
                         stencilButton.setVisibility(View.GONE);
@@ -317,6 +326,8 @@ public class GameFragment extends Fragment {
                                 String getUserInputThree = userInputThree.getText().toString();
                                 if(getUserInputOne.equals("ochre") && getUserInputTwo.equals("hand stencil") &&
                                         getUserInputThree.equals("rock art")){
+                                    nextButton.setVisibility(View.VISIBLE);
+                                    checkAnswersButton.setVisibility(View.GONE);
                                     makeAlert("Correct!", "Please proceed to the next image.", "Ok");
                                 }else{
                                     makeAlert("Sorry!", "Please try again.", "Ok");
