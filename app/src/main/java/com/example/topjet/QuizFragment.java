@@ -154,11 +154,20 @@ public class QuizFragment extends Fragment {
                 if (answerOne.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
                     testScore++;
                     score.setText("Score: " + testScore);
-                    showCorrectAnswer();
+                    answerOne.setTextColor(Color.GREEN);
+                    //showCorrectAnswer();
                     showAnswer.setText("Good Job! Your answer is correct!");
                 } else { // if wrong
                     showAnswer.setText("Sorry, your answer is incorrect");
-                    showCorrectAnswer();
+                    answerOne.setTextColor(Color.RED);
+                    if (answerTwo.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerTwo.setTextColor(Color.GREEN);
+                    } else if (answerThree.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerThree.setTextColor(Color.GREEN);
+                    } else if (answerFour.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerFour.setTextColor(Color.GREEN);
+                    }
+                    //showCorrectAnswer();
                 }
                 Log.d(TAG, "The question counter in the submit button: " + questionCounter);
                 if (questionCounter < maxQuestions) {
@@ -189,11 +198,20 @@ public class QuizFragment extends Fragment {
                 if (answerTwo.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
                     testScore++;
                     score.setText("Score: " + testScore);
-                    showCorrectAnswer();
+                    answerTwo.setTextColor(Color.GREEN);
+                   // showCorrectAnswer();
                     showAnswer.setText("Good Job! Your answer is correct!");
                 } else { // if wrong
                     showAnswer.setText("Sorry, your answer is incorrect");
-                    showCorrectAnswer();
+                    answerTwo.setTextColor(Color.RED);
+                    if (answerOne.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerOne.setTextColor(Color.GREEN);
+                    } else if (answerThree.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerThree.setTextColor(Color.GREEN);
+                    } else if (answerFour.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerFour.setTextColor(Color.GREEN);
+                    }
+                   // showCorrectAnswer();
                 }
                 Log.d(TAG, "The question counter in the submit button: " + questionCounter);
                 if (questionCounter < maxQuestions) {
@@ -224,11 +242,20 @@ public class QuizFragment extends Fragment {
                 if (answerThree.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
                     testScore++;
                     score.setText("Score: " + testScore);
-                    showCorrectAnswer();
+                    answerThree.setTextColor(Color.GREEN);
+                    //showCorrectAnswer();
                     showAnswer.setText("Good Job! Your answer is correct!");
                 } else { // if wrong
                     showAnswer.setText("Sorry, your answer is incorrect");
-                    showCorrectAnswer();
+                    answerThree.setTextColor(Color.RED);
+                    if (answerTwo.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerTwo.setTextColor(Color.GREEN);
+                    } else if (answerOne.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerOne.setTextColor(Color.GREEN);
+                    } else if (answerFour.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerFour.setTextColor(Color.GREEN);
+                    }
+                   // showCorrectAnswer();
                 }
                 Log.d(TAG, "The question counter in the submit button: " + questionCounter);
                 if (questionCounter < maxQuestions) {
@@ -259,11 +286,20 @@ public class QuizFragment extends Fragment {
                 if (answerFour.getText().toString().equals(currentQuestion.getCorrectAnswer())) {
                     testScore++;
                     score.setText("Score: " + testScore);
-                    showCorrectAnswer();
+                    answerFour.setTextColor(Color.GREEN);
+                    //showCorrectAnswer();
                     showAnswer.setText("Good Job! Your answer is correct!");
                 } else { // if wrong
                     showAnswer.setText("Sorry, your answer is incorrect");
-                    showCorrectAnswer();
+                    answerFour.setTextColor(Color.RED);
+                    if (answerTwo.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerTwo.setTextColor(Color.GREEN);
+                    } else if (answerThree.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerThree.setTextColor(Color.GREEN);
+                    } else if (answerOne.getText().equals(currentQuestion.getCorrectAnswer())) {
+                        answerOne.setTextColor(Color.GREEN);
+                    }
+                   // showCorrectAnswer();
                 }
                 Log.d(TAG, "The question counter in the submit button: " + questionCounter);
                 if (questionCounter < maxQuestions) {
@@ -331,58 +367,58 @@ public class QuizFragment extends Fragment {
         return view;
     } // end of onCreateView
 
-    private void showCorrectAnswer() {
-        String correctAnswer = currentQuestion.getCorrectAnswer();
-
-        if (answerOne.getText().equals(correctAnswer)) {
-            answerOne.setTextColor(Color.GREEN);
-        } else if (!answerOne.getText().equals(correctAnswer)) {
-            answerOne.setTextColor(Color.RED);
-            if (answerTwo.getText().equals(correctAnswer)) {
-                answerTwo.setTextColor(Color.GREEN);
-            } else if (answerThree.getText().equals(correctAnswer)) {
-                answerThree.setTextColor(Color.GREEN);
-            } else if (answerFour.getText().equals(correctAnswer)) {
-                answerFour.setTextColor(Color.GREEN);
-            }
-        }
-        if (answerTwo.getText().equals(correctAnswer)) {
-            answerTwo.setTextColor(Color.GREEN);
-        } else if (!answerTwo.getText().equals(correctAnswer)) {
-            answerTwo.setTextColor(Color.RED);
-            if (answerOne.getText().equals(correctAnswer)) {
-                answerOne.setTextColor(Color.GREEN);
-            } else if (answerThree.getText().equals(correctAnswer)) {
-                answerThree.setTextColor(Color.GREEN);
-            } else if (answerFour.getText().equals(correctAnswer)) {
-                answerFour.setTextColor(Color.GREEN);
-            }
-        }
-        if (answerThree.getText().equals(correctAnswer)) {
-            answerThree.setTextColor(Color.GREEN);
-        } else if (!answerThree.getText().equals(correctAnswer)) {
-            answerThree.setTextColor(Color.RED);
-            if (answerTwo.getText().equals(correctAnswer)) {
-                answerTwo.setTextColor(Color.GREEN);
-            } else if (answerOne.getText().equals(correctAnswer)) {
-                answerOne.setTextColor(Color.GREEN);
-            } else if (answerFour.getText().equals(correctAnswer)) {
-                answerFour.setTextColor(Color.GREEN);
-            }
-        }
-        if (answerFour.getText().equals(correctAnswer)) {
-            answerFour.setTextColor(Color.GREEN);
-        } else if (!answerFour.getText().equals(correctAnswer)) {
-            answerFour.setTextColor(Color.RED);
-            if (answerTwo.getText().equals(correctAnswer)) {
-                answerTwo.setTextColor(Color.GREEN);
-            } else if (answerThree.getText().equals(correctAnswer)) {
-                answerThree.setTextColor(Color.GREEN);
-            } else if (answerOne.getText().equals(correctAnswer)) {
-                answerOne.setTextColor(Color.GREEN);
-            }
-        }
-    } // end of showCorrectAnswer method
+//    private void showCorrectAnswer() {
+//        String correctAnswer = currentQuestion.getCorrectAnswer();
+//
+//        if (answerOne.getText().equals(correctAnswer)) {
+//            answerOne.setTextColor(Color.GREEN);
+//        } else if (!answerOne.getText().equals(correctAnswer)) {
+//            answerOne.setTextColor(Color.RED);
+//            if (answerTwo.getText().equals(correctAnswer)) {
+//                answerTwo.setTextColor(Color.GREEN);
+//            } else if (answerThree.getText().equals(correctAnswer)) {
+//                answerThree.setTextColor(Color.GREEN);
+//            } else if (answerFour.getText().equals(correctAnswer)) {
+//                answerFour.setTextColor(Color.GREEN);
+//            }
+//        }
+//        if (answerTwo.getText().equals(correctAnswer)) {
+//            answerTwo.setTextColor(Color.GREEN);
+//        } else if (!answerTwo.getText().equals(correctAnswer)) {
+//            answerTwo.setTextColor(Color.RED);
+//            if (answerOne.getText().equals(correctAnswer)) {
+//                answerOne.setTextColor(Color.GREEN);
+//            } else if (answerThree.getText().equals(correctAnswer)) {
+//                answerThree.setTextColor(Color.GREEN);
+//            } else if (answerFour.getText().equals(correctAnswer)) {
+//                answerFour.setTextColor(Color.GREEN);
+//            }
+//        }
+//        if (answerThree.getText().equals(correctAnswer)) {
+//            answerThree.setTextColor(Color.GREEN);
+//        } else if (!answerThree.getText().equals(correctAnswer)) {
+//            answerThree.setTextColor(Color.RED);
+//            if (answerTwo.getText().equals(correctAnswer)) {
+//                answerTwo.setTextColor(Color.GREEN);
+//            } else if (answerOne.getText().equals(correctAnswer)) {
+//                answerOne.setTextColor(Color.GREEN);
+//            } else if (answerFour.getText().equals(correctAnswer)) {
+//                answerFour.setTextColor(Color.GREEN);
+//            }
+//        }
+//        if (answerFour.getText().equals(correctAnswer)) {
+//            answerFour.setTextColor(Color.GREEN);
+//        } else if (!answerFour.getText().equals(correctAnswer)) {
+//            answerFour.setTextColor(Color.RED);
+//            if (answerTwo.getText().equals(correctAnswer)) {
+//                answerTwo.setTextColor(Color.GREEN);
+//            } else if (answerThree.getText().equals(correctAnswer)) {
+//                answerThree.setTextColor(Color.GREEN);
+//            } else if (answerOne.getText().equals(correctAnswer)) {
+//                answerOne.setTextColor(Color.GREEN);
+//            }
+//        }
+//    } // end of showCorrectAnswer method
 
     private void showNextQuestion(String email, String quizTopicArea) {
         // Clear all the text and checks
