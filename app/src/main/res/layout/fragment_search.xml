@@ -36,6 +36,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+            android:id="@+id/artsProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="151dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toEndOf="@+id/tvArts"
+            app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
+
+        <ProgressBar
+            android:id="@+id/cultureProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="151dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="372dp"
+            app:layout_constraintStart_toEndOf="@+id/tvCulture"
+            app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
+
+        <ProgressBar
+            android:id="@+id/valuesProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="151dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="23dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="736dp"
+            app:layout_constraintStart_toEndOf="@+id/tvValues"
+            app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
+
         <TextView
             android:id="@+id/tvCulture"
             android:layout_width="wrap_content"
@@ -98,6 +131,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvValues"
             app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/tvArtsProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="32dp"
+            android:text="% Completed"
+            app:layout_constraintStart_toEndOf="@+id/artsProgressBar"
+            app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
+
+        <TextView
+            android:id="@+id/tvCultureProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="22dp"
+            android:text="% Completed"
+            app:layout_constraintStart_toEndOf="@+id/cultureProgressBar"
+            app:layout_constraintTop_toBottomOf="@+id/rvArts" />
+
+        <TextView
+            android:id="@+id/tvValuesProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="29dp"
+            android:text="% Completed"
+            app:layout_constraintStart_toEndOf="@+id/valuesProgressBar"
+            app:layout_constraintTop_toBottomOf="@+id/rvCulture" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

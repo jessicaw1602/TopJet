@@ -46,7 +46,7 @@ public class DiscussionAddFragment extends Fragment {
     private static final String KEY_SHORT_DESC = "shortDesc";
     private static final String KEY_ID = "docId";
 
-    private static final String KEY_SCORE = "docId"; // to update the user's score
+    private static final String KEY_SCORE = "score"; // to update the user's score
 
     EditText etTitleName, etNewPostContent;
     Button btPost, btDiscardPost;
@@ -105,6 +105,7 @@ public class DiscussionAddFragment extends Fragment {
                     // return the username
                     String username = documentSnapshot.getString(KEY_USERNAME);
                     String userScore = documentSnapshot.getString(KEY_SCORE);
+                    Log.d(TAG, "UserScore is: " + userScore);
 
                     // Retrieve the text from the xml file
                     String titleName = etTitleName.getText().toString();
@@ -117,7 +118,9 @@ public class DiscussionAddFragment extends Fragment {
                         String shortDesc = (etNewPostContent.getText().toString()).substring(0,postContent.length()); // only get whatever text is available
                         addPost(titleName, postContent, getTag, username, shortDesc, email, userScore);
                     } else if (postContent.length() >= 100){
-                        String shortDesc = (etNewPostContent.getText().toString()).substring(0,100); // cut the OG postContent into 100 chars
+                        String desc = (etNewPostContent.getText().toString()).substring(0,100); // cut the OG postContent into 100 chars
+                        String shortDesc = desc + "...";
+
                         addPost(titleName, postContent, getTag, username, shortDesc, email, userScore);
                     }
                 } else {
@@ -165,6 +168,7 @@ public class DiscussionAddFragment extends Fragment {
                             int userScores = Integer.parseInt(userScore);
                             int updateUserScore = userScores + 5;
                             String updateScore = String.valueOf(updateUserScore);
+                            Log.d(TAG, "Updated score is: " + updateScore);
                             database.collection("Users").document(email).update(KEY_SCORE, updateScore);
                         }
                     })
