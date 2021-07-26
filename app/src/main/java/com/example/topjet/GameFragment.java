@@ -29,22 +29,15 @@ public class GameFragment extends Fragment {
 
     private static final String KEY_USERNAME = "username";
 
-    Button didgeridooButton;
-    Button headbandButton;
-    Button ceremonyButton;
+    Button didgeridooButton, headbandButton, ceremonyButton;
 
-    EditText userInputOne;
-    EditText userInputTwo;
-    EditText userInputThree;
+    EditText userInputOne, userInputTwo, userInputThree;
     Button checkAnswersButton;
 
-    Button uluruButton;
-    Button bodyButton;
-    Button spearButton;
-
-    Button ochreButton;
-    Button artButton;
-    Button stencilButton;
+    Button uluruButton, bodyButton, spearButton;
+    Button ochreButton, artButton, stencilButton;
+    Button hutDepressionButton, basketButton, shellfishButton;
+    Button tjiwaButton, seedsButton, tjungariButton;
 
     Button nextButton;
     ImageView ivGame;
@@ -101,6 +94,14 @@ public class GameFragment extends Fragment {
         artButton = view.findViewById(R.id.artButton);
         stencilButton = view.findViewById(R.id.stencilButton);
 
+        hutDepressionButton = view.findViewById(R.id.hutDepressionButton);
+        basketButton = view.findViewById(R.id.basketButton);
+        shellfishButton = view.findViewById(R.id.shellfishButton);
+
+        tjiwaButton = view.findViewById(R.id.tjiwaButton);
+        seedsButton = view.findViewById(R.id.seedsButton);
+        tjungariButton = view.findViewById(R.id.tjungariButton);
+
         nextButton = view.findViewById(R.id.nextButton);
         ivGame = view.findViewById(R.id.ivGame);
         tvTitle = view.findViewById(R.id.tvTitle);
@@ -111,7 +112,7 @@ public class GameFragment extends Fragment {
             public void onClick(View view) {
                 Log.d(TAG, "Didgeridoo button works!");
                 makeAlert("Didgeridoo", "A wind instrument played to " +
-                                "accompany ceremonies and evokes the magic of the Dreamtime",
+                                "accompany ceremonies and evokes the magic of the Dreamtime.",
                         "Done");
                 //showPopup(view);
             }
@@ -122,7 +123,7 @@ public class GameFragment extends Fragment {
             public void onClick(View view) {
                 Log.d(TAG, "Headband button works!");
                 makeAlert("Headband", "One type of body adornment and may " +
-                                "be worn as everyday items or reserved for ceremonial occasions ",
+                                "be worn as everyday items or reserved for ceremonial occasions.",
                         "Done");
                 //showPopup(view);
             }
@@ -134,7 +135,7 @@ public class GameFragment extends Fragment {
                 Log.d(TAG, "Ceremony button works!");
                 makeAlert("Smoking Ceremony", "Conducted to acknowledge " +
                         "ancestors, ward off evil spirits and heal and cleanse the place " +
-                        "and the participants by burning native plants", "Done");
+                        "and the participants by burning native plants.", "Done");
                 //showPopup(view);
             }
         });
@@ -150,7 +151,7 @@ public class GameFragment extends Fragment {
                 pageCounter++;
                 switch(pageCounter){
                     case 1:
-                        ivGame.setImageResource(R.drawable.ceremony);
+                        ivGame.setImageResource(R.drawable.ceremony_numbers);
                         tvTitle.setText("Name the objects:");
                         didgeridooButton.setVisibility(View.GONE);
                         headbandButton.setVisibility(View.GONE);
@@ -168,8 +169,9 @@ public class GameFragment extends Fragment {
                                 String getUserInputOne = userInputOne.getText().toString();
                                 String getUserInputTwo = userInputTwo.getText().toString();
                                 String getUserInputThree = userInputThree.getText().toString();
-                                if(getUserInputOne.equals("didgeridoo") && getUserInputTwo.equals("headband") &&
-                                        getUserInputThree.equals("smoking ceremony")){
+                                if(getUserInputOne.equals("didgeridoo") || getUserInputOne.equals("Didgeridoo") && getUserInputTwo.equals("headband")
+                                        || getUserInputTwo.equals("Headband") && getUserInputThree.equals("Smoking Ceremony") ||
+                                        getUserInputThree.equals("smoking ceremony") || getUserInputThree.equals("Smoking ceremony")){
                                     makeAlert("Correct!", "Please proceed to the next image.", "Ok");
                                     nextButton.setVisibility(View.VISIBLE);
                                     checkAnswersButton.setVisibility(View.GONE);
@@ -211,7 +213,7 @@ public class GameFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 Log.d(TAG, "Body Art button works!");
-                                makeAlert("Body Art", "A traditional custom that varies between nations with specific designs revealing relationships to family group, social position, tribe, precise ancestors, totemic fauna and tracts of land",
+                                makeAlert("Body Art", "A traditional custom that varies between nations with specific designs revealing relationships to family group, social position, tribe, precise ancestors, totemic fauna and tracts of land.",
                                         "Done");
                                 //showPopup(view);
                             }
@@ -221,7 +223,7 @@ public class GameFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 Log.d(TAG, "Spear button works!");
-                                makeAlert("Spear", "Made of wood and primarily used for hunting and combat purposes",
+                                makeAlert("Spear", "Made of wood and primarily used for hunting and combat purposes.",
                                         "Done");
                                 //showPopup(view);
                             }
@@ -229,7 +231,7 @@ public class GameFragment extends Fragment {
                         break;
 
                     case 3:
-                        ivGame.setImageResource(R.drawable.uluru);
+                        ivGame.setImageResource(R.drawable.uluru_numbers);
                         tvTitle.setText("Name the objects:");
                         userInputOne.setVisibility(View.VISIBLE);
                         userInputTwo.setVisibility(View.VISIBLE);
@@ -241,14 +243,20 @@ public class GameFragment extends Fragment {
                         bodyButton.setVisibility(View.GONE);
                         spearButton.setVisibility(View.GONE);
 
+                        userInputOne.getText().clear();
+                        userInputTwo.getText().clear();
+                        userInputThree.getText().clear();
+
                         checkAnswersButton.setOnClickListener(new View.OnClickListener(){
                             @Override
                             public void onClick(View v) {
                                 String getUserInputOne = userInputOne.getText().toString();
                                 String getUserInputTwo = userInputTwo.getText().toString();
                                 String getUserInputThree = userInputThree.getText().toString();
-                                if(getUserInputOne.equals("uluru") && getUserInputTwo.equals("spear") &&
-                                        getUserInputThree.equals("body art")){
+                                if(getUserInputOne.equals("uluru") || getUserInputOne.equals("Uluru") &&
+                                        getUserInputTwo.equals("spear") || getUserInputTwo.equals("Spear") &&
+                                        getUserInputThree.equals("body art") || getUserInputThree.equals("Body art") ||
+                                        getUserInputThree.equals("Body Art")){
                                     nextButton.setVisibility(View.VISIBLE);
                                     checkAnswersButton.setVisibility(View.GONE);
                                     makeAlert("Correct!", "Please proceed to the next image.", "Ok");
@@ -260,8 +268,8 @@ public class GameFragment extends Fragment {
                         break;
 
                     case 4:
-                        ivGame.setImageResource(R.drawable.wallpaint);
-                        tvTitle.setText("Wallpainting");
+                        ivGame.setImageResource(R.drawable.rockart);
+                        tvTitle.setText("Rock Art");
                         uluruButton.setVisibility(View.GONE);
                         bodyButton.setVisibility(View.GONE);
                         spearButton.setVisibility(View.GONE);
@@ -279,7 +287,7 @@ public class GameFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             Log.d(TAG, "Ochre button works!");
-                            makeAlert("Ochre", "Ochre was the main material used in creating hand stencils since it chemically reacted with and sunk into the surface of the rock",
+                            makeAlert("Ochre", "Ochre was the main material used in creating hand stencils since it chemically reacted with and sunk into the surface of the rock.",
                                     "Done");
                             //showPopup(view);
                         }
@@ -289,7 +297,7 @@ public class GameFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             Log.d(TAG, "Rock Art button works!");
-                            makeAlert("Rock Art", "A keystone of Aboriginal heritage and may act as gateways to communication between humans and the Spirit World, to mark territory, record historical events or stories or to help enact rituals",
+                            makeAlert("Rock Art", "A keystone of Aboriginal heritage and may act as gateways to communication between humans and the Spirit World, to mark territory, record historical events or stories or to help enact rituals.",
                                     "Done");
                             //showPopup(view);
                         }
@@ -299,14 +307,14 @@ public class GameFragment extends Fragment {
                         @Override
                         public void onClick(View view) {
                             Log.d(TAG, "Hand Stencil button works!");
-                            makeAlert("Hand Stencil", "Marks a territory and defines a rank so the higher the stencil in relationship to others, the higher the person’s rank",
+                            makeAlert("Hand Stencil", "Marks a territory and defines a rank so the higher the stencil in relationship to others, the higher the person’s rank.",
                                     "Done");
                             //showPopup(view);
                         }
                     });
                     break;
                     case 5:
-                        ivGame.setImageResource(R.drawable.wallpaint);
+                        ivGame.setImageResource(R.drawable.rockart_numbers);
                         tvTitle.setText("Name the objects:");
                         userInputOne.setVisibility(View.VISIBLE);
                         userInputTwo.setVisibility(View.VISIBLE);
@@ -318,14 +326,20 @@ public class GameFragment extends Fragment {
                         artButton.setVisibility(View.GONE);
                         stencilButton.setVisibility(View.GONE);
 
+                        userInputOne.getText().clear();
+                        userInputTwo.getText().clear();
+                        userInputThree.getText().clear();
+
                         checkAnswersButton.setOnClickListener(new View.OnClickListener(){
                             @Override
                             public void onClick(View v) {
                                 String getUserInputOne = userInputOne.getText().toString();
                                 String getUserInputTwo = userInputTwo.getText().toString();
                                 String getUserInputThree = userInputThree.getText().toString();
-                                if(getUserInputOne.equals("ochre") && getUserInputTwo.equals("hand stencil") &&
-                                        getUserInputThree.equals("rock art")){
+                                if(getUserInputOne.equals("ochre") || getUserInputOne.equals("Ochre")
+                                        && getUserInputTwo.equals("hand stencil") || getUserInputTwo.equals("Hand stencil") ||
+                                        getUserInputTwo.equals("Hand Stencil")&& getUserInputThree.equals("rock art") ||
+                                        getUserInputThree.equals("Rock art") || getUserInputThree.equals("Rock Art")){
                                     nextButton.setVisibility(View.VISIBLE);
                                     checkAnswersButton.setVisibility(View.GONE);
                                     makeAlert("Correct!", "Please proceed to the next image.", "Ok");
@@ -336,7 +350,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
                     case 6:
-                        ivGame.setImageResource(R.drawable.hut);
+                        ivGame.setImageResource(R.drawable.hut_depression);
                         tvTitle.setText("Hut Depression");
 
                         userInputOne.setVisibility(View.GONE);
@@ -344,14 +358,153 @@ public class GameFragment extends Fragment {
                         userInputThree.setVisibility(View.GONE);
                         checkAnswersButton.setVisibility(View.GONE);
 
+                        hutDepressionButton.setVisibility(View.VISIBLE);
+                        basketButton.setVisibility(View.VISIBLE);
+                        shellfishButton.setVisibility(View.VISIBLE);
+                        nextButton.setVisibility(View.VISIBLE);
+
+                        hutDepressionButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                makeAlert("Hut Depression", "A form of shelter for the " +
+                                                "Aboriginals which take the form of a circular hollow. " +
+                                                "These huts are typically built using tea tree wood on top " +
+                                                "of small hills and dunes.",
+                                        "Done");
+                            }
+                        });
+
+                        shellfishButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                makeAlert("Shellfish", "Forms an essential part of the Aboriginal diet. " +
+                                                "Typically consists of a variety of shellfish such as abalone, mussels, oysters, limpets.",
+                                        "Done");
+                            }
+                        });
+
+                        basketButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                makeAlert("Basket", "a traditional tool used by the aboriginals to collect, store and hold " +
+                                                "material. These are manually weaved using lomandra (also known as basket grass).",
+                                        "Done");
+                            }
+                        });
                         break;
                     case 7:
-                        ivGame.setImageResource(R.drawable.grindstone);
-                        tvTitle.setText("Grindstone");
+                        ivGame.setImageResource(R.drawable.hut_numbers);
+                        tvTitle.setText("Name the objects:");
+                        hutDepressionButton.setVisibility(View.GONE);
+                        basketButton.setVisibility(View.GONE);
+                        shellfishButton.setVisibility(View.GONE);
+                        checkAnswersButton.setVisibility(View.VISIBLE);
+                        userInputOne.setVisibility(View.VISIBLE);
+                        userInputTwo.setVisibility(View.VISIBLE);
+                        userInputThree.setVisibility(View.VISIBLE);
+                        nextButton.setVisibility(View.GONE);
+
+                        userInputOne.getText().clear();
+                        userInputTwo.getText().clear();
+                        userInputThree.getText().clear();
+
+                        checkAnswersButton.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                String getUserInputOne = userInputOne.getText().toString();
+                                String getUserInputTwo = userInputTwo.getText().toString();
+                                String getUserInputThree = userInputThree.getText().toString();
+                                if(getUserInputOne.equals("hut depression") || getUserInputOne.equals("Hut depression") ||
+                                        getUserInputOne.equals("Hut Depression") && getUserInputTwo.equals("Shellfish") ||
+                                        getUserInputTwo.equals("shellfish") && getUserInputThree.equals("basket") ||
+                                        getUserInputThree.equals("Basket")){
+                                    nextButton.setVisibility(View.VISIBLE);
+                                    checkAnswersButton.setVisibility(View.GONE);
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
+                                }else{
+                                    makeAlert("Sorry!", "Please try again.", "Ok");
+                                }
+                            }
+                        });
+
                         break;
                     case 8:
-                        ivGame.setImageResource(R.drawable.serpent);
-                        tvTitle.setText("Rainbow Serpent");
+                        ivGame.setImageResource(R.drawable.rock);
+                        tvTitle.setText("Grindstone");
+
+                        userInputOne.setVisibility(View.GONE);
+                        userInputTwo.setVisibility(View.GONE);
+                        userInputThree.setVisibility(View.GONE);
+                        checkAnswersButton.setVisibility(View.GONE);
+
+                        tjiwaButton.setVisibility(View.VISIBLE);
+                        seedsButton.setVisibility(View.VISIBLE);
+                        tjungariButton.setVisibility(View.VISIBLE);
+                        nextButton.setVisibility(View.VISIBLE);
+
+                        tjiwaButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                makeAlert("Tjiwa", "The base rock that acts as a mortar " +
+                                                "for the tjungari to grind material.",
+                                        "Done");
+                            }
+                        });
+
+                        seedsButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                makeAlert("Seeds", "Seeds such as native millet, spinifex and " +
+                                                "wattleseed are ground into flour to create key aboriginal dishes such as damper.",
+                                        "Done");
+                            }
+                        });
+
+                        tjungariButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                makeAlert("Tjungari", "A grindstone that acts as a pestle " +
+                                                "to process material such as seeds into flour and grindfruit.",
+                                        "Done");
+                            }
+                        });
+
+                        break;
+                    case 9:
+                        ivGame.setImageResource(R.drawable.rock_numbers);
+                        tvTitle.setText("Name the objects:");
+
+                        tjiwaButton.setVisibility(View.GONE);
+                        seedsButton.setVisibility(View.GONE);
+                        tjungariButton.setVisibility(View.GONE);
+                        checkAnswersButton.setVisibility(View.VISIBLE);
+                        userInputOne.setVisibility(View.VISIBLE);
+                        userInputTwo.setVisibility(View.VISIBLE);
+                        userInputThree.setVisibility(View.VISIBLE);
+                        nextButton.setVisibility(View.GONE);
+
+                        userInputOne.getText().clear();
+                        userInputTwo.getText().clear();
+                        userInputThree.getText().clear();
+
+                        checkAnswersButton.setOnClickListener(new View.OnClickListener(){
+                            @Override
+                            public void onClick(View v) {
+                                String getUserInputOne = userInputOne.getText().toString();
+                                String getUserInputTwo = userInputTwo.getText().toString();
+                                String getUserInputThree = userInputThree.getText().toString();
+                                if(getUserInputOne.equals("Tjiwa") || getUserInputOne.equals("tjiwa") &&
+                                        getUserInputTwo.equals("seeds") || getUserInputTwo.equals("Seeds") &&
+                                        getUserInputThree.equals("tjungari") || getUserInputThree.equals("Tjungari")){
+                                    nextButton.setVisibility(View.VISIBLE);
+                                    checkAnswersButton.setVisibility(View.GONE);
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
+                                }else{
+                                    makeAlert("Sorry!", "Please try again.", "Ok");
+                                }
+                            }
+                        });
+
                         break;
                 }
 //                getContent(email); // go to the next page. Now page counter = 2
