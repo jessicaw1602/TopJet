@@ -23,15 +23,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.topjet.Entities.DiscussionEntity;
 import com.example.topjet.Entities.TopicEntity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /* IMAGE RECYCLERVIEW CODE ADAPTED FROM: https://www.youtube.com/watch?v=Ph3Ek6cLS4M */
 
 public class SearchFragment extends Fragment {
     private static final String TAG = "SearchFragment";
+
+    // Access FireStore
+    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_USERNAME = "username";
+    private static final String KEY_PASSWORD = "password";
+    private static final String KEY_IDENTIFY = "cbIdentify";
+    private static final String KEY_SCORE = "score";
+
+    private static final String KEY_QUIZ_TOPIC = "quizTopic";
+
 
     // Initialise RecyclerView
     private RecyclerView rvArts, rvCulture, rvValues;
@@ -46,17 +69,16 @@ public class SearchFragment extends Fragment {
     private ProgressBar artsProgressBar, cultureProgressBar, valuesProgressBar;
 
     // Count how many quizzes the user has completed
-    int artsCounter = 0;
-    int cultureCounter = 0;
-    int valuesCounter = 0;
+    int symbolsCounter = 0, materialsCounter = 0, ceremonyCounter = 0, landCounter = 0, familyCounter = 0;
+    int langCounter = 0, dreamCounter = 0, sitesCounter = 0, spiritCounter = 0;
+
+//    int symbolsCounter, materialsCounter, ceremonyCounter, landCounter, familyCounter;
+//    int langCounter, dreamCounter, sitesCounter, spiritCounter;
 
     // set the total number of quizzes by each category
-    int artsTotal = 2;
-    int cultureTotal = 4;
-    int valuesTotal = 3;
-
-    // Access FireStore
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
+    final String artsTotal = "2";
+    final String cultureTotal = "4";
+    final String valuesTotal = "3";
 
     @Nullable
     @Override
@@ -88,87 +110,72 @@ public class SearchFragment extends Fragment {
         topicCultureList = new ArrayList<TopicEntity>();
         topicValueList = new ArrayList<TopicEntity>();
 
-        new Thread(new Runnable() {
+        // set Horizontal RecyclerView Layout
+        LinearLayoutManager artLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager cultureLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager valuesLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+
+        rvArts.setLayoutManager(artLayout);
+        rvCulture.setLayoutManager(cultureLayout);
+        rvValues.setLayoutManager(valuesLayout);
+        rvArts.setHasFixedSize(true);
+        rvCulture.setHasFixedSize(true);
+        rvValues.setHasFixedSize(true);
+        rvArts.setItemAnimator(new DefaultItemAnimator());
+        rvCulture.setItemAnimator(new DefaultItemAnimator());
+        rvValues.setItemAnimator(new DefaultItemAnimator());
+
+        int[] artIcons = {R.drawable.content_arts_symbols, R.drawable.content_arts_material};
+        int[] cultureIcons = {R.drawable.content_culture_land, R.drawable.content_culture_family, R.drawable.content_culture_ceremony,R.drawable.content_culture_language};
+        int[] valueIcons = {R.drawable.content_values_dreamtime, R.drawable.content_values_sacred, R.drawable.content_values_spirituality};
+
+        String[] artNames = {"Symbols", "Materials"};
+        String[] cultureNames = {"Land", "Family and Kinship", "Ceremony", "Language"};
+        String[] valueNames = {"Dreamtime Stories", "Sacred Sites", "Spirituality"};
+
+        // Display all the information.
+        for (int i = 0; i < artIcons.length; i++){
+            TopicEntity topicEntities = new TopicEntity(artIcons[i], artNames[i]);
+            topicArtList.add(topicEntities);
+        }
+
+        for (int i = 0; i < cultureIcons.length; i++){
+            TopicEntity topicEntities = new TopicEntity(cultureIcons[i], cultureNames[i]);
+            topicCultureList.add(topicEntities);
+        }
+
+        for (int i = 0; i < valueIcons.length; i++){
+            TopicEntity topicEntities = new TopicEntity(valueIcons[i], valueNames[i]);
+            topicValueList.add(topicEntities);
+        }
+
+        TopicAdapter.RecyclerViewClickListener listener = new TopicAdapter.RecyclerViewClickListener() {
             @Override
-            public void run() {
-
-                // set Horizontal RecyclerView Layout
-                LinearLayoutManager artLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                LinearLayoutManager cultureLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                LinearLayoutManager valuesLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
-                rvArts.setLayoutManager(artLayout);
-                rvCulture.setLayoutManager(cultureLayout);
-                rvValues.setLayoutManager(valuesLayout);
-                rvArts.setHasFixedSize(true);
-                rvCulture.setHasFixedSize(true);
-                rvValues.setHasFixedSize(true);
-                rvArts.setItemAnimator(new DefaultItemAnimator());
-                rvCulture.setItemAnimator(new DefaultItemAnimator());
-                rvValues.setItemAnimator(new DefaultItemAnimator());
-
-                int[] artIcons = {R.drawable.content_arts_symbols, R.drawable.content_arts_material};
-                int[] cultureIcons = {R.drawable.content_culture_land, R.drawable.content_culture_family, R.drawable.content_culture_ceremony,R.drawable.content_culture_language};
-                int[] valueIcons = {R.drawable.content_values_dreamtime, R.drawable.content_values_sacred, R.drawable.content_values_spirituality};
-
-                String[] artNames = {"Symbols", "Materials"};
-                String[] cultureNames = {"Land", "Family and Kinship", "Ceremony", "Language"};
-                String[] valueNames = {"Dreamtime Stories", "Sacred Sites", "Spirituality"};
-
-                // Display all the information.
-                for (int i = 0; i < artIcons.length; i++){
-                    TopicEntity topicEntities = new TopicEntity(artIcons[i], artNames[i]);
-                    topicArtList.add(topicEntities);
-                }
-
-                for (int i = 0; i < cultureIcons.length; i++){
-                    TopicEntity topicEntities = new TopicEntity(cultureIcons[i], cultureNames[i]);
-                    topicCultureList.add(topicEntities);
-                }
-
-                for (int i = 0; i < valueIcons.length; i++){
-                    TopicEntity topicEntities = new TopicEntity(valueIcons[i], valueNames[i]);
-                    topicValueList.add(topicEntities);
-                }
-
-                TopicAdapter.RecyclerViewClickListener listener = new TopicAdapter.RecyclerViewClickListener() {
-                    @Override
-                    public void onClick(View view, String topicName) {
-                        Log.d(TAG, "DiscussionFragment title: " + topicName);
-                        getCollectionName (topicName, email);
-                    }
-                }; // end of DiscussionAdapter.RecyclerViewClickListener
-
-                artAdapter = new TopicAdapter(topicArtList, listener);
-                cultureAdapter = new TopicAdapter(topicCultureList, listener);
-                valueAdapter = new TopicAdapter(topicValueList, listener);
-
-                rvArts.setAdapter(artAdapter);
-                rvCulture.setAdapter(cultureAdapter);
-                rvValues.setAdapter(valueAdapter);
+            public void onClick(View view, String topicName) {
+                Log.d(TAG, "DiscussionFragment title: " + topicName);
+                getCollectionName (topicName, email);
             }
-        }).start(); // end of new Thread
+        }; // end of DiscussionAdapter.RecyclerViewClickListener
 
-        // View the progress of each of the text
-        getProgress();
+        artAdapter = new TopicAdapter(topicArtList, listener);
+        cultureAdapter = new TopicAdapter(topicCultureList, listener);
+        valueAdapter = new TopicAdapter(topicValueList, listener);
 
-        return view;
-    } // end of onCreate method
-
-    private void getProgress() {
+        rvArts.setAdapter(artAdapter);
+        rvCulture.setAdapter(cultureAdapter);
+        rvValues.setAdapter(valueAdapter);
 
         artsProgressBar.setMax(2);
         cultureProgressBar.setMax(4);
         valuesProgressBar.setMax(3);
 
-        // set the progress bar...
-        // To do this, we want to get the database values...
-        artsProgressBar.setProgress(1);
-        cultureProgressBar.setProgress(1);
-        valuesProgressBar.setProgress(1);
+        // View the progress of each of the text
+        getArtsData(email);
+        getCultureData(email);
+        getValuesData(email);
 
-
-    } // end of getProgress method
+        return view;
+    } // end of onCreate method
 
     private void getCollectionName(String topicName, String email){
         String heading;
@@ -241,21 +248,188 @@ public class SearchFragment extends Fragment {
         fragmentTransaction.commit();
 
     } // end of openViewContent page
+
     //Action bar go back button function
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 getActivity().onBackPressed();
-                    // Navigate to settings screen
+                // Navigate to settings screen
                 break;
             case R.id.fragment_frame:
-                    // Save profile changes
+                // Save profile changes
                 return true;
             default:
                 return false;
-            }
-            return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void getArtsData (String email) {
+
+        CollectionReference postsRef = database.collection("Quiz Attempts");
+        // perform query to get all the attempts made by the user.
+        Query quizArtSymbols = postsRef.whereEqualTo("email", email).whereEqualTo("quizTopic", "Arts Symbols Quiz");
+        Query quizArtsMaterials = postsRef.whereEqualTo("email", email).whereEqualTo("quizTopic", "Arts Materials Quiz");
+
+        // You cannot perform unique queries with Firestore database...
+        quizArtSymbols.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (!value.isEmpty()){
+                    symbolsCounter = 1;
+                } else {
+                    symbolsCounter = 0;
+                } setArtData();
+            }
+        });
+
+        quizArtsMaterials.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (!value.isEmpty()){
+                    materialsCounter = 1;
+                } else {
+                    materialsCounter = 0;
+                }
+            }
+        });
+
+
+    } // end of getArtsData method
+
+    private void getCultureData(String email){
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                CollectionReference postsRefs = database.collection("Quiz Attempts");
+
+                Query quizCultureCeremony = postsRefs.whereEqualTo("email", email).whereEqualTo("quizTopic", "Culture Ceremony Quiz");
+                Query quizCultureFamily = postsRefs.whereEqualTo("email", email).whereEqualTo("quizTopic", "Culture Family and Kinship Quiz");
+                Query quizCultureLand = postsRefs.whereEqualTo("email", email).whereEqualTo("quizTopic", "Culture Land Quiz");
+                Query quizCultureLan = postsRefs.whereEqualTo("email", email).whereEqualTo("quizTopic", "Culture Language Quiz");
+
+                quizCultureCeremony.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            ceremonyCounter = 1;
+                        } else {
+                            ceremonyCounter = 0;
+                        }
+                        setCultureData();
+                    }
+                });
+
+                quizCultureFamily.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            familyCounter = 1;
+                        } else {
+                            familyCounter = 0;
+                        }
+                    }
+                });
+
+                quizCultureLand.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            landCounter = 1;
+                        } else {
+                            landCounter = 0;
+                        }// end of if-statement
+
+                    }
+                });
+
+                quizCultureLan.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            langCounter = 1;
+                        } else {
+                            langCounter = 0;
+                        }// end of if-statement
+                    }
+                });
+            }
+        }); // end of thread
+
+    } // end of getCultureData method
+
+    private void getValuesData(String email) {
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                CollectionReference postsRef = database.collection("Quiz Attempts");
+
+                Query quizValuesDream = postsRef.whereEqualTo("email", email).whereEqualTo("quizTopic", "Values Dreamtime Quiz");
+                Query quizValuesSites = postsRef.whereEqualTo("email", email).whereEqualTo("quizTopic", "Values Sites Quiz");
+                Query quizValuesSpirit = postsRef.whereEqualTo("email", email).whereEqualTo("quizTopic", "Values Spirituality Quiz");
+
+                quizValuesDream.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            dreamCounter = 1;
+                        } else {
+                            dreamCounter = 0;
+                        } setValueData();
+                    }
+                });
+
+                quizValuesSites.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            sitesCounter = 1;
+                        } else {
+                            sitesCounter = 0;
+                        }
+                    }
+                });
+
+                quizValuesSpirit.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            spiritCounter = 1;
+                        } else {
+                            spiritCounter = 0;
+                        }
+                    }
+                });
+
+            }
+        }); // end of thread
+
+    } // end of getValuesData method
+
+    private void setArtData (){
+        String artProgressTotal = String.valueOf(materialsCounter + symbolsCounter);
+        artsProgressBar.setProgress((materialsCounter + symbolsCounter));
+        tvArtsProgress.setText(artProgressTotal + "/" + artsTotal);
+    }
+
+    private void setCultureData() {
+        String cultureProgressTotal = String.valueOf(ceremonyCounter + familyCounter + landCounter + langCounter);
+        cultureProgressBar.setProgress((ceremonyCounter + familyCounter + landCounter + langCounter));
+        tvCultureProgress.setText(cultureProgressTotal + "/" + cultureTotal);
+    }
+
+    private void setValueData() {
+        String valueProgressTotal = String.valueOf((dreamCounter + sitesCounter + spiritCounter));
+        valuesProgressBar.setProgress((dreamCounter + sitesCounter + spiritCounter));
+        tvValuesProgress.setText(valueProgressTotal + "/" + valuesTotal);
+
+    }
+
 }
 

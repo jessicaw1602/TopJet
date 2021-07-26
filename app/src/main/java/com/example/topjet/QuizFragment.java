@@ -58,10 +58,12 @@ public class QuizFragment extends Fragment {
     private static final String KEY_CORRECT_ANSWER = "correctAnswer";
 
     // FireStore Database to insert user's quiz attempt
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_TOTAL_SCORE = "score";
     private static final String KEY_DATE = "date";
     private static final String KEY_QUIZ_TOPIC = "quizTopic";
+    private static final String KEY_QUIZ = "topicArea";
     private static final String KEY_ID = "docId";
 
     // FireStore
@@ -141,7 +143,7 @@ public class QuizFragment extends Fragment {
                                 maxQuestions = listOfQuizQues.size(); // get the size of the list and save it as maxQuestions
                                 Log.d(TAG, "The number of pages is: " + maxQuestions);
                             }
-                            showNextQuestion(email, quizTopicArea);
+                            showNextQuestion(email, quizTopicArea, topicAreas);
 
                         } else {
                             Log.d(TAG, "Unsuccessful in Retrieving the Quiz Data");
@@ -176,7 +178,7 @@ public class QuizFragment extends Fragment {
                     submitAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showNextQuestion(email, quizTopicArea);
+                            showNextQuestion(email, quizTopicArea, topicAreas);
                             submitAns.setVisibility((View.GONE));
                         }
                     });
@@ -186,7 +188,7 @@ public class QuizFragment extends Fragment {
                     submitAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            finishQuiz(email, quizTopicArea);
+                            finishQuiz(email, quizTopicArea, topicAreas);
                         }
                     });
                 }
@@ -220,7 +222,7 @@ public class QuizFragment extends Fragment {
                     submitAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showNextQuestion(email, quizTopicArea);
+                            showNextQuestion(email, quizTopicArea, topicAreas);
                             submitAns.setVisibility((View.GONE));
                         }
                     });
@@ -230,7 +232,7 @@ public class QuizFragment extends Fragment {
                     submitAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            finishQuiz(email, quizTopicArea);
+                            finishQuiz(email, quizTopicArea, topicAreas);
                         }
                     });
                 }
@@ -246,7 +248,7 @@ public class QuizFragment extends Fragment {
                     //showCorrectAnswer();
                     showAnswer.setText("Good Job! Your answer is correct!");
                 } else { // if wrong
-                    showAnswer.setText("Sorry, your answer is incorrect");
+                    showAnswer.setText("Sorry, your answer is incorrect!");
                     answerThree.setTextColor(Color.RED);
                     if (answerTwo.getText().equals(currentQuestion.getCorrectAnswer())) {
                         answerTwo.setTextColor(Color.GREEN);
@@ -264,7 +266,7 @@ public class QuizFragment extends Fragment {
                     submitAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showNextQuestion(email, quizTopicArea);
+                            showNextQuestion(email, quizTopicArea, topicAreas);
                             submitAns.setVisibility((View.GONE));
                         }
                     });
@@ -274,7 +276,7 @@ public class QuizFragment extends Fragment {
                     submitAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            finishQuiz(email, quizTopicArea);
+                            finishQuiz(email, quizTopicArea, topicAreas);
                         }
                     });
                 }
@@ -308,7 +310,7 @@ public class QuizFragment extends Fragment {
                     submitAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showNextQuestion(email, quizTopicArea);
+                            showNextQuestion(email, quizTopicArea, topicAreas);
                             submitAns.setVisibility((View.GONE));
                         }
                     });
@@ -318,7 +320,7 @@ public class QuizFragment extends Fragment {
                     submitAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            finishQuiz(email, quizTopicArea);
+                            finishQuiz(email, quizTopicArea, topicAreas);
                         }
                     });
                 }
@@ -420,7 +422,7 @@ public class QuizFragment extends Fragment {
 //        }
 //    } // end of showCorrectAnswer method
 
-    private void showNextQuestion(String email, String quizTopicArea) {
+    private void showNextQuestion(String email, String quizTopicArea, String topicAreas) {
         // Clear all the text and checks
         showAnswer.setText(""); // we don't want to show whether the user's answer is correct/incorrect yet
         //radioGroup.clearCheck(); // clear all the checked answers
@@ -447,12 +449,12 @@ public class QuizFragment extends Fragment {
             answered = false;
             questionNum.setText("Question: " + questionCounter + "/" + maxQuestions);
         } else {
-            finishQuiz(email, quizTopicArea);
+            finishQuiz(email, quizTopicArea, topicAreas);
         }
 
     } // end of showNextQuestion method
 
-    private void finishQuiz(String email, String quizTopicArea) {
+    private void finishQuiz(String email, String quizTopicArea, String topicArea) {
         Log.d(TAG, "Users score is: " + testScore);
 
         // Get the username of the user
@@ -478,9 +480,11 @@ public class QuizFragment extends Fragment {
                     // Create the new Quiz attempt with the username
                     Map<String, Object> newAttempt = new HashMap<>();
                     newAttempt.put(KEY_USERNAME, username);
+                    newAttempt.put(KEY_EMAIL, email);
                     newAttempt.put(KEY_DATE, getDate);
                     newAttempt.put(KEY_TOTAL_SCORE, testScore);
                     newAttempt.put(KEY_QUIZ_TOPIC, quizTopicArea);
+                    newAttempt.put(KEY_QUIZ, topicArea);
                     newAttempt.put(KEY_ID, docId);
 
                     // Add the new attempt into the database
