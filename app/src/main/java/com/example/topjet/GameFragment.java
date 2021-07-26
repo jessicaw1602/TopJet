@@ -50,7 +50,7 @@ public class GameFragment extends Fragment {
 
     private ContentEntity currentPage; // currentPage = the page that the user will be on, and maxPages is the total number of pages
     private int pageCounter = 0; // will be used to count the current page
-    private int maxPages = 5; // number of pages listed in the contentList
+    private int maxPages = 20; // number of pages listed in the contentList
 
     // enable action bar
 
@@ -151,6 +151,11 @@ public class GameFragment extends Fragment {
                 pageCounter++;
                 switch(pageCounter){
                     case 1:
+                        ivGame.setImageResource(R.drawable.ceremony);
+                        //replace this code here with an instructions page
+                        break;
+
+                    case 2:
                         ivGame.setImageResource(R.drawable.ceremony_numbers);
                         tvTitle.setText("Name the objects:");
                         didgeridooButton.setVisibility(View.GONE);
@@ -181,7 +186,8 @@ public class GameFragment extends Fragment {
                             }
                         });
                         break;
-                    case 2:
+
+                    case 3:
                         ivGame.setImageResource(R.drawable.uluru);
                         tvTitle.setText("Uluru");
                         didgeridooButton.setVisibility(View.GONE);
@@ -230,7 +236,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
 
-                    case 3:
+                    case 4:
                         ivGame.setImageResource(R.drawable.uluru_numbers);
                         tvTitle.setText("Name the objects:");
                         userInputOne.setVisibility(View.VISIBLE);
@@ -267,7 +273,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
 
-                    case 4:
+                    case 5:
                         ivGame.setImageResource(R.drawable.rockart);
                         tvTitle.setText("Rock Art");
                         uluruButton.setVisibility(View.GONE);
@@ -313,7 +319,8 @@ public class GameFragment extends Fragment {
                         }
                     });
                     break;
-                    case 5:
+
+                    case 6:
                         ivGame.setImageResource(R.drawable.rockart_numbers);
                         tvTitle.setText("Name the objects:");
                         userInputOne.setVisibility(View.VISIBLE);
@@ -349,7 +356,7 @@ public class GameFragment extends Fragment {
                             }
                         });
                         break;
-                    case 6:
+                    case 7:
                         ivGame.setImageResource(R.drawable.hut_depression);
                         tvTitle.setText("Hut Depression");
 
@@ -392,7 +399,8 @@ public class GameFragment extends Fragment {
                             }
                         });
                         break;
-                    case 7:
+
+                    case 8:
                         ivGame.setImageResource(R.drawable.hut_numbers);
                         tvTitle.setText("Name the objects:");
                         hutDepressionButton.setVisibility(View.GONE);
@@ -426,9 +434,9 @@ public class GameFragment extends Fragment {
                                 }
                             }
                         });
-
                         break;
-                    case 8:
+
+                    case 9:
                         ivGame.setImageResource(R.drawable.rock);
                         tvTitle.setText("Grindstone");
 
@@ -468,9 +476,9 @@ public class GameFragment extends Fragment {
                                         "Done");
                             }
                         });
-
                         break;
-                    case 9:
+
+                    case 10:
                         ivGame.setImageResource(R.drawable.rock_numbers);
                         tvTitle.setText("Name the objects:");
 
@@ -504,7 +512,6 @@ public class GameFragment extends Fragment {
                                 }
                             }
                         });
-
                         break;
                 }
 //                getContent(email); // go to the next page. Now page counter = 2
