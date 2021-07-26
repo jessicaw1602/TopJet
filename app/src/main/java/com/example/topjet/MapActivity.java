@@ -197,7 +197,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     } // end of onMapReady
 
 
-
     // Enables the user's location, if the 'Fine' location permission has been granted
     private void enableMyLocation() {
         // [START maps_check_location_permission]
@@ -241,7 +240,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        Toast.makeText(this, "Get location" + location.getLongitude() , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Get location" + location.getLongitude() , Toast.LENGTH_SHORT).show();
     }
 }
 

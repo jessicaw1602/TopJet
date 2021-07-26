@@ -281,7 +281,7 @@ public class SearchFragment extends Fragment {
                     symbolsCounter = 1;
                 } else {
                     symbolsCounter = 0;
-                } setArtData();
+                } setArtData(symbolsCounter);
             }
         });
 
@@ -320,7 +320,7 @@ public class SearchFragment extends Fragment {
                         } else {
                             ceremonyCounter = 0;
                         }
-                        setCultureData();
+                        setCultureData(ceremonyCounter);
                     }
                 });
 
@@ -381,7 +381,7 @@ public class SearchFragment extends Fragment {
                             dreamCounter = 1;
                         } else {
                             dreamCounter = 0;
-                        } setValueData();
+                        } setValueData(dreamCounter);
                     }
                 });
 
@@ -412,19 +412,19 @@ public class SearchFragment extends Fragment {
 
     } // end of getValuesData method
 
-    private void setArtData (){
+    private void setArtData (int symbolsCounter){
         String artProgressTotal = String.valueOf(materialsCounter + symbolsCounter);
         artsProgressBar.setProgress((materialsCounter + symbolsCounter));
         tvArtsProgress.setText(artProgressTotal + "/" + artsTotal);
     }
 
-    private void setCultureData() {
+    private void setCultureData(int ceremonyCounter) {
         String cultureProgressTotal = String.valueOf(ceremonyCounter + familyCounter + landCounter + langCounter);
         cultureProgressBar.setProgress((ceremonyCounter + familyCounter + landCounter + langCounter));
         tvCultureProgress.setText(cultureProgressTotal + "/" + cultureTotal);
     }
 
-    private void setValueData() {
+    private void setValueData(int dreamCounter) {
         String valueProgressTotal = String.valueOf((dreamCounter + sitesCounter + spiritCounter));
         valuesProgressBar.setProgress((dreamCounter + sitesCounter + spiritCounter));
         tvValuesProgress.setText(valueProgressTotal + "/" + valuesTotal);
