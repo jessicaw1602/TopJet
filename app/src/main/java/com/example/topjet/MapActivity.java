@@ -240,7 +240,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-//        Toast.makeText(this, "Get location" + location.getLongitude() , Toast.LENGTH_SHORT).show();
     }
 }
 

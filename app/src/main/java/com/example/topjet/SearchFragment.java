@@ -39,7 +39,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/* IMAGE RECYCLERVIEW CODE ADAPTED FROM: https://www.youtube.com/watch?v=Ph3Ek6cLS4M */
+/*
+* IMAGE RECYCLERVIEW CODE ADAPTED FROM: https://www.youtube.com/watch?v=Ph3Ek6cLS4M
+* QUERY SNAPSHOT DOCUMENTATION: https://googleapis.dev/nodejs/firestore/3.7.5/QuerySnapshot.html#isEqual
+* */
 
 public class SearchFragment extends Fragment {
     private static final String TAG = "SearchFragment";
