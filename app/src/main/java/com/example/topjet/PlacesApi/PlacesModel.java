@@ -33,9 +33,9 @@ public class PlacesModel {
     @Expose
     private String name;
 
-    @SerializedName("photos")
-    @Expose
-    private List<PhotoModel> photos = null;
+//    @SerializedName("photos")
+//    @Expose
+//    private List<PhotoModel> photos = null;
 
     @SerializedName("place_id")
     @Expose
@@ -86,9 +86,9 @@ public class PlacesModel {
         this.name = name;
     }
 
-    public void setPhotos(List<PhotoModel> photos) {
-        this.photos = photos;
-    }
+//    public void setPhotos(List<PhotoModel> photos) {
+//        this.photos = photos;
+//    }
 
     public void setPlaceId(String placeId) {
         this.placeId = placeId;
@@ -139,9 +139,9 @@ public class PlacesModel {
         return name;
     }
 
-    public List<PhotoModel> getPhotos() {
-        return photos;
-    }
+//    public List<PhotoModel> getPhotos() {
+//        return photos;
+//    }
 
     public String getPlaceId() {
         return placeId;

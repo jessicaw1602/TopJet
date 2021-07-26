@@ -6,7 +6,7 @@ import retrofit2.http.Url;
 
 // Retrofit API
 public interface PlacesService {
-    @GET // return the List of PlacesModel
+    @GET // return all the necessary information based on the Places
     Call<PlacesResponse> getNearByPlaces (@Url String url);
 
     /*

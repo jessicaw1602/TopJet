@@ -78,8 +78,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private static final String TAG = "MapActivity";
     //    String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=art_gallery&keyword=aboriginal&key=AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y";
-    String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
-
 
     Spinner mapSpinner;
     Button btMapSearch;
@@ -92,25 +90,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private PlacesClient placesClient;
     FusedLocationProviderClient client; // entry point to fused location
     private Location lastKnownLocation; // the last known location retrieved by the Fused Location Provider
-    LocationManager locationManager;
 
     // Get user's location
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean permissionDenied = false;
-    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085); // default location - Sydney
     private boolean locationPermissionGranted;
     private static final int DEFAULT_ZOOM = 16;
-
-
     Marker allMarkers;
-    double currentLatitude = 0;
-    double currentLongitude = 0;
+
+    // For Retrofit
     PlacesService placesService;
-
-    PlacesResponse placesResponse;
     List<PlacesModel> getPlaceModelList;
-
+    PlacesResponse placesResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +111,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mapSpinner = findViewById(R.id.mapSpinner);
         btMapSearch = findViewById(R.id.btnMapSearch);
+
+        // Create an instance for retrofit API
+        placesService = PlacesRetrofit.getPlacesRetrofit().create(PlacesService.class);
+        getPlaceModelList = new ArrayList<>();
 
         // Set the Spinner Adapter
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
@@ -132,20 +128,84 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         client = LocationServices.getFusedLocationProviderClient(this);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        // if the user hasn't set any permissions yet.
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MapActivity.this,
                     new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 44);
-
             Toast.makeText(this, "Error! Cannot get location!", Toast.LENGTH_SHORT).show();
             return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         enableMyLocation();
         getCurrentLocation();
 
     } // end of onCreate
 
+    // This is where we can ad markers or lines add listeners or move the camera.
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); // set the map to normal
+        mMap.setOnMyLocationButtonClickListener(this);
+        mMap.setOnMyLocationClickListener(this);
+        enableMyLocation();
+
+    } // end of onMapReady
+
+    // Now call RETROFIT
+    private void getPlaces(String placeName){
+
+        //TODO - replace the location with the current location & replace the type with the adapter
+        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+                + "location=-33.8688197,151.2092955"
+                + "&radius=1800"
+                + "&type=art_gallery"
+                + "&keyword=aboriginal"
+                + "&key=AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y";
+
+        // would need to do an if-else statement; you need to check if the current location is null
+        // or not
+        /*  if (currentLocation != null){} */
+
+        placesService.getNearByPlaces(url).enqueue(new Callback<PlacesResponse>() {
+            @Override
+            public void onResponse(Call<PlacesResponse> call, Response<PlacesResponse> response) {
+                // check to see whether the call was successful or not
+                if (response.errorBody() == null && response.isSuccessful()){ // if the call is successful
+                    // Clear all the map and the arraylist (that will store the vales) first
+                    getPlaceModelList.clear();
+                    mMap.clear();
+
+                    // retrieve all the values first
+                    for (int i = 0; i < response.body().getMapPlaceList().size(); i++){
+                        // we then want to store all the responses (attributes) into an arrayList
+                        getPlaceModelList.add(response.body().getMapPlaceList().get(i));
+                        Log.d(TAG, response.toString());
+                        // now we want to add markers to the position of
+                        addMarker(response.body().getMapPlaceList().get(i));
+                    } // end of for method
+
+                } else { // if there is an error in retrieving the values
+                    Log.d(TAG, "unable to retrieve the values" + response.errorBody());
+                    Toast.makeText(getApplicationContext(), "Error: " + response.errorBody(),
+                            Toast.LENGTH_SHORT).show();
+                } // end of if-else
+            }
+
+            @Override
+            public void onFailure(Call<PlacesResponse> call, Throwable t) {
+                Log.d(TAG, "Failed to connect to API");
+            }
+        }); // end of enqueue
+
+    } // end of getPlaces method
+
+    // Now we want to be able to add in the markers for all the places
+    private void addMarker(PlacesModel placesModel) {
+    }
+
+    /** DON'T TOUCH THE BOTTOM OF THE CODE **/
     private void getCurrentLocation() {
         // Check permissions
         if (ActivityCompat.checkSelfPermission(MapActivity.this,
@@ -160,9 +220,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             @Override
                             public void onMapReady(@NonNull GoogleMap googleMap) {
                                 // Get the long & lat of the location
-                                 LatLng getLatLong = new LatLng(location.getLatitude(), location.getLongitude());
+                                LatLng getLatLong = new LatLng(location.getLatitude(), location.getLongitude());
 
-                                 // Create Marker options
+                                // Create Marker options
                                 MarkerOptions markerOptions = new MarkerOptions().position(getLatLong)
                                         .title("Your Location");
 
@@ -183,19 +243,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
     } // end of getCurrentLocation method
-
-    // This is where we can ad markers or lines add listeners or move the camera.
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
-
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); // set the map to normal
-        mMap.setOnMyLocationButtonClickListener(this);
-        mMap.setOnMyLocationClickListener(this);
-        enableMyLocation();
-
-    } // end of onMapReady
-
 
     // Enables the user's location, if the 'Fine' location permission has been granted
     private void enableMyLocation() {
@@ -241,17 +288,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(@NonNull Location location) {
     }
+
 }
-
-/*
-        // Create an instance for retrofit API
-        placesService = PlacesRetrofit.getPlacesRetrofit().create(PlacesService.class);
-        getPlaceModelList = new ArrayList<>();
-
-        // initialise fused client location provider i.e. currentLocation.getLatitude(), currentLocation.getLongitude()
-        locationProvider = LocationServices.getFusedLocationProviderClient(this);
-
- */
 
 /*
     // This is where we can ad markers or lines add listeners or move the camera.
@@ -283,22 +321,3 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 //} // end of onMapReady
 // */
 
-/*
-    // [START maps_check_location_permission_result]
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
-            return;
-        }
-        if (PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Enable the my location layer if the permission has been granted.
-            enableMyLocation();
-        } else {
-            // Permission was denied. Display an error message
-            // [START_EXCLUDE]
-            // Display the missing permission error dialog when the fragments resume.
-            permissionDenied = true;
-            // [END_EXCLUDE]
-        }
-    }
- */
