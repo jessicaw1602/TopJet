@@ -123,6 +123,18 @@
         app:layout_constraintTop_toBottomOf="@+id/tvEditUserName"
         app:srcCompat="@drawable/flag_profile" />
 
+
+    <ProgressBar
+        android:id="@+id/profileProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="151dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProfile" />
+
     <Button
         android:id="@+id/btEditProfileEdit"
         android:layout_width="wrap_content"
@@ -133,5 +145,36 @@
         android:text="Edit Profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvGetProfilePassword" />
+
+    <TextView
+        android:id="@+id/tvMaxScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="100dp"
+        android:text="100"
+        app:layout_constraintStart_toEndOf="@+id/profileProgress"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:text="Level 1:"
+        app:layout_constraintStart_toStartOf="@+id/profileProgress"
+        app:layout_constraintTop_toBottomOf="@+id/tvEditProfile" />
+
+    <TextView
+        android:id="@+id/tvPercentageDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:text="% Completed"
+        app:layout_constraintBottom_toBottomOf="@+id/tvLevel"
+        app:layout_constraintStart_toEndOf="@+id/tvLevel"
+        app:layout_constraintTop_toTopOf="@+id/tvLevel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

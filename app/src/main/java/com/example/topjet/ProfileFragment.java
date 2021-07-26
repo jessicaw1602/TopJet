@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,8 +28,12 @@ public class ProfileFragment extends Fragment {
     private static final String KEY_USERNAME = "username"; // these are the names for the fields in FireStore
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_IDENTIFY = "cbIdentify";
+    private static final String KEY_SCORE = "score";
+
 
     TextView tvGetProfileEmail, tvGetProfileUsername, tvGetProfilePassword, tvGetProfileIdentify;
+    ProgressBar profileProgress;
+    TextView tvPercentageDone;
     Button btEditProfile;
 
     // Access FireStore
@@ -50,6 +55,10 @@ public class ProfileFragment extends Fragment {
         tvGetProfilePassword = view.findViewById(R.id.tvGetProfilePassword);
         tvGetProfileIdentify = view.findViewById(R.id.tvEditIdentify);
         btEditProfile = view.findViewById(R.id.btEditProfileEdit);
+
+        //Progress Bar
+        profileProgress = view.findViewById(R.id.profileProgress);
+        tvPercentageDone = view.findViewById(R.id.tvPercentageDone);
 
         // now that we have the username, we want to access Firebase and get all the information relating back to the user.
         retrieveUserInfo(email);
@@ -77,11 +86,18 @@ public class ProfileFragment extends Fragment {
                     String keyUsername = documentSnapshot.getString(KEY_USERNAME);
                     String keyPassword = documentSnapshot.getString(KEY_PASSWORD);
                     String keyIdentify = documentSnapshot.getString(KEY_IDENTIFY);
+                    String keyScore = documentSnapshot.getString(KEY_SCORE);
 
                     tvGetProfileEmail.setText(keyEmail);
                     tvGetProfileUsername.setText(keyUsername);
                     tvGetProfilePassword.setText("********");
                     tvGetProfileIdentify.setText(keyIdentify);
+                    tvPercentageDone.setText(keyScore + "/100");
+
+                    // Set the values of the progress bar
+                    profileProgress.setMax(100);
+                    profileProgress.setProgress(Integer.parseInt(keyScore));
+
                     Log.d(TAG, keyEmail); // check to see whether the code works or not.
                 }
             }
