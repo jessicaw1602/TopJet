@@ -41,10 +41,10 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="151dp"
             android:layout_height="26dp"
-            android:layout_marginStart="28dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintStart_toEndOf="@+id/tvArts"
+            android:layout_marginStart="136dp"
+            android:layout_marginLeft="136dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
 
         <ProgressBar
@@ -52,22 +52,22 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="151dp"
             android:layout_height="26dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="372dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
             app:layout_constraintStart_toEndOf="@+id/tvCulture"
-            app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
+            app:layout_constraintTop_toBottomOf="@+id/rvArts" />
 
         <ProgressBar
             android:id="@+id/valuesProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="151dp"
             android:layout_height="26dp"
-            android:layout_marginStart="23dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginTop="736dp"
-            app:layout_constraintStart_toEndOf="@+id/tvValues"
-            app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
+            android:layout_marginStart="144dp"
+            android:layout_marginLeft="144dp"
+            android:layout_marginTop="27dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvCulture" />
 
         <TextView
             android:id="@+id/tvCulture"
@@ -136,8 +136,8 @@
             android:id="@+id/tvArtsProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
             android:layout_marginTop="32dp"
             android:text="% Completed"
             app:layout_constraintStart_toEndOf="@+id/artsProgressBar"
@@ -147,9 +147,9 @@
             android:id="@+id/tvCultureProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:layout_marginLeft="17dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="27dp"
             android:text="% Completed"
             app:layout_constraintStart_toEndOf="@+id/cultureProgressBar"
             app:layout_constraintTop_toBottomOf="@+id/rvArts" />

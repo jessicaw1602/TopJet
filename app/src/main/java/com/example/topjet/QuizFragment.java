@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -83,6 +84,8 @@ public class QuizFragment extends Fragment {
     private Button submitAns;
     private ColorStateList originalTextColour;
 
+    private ProgressBar questionProgressBar;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,6 +104,11 @@ public class QuizFragment extends Fragment {
         score = view.findViewById(R.id.tvQuizScore);
         showAnswer = view.findViewById(R.id.tvShowAns); // will show whether the user's answer is correct or incorrect
         submitAns = view.findViewById(R.id.btSubmit);
+
+        questionProgressBar = view.findViewById(R.id.questionProgressBar);
+        questionProgressBar.setMax(maxQuestions);
+
+
 
         //set submit answer button to invisible
         submitAns.setVisibility((View.GONE));
@@ -445,6 +453,7 @@ public class QuizFragment extends Fragment {
             answerFour.setText(currentQuestion.getAnswerFour());
 
             questionCounter++; // increment the question number
+            questionProgressBar.setProgress(questionCounter);
 
             answered = false;
             questionNum.setText("Question: " + questionCounter + "/" + maxQuestions);
