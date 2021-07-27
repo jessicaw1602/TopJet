@@ -174,7 +174,7 @@ public class GameFragment extends Fragment {
                                 String getUserInputOne = userInputOne.getText().toString();
                                 String getUserInputTwo = userInputTwo.getText().toString();
                                 String getUserInputThree = userInputThree.getText().toString();
-                                if(getUserInputOne.equals("didgeridoo") || getUserInputOne.equals("Didgeridoo") && getUserInputTwo.equals("headband")
+                                /*if(getUserInputOne.equals("didgeridoo") || getUserInputOne.equals("Didgeridoo") && getUserInputTwo.equals("headband")
                                         || getUserInputTwo.equals("Headband") && getUserInputThree.equals("Smoking Ceremony") ||
                                         getUserInputThree.equals("smoking ceremony") || getUserInputThree.equals("Smoking ceremony")){
                                     makeAlert("Correct!", "Please proceed to the next image.", "Ok");
@@ -182,7 +182,21 @@ public class GameFragment extends Fragment {
                                     checkAnswersButton.setVisibility(View.GONE);
                                 }else{
                                     makeAlert("Sorry!", "Please try again.", "Ok");
+                                }*/
+
+                                if(!getUserInputOne.equals("didgeridoo") && !getUserInputOne.equals("Didgeridoo")) {
+                                    makeAlert("Sorry!", "Object 1 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputTwo.equals("headband") && !getUserInputTwo.equals("Headband")) {
+                                    makeAlert("Sorry!", "Object 2 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputThree.equals("Smoking Ceremony") && !getUserInputThree.equals("smoking ceremony")
+                                            && !getUserInputThree.equals("Smoking ceremony") && !getUserInputThree.equals("smoking Ceremony")) {
+                                    makeAlert("Sorry!", "Object 3 is incorrect. Please try again.", "Ok");
+                                }else{
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
+                                    nextButton.setVisibility(View.VISIBLE);
+                                    checkAnswersButton.setVisibility(View.GONE);
                                 }
+
                             }
                         });
                         break;
@@ -259,15 +273,18 @@ public class GameFragment extends Fragment {
                                 String getUserInputOne = userInputOne.getText().toString();
                                 String getUserInputTwo = userInputTwo.getText().toString();
                                 String getUserInputThree = userInputThree.getText().toString();
-                                if(getUserInputOne.equals("uluru") || getUserInputOne.equals("Uluru") &&
-                                        getUserInputTwo.equals("spear") || getUserInputTwo.equals("Spear") &&
-                                        getUserInputThree.equals("body art") || getUserInputThree.equals("Body art") ||
-                                        getUserInputThree.equals("Body Art")){
+
+                                if(!getUserInputOne.equals("uluru") && !getUserInputOne.equals("Uluru")) {
+                                    makeAlert("Sorry!", "Object 1 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputTwo.equals("spear") && !getUserInputTwo.equals("Spear")) {
+                                    makeAlert("Sorry!", "Object 2 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputThree.equals("body art") && !getUserInputThree.equals("Body Art")
+                                        && !getUserInputThree.equals("body Art") && !getUserInputThree.equals("Body art")) {
+                                    makeAlert("Sorry!", "Object 3 is incorrect. Please try again.", "Ok");
+                                }else{
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
                                     nextButton.setVisibility(View.VISIBLE);
                                     checkAnswersButton.setVisibility(View.GONE);
-                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
-                                }else{
-                                    makeAlert("Sorry!", "Please try again.", "Ok");
                                 }
                             }
                         });
@@ -343,15 +360,19 @@ public class GameFragment extends Fragment {
                                 String getUserInputOne = userInputOne.getText().toString();
                                 String getUserInputTwo = userInputTwo.getText().toString();
                                 String getUserInputThree = userInputThree.getText().toString();
-                                if(getUserInputOne.equals("ochre") || getUserInputOne.equals("Ochre")
-                                        && getUserInputTwo.equals("hand stencil") || getUserInputTwo.equals("Hand stencil") ||
-                                        getUserInputTwo.equals("Hand Stencil")&& getUserInputThree.equals("rock art") ||
-                                        getUserInputThree.equals("Rock art") || getUserInputThree.equals("Rock Art")){
+
+                                if(!getUserInputOne.equals("ochre") && !getUserInputOne.equals("Ochre")) {
+                                    makeAlert("Sorry!", "Object 1 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputTwo.equals("hand stencil") && !getUserInputTwo.equals("Hand stencil")
+                                        && !getUserInputTwo.equals("Hand Stencil") && !getUserInputTwo.equals("hand Stencil")) {
+                                    makeAlert("Sorry!", "Object 2 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputThree.equals("rock art") && !getUserInputThree.equals("Rock art")
+                                        && !getUserInputThree.equals("Rock Art")) {
+                                    makeAlert("Sorry!", "Object 3 is incorrect. Please try again.", "Ok");
+                                }else{
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
                                     nextButton.setVisibility(View.VISIBLE);
                                     checkAnswersButton.setVisibility(View.GONE);
-                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
-                                }else{
-                                    makeAlert("Sorry!", "Please try again.", "Ok");
                                 }
                             }
                         });
@@ -422,15 +443,18 @@ public class GameFragment extends Fragment {
                                 String getUserInputOne = userInputOne.getText().toString();
                                 String getUserInputTwo = userInputTwo.getText().toString();
                                 String getUserInputThree = userInputThree.getText().toString();
-                                if(getUserInputOne.equals("hut depression") || getUserInputOne.equals("Hut depression") ||
-                                        getUserInputOne.equals("Hut Depression") && getUserInputTwo.equals("Shellfish") ||
-                                        getUserInputTwo.equals("shellfish") && getUserInputThree.equals("basket") ||
-                                        getUserInputThree.equals("Basket")){
+
+                                if(!getUserInputOne.equals("hut depression") && !getUserInputOne.equals("Hut depression")
+                                        && !getUserInputTwo.equals("Hut Depression") && !getUserInputTwo.equals("hut Depression")) {
+                                    makeAlert("Sorry!", "Object 1 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputTwo.equals("Shellfish") && !getUserInputTwo.equals("shellfish")) {
+                                    makeAlert("Sorry!", "Object 2 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputThree.equals("basket") && !getUserInputThree.equals("Basket")) {
+                                    makeAlert("Sorry!", "Object 3 is incorrect. Please try again.", "Ok");
+                                }else{
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
                                     nextButton.setVisibility(View.VISIBLE);
                                     checkAnswersButton.setVisibility(View.GONE);
-                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
-                                }else{
-                                    makeAlert("Sorry!", "Please try again.", "Ok");
                                 }
                             }
                         });
@@ -501,14 +525,17 @@ public class GameFragment extends Fragment {
                                 String getUserInputOne = userInputOne.getText().toString();
                                 String getUserInputTwo = userInputTwo.getText().toString();
                                 String getUserInputThree = userInputThree.getText().toString();
-                                if(getUserInputOne.equals("Tjiwa") || getUserInputOne.equals("tjiwa") &&
-                                        getUserInputTwo.equals("seeds") || getUserInputTwo.equals("Seeds") &&
-                                        getUserInputThree.equals("tjungari") || getUserInputThree.equals("Tjungari")){
+
+                                if(!getUserInputOne.equals("Tjiwa") && !getUserInputOne.equals("tjiwa")) {
+                                    makeAlert("Sorry!", "Object 1 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputTwo.equals("seeds") && !getUserInputTwo.equals("Seeds")) {
+                                    makeAlert("Sorry!", "Object 2 is incorrect. Please try again.", "Ok");
+                                }else if(!getUserInputThree.equals("tjungari") && !getUserInputThree.equals("Tjungari")) {
+                                    makeAlert("Sorry!", "Object 3 is incorrect. Please try again.", "Ok");
+                                }else{
+                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
                                     nextButton.setVisibility(View.VISIBLE);
                                     checkAnswersButton.setVisibility(View.GONE);
-                                    makeAlert("Correct!", "Please proceed to the next image.", "Ok");
-                                }else{
-                                    makeAlert("Sorry!", "Please try again.", "Ok");
                                 }
                             }
                         });
