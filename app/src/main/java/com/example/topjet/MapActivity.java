@@ -139,7 +139,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     } // end of onMapReady
 
     // If you press on Click Listener then do private void getPlacesData(String type){}
-    // Code Adapted From: https://www.codeproject.com/Articles/1121069/Google-Maps-Nearby-Places-API-using-Retrofit-Andro
+    /*
+     * Code Adapted From: https://www.codeproject.com/Articles/1121069/Google-Maps-Nearby-Places-API-using-Retrofit-Andro
+     * && https://www.youtube.com/watch?v=5QkB1-ln8H0&t=2s
+     */
+
     private void getPlacesData(){
         String type = "art_gallery"; // you will have the opportunity to change this to museums
         String keyword = "aboriginal";
