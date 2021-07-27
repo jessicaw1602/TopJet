@@ -1,38 +1,31 @@
 package com.example.topjet;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.loader.content.AsyncTaskLoader;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.renderscript.ScriptGroup;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.topjet.PlacesApi.PermissionUtils;
-import com.example.topjet.PlacesApi.PlacesModel;
-import com.example.topjet.PlacesApi.PlacesResponse;
-import com.example.topjet.PlacesApi.PlacesRetrofit;
-import com.example.topjet.PlacesApi.PlacesService;
+import com.example.topjet.PlacesApi.PlacesMap;
+import com.example.topjet.PlacesApi.PlacesResult;
+import com.example.topjet.PlacesApi.RetrofitService;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,30 +34,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /* Code adapted from:
  * https://developers.google.com/maps/documentation/places/web-service/search?hl=en_GB &&
@@ -100,9 +84,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     Marker allMarkers;
 
     // For Retrofit
-    PlacesService placesService;
-    List<PlacesModel> getPlaceModelList;
-    PlacesResponse placesResponse;
+    private List<PlacesResult> placesResultsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +93,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mapSpinner = findViewById(R.id.mapSpinner);
         btMapSearch = findViewById(R.id.btnMapSearch);
-
-        // Create an instance for retrofit API
-        placesService = PlacesRetrofit.getPlacesRetrofit().create(PlacesService.class);
-        getPlaceModelList = new ArrayList<>();
 
         // Set the Spinner Adapter
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
@@ -128,6 +106,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         client = LocationServices.getFusedLocationProviderClient(this);
+        placesResultsList = new ArrayList<>();
 
         // if the user hasn't set any permissions yet.
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -136,74 +115,101 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             Toast.makeText(this, "Error! Cannot get location!", Toast.LENGTH_SHORT).show();
             return;
         }
-        enableMyLocation();
-        getCurrentLocation();
+        checkGooglePlayServices();
+        //TODO - replaces current location from the Retrofit Request
+        // & replace the String 'type' and get user request from the button
+        enableMyLocation(); // enable user's location
+        getCurrentLocation(); // get their current location and pass it into getPlaces data
+        getPlacesData(); // return all the nearbyPlaces from the API Call
 
     } // end of onCreate
 
-    // This is where we can ad markers or lines add listeners or move the camera.
+
+
+    // This is where we can add markers or lines add listeners or move the camera.
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL); // set the map to normal
+
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
 
     } // end of onMapReady
 
-    // Now call RETROFIT
-    private void getPlaces(String placeName){
+    // If you press on Click Listener then do private void getPlacesData(String type){}
+    // Code Adapted From: https://www.codeproject.com/Articles/1121069/Google-Maps-Nearby-Places-API-using-Retrofit-Andro
+    private void getPlacesData(){
+        String type = "art_gallery"; // you will have the opportunity to change this to museums
+        String keyword = "aboriginal";
+        String location = "-33.8670522,151.1957362"; // OR you can do it like this: latitude + "," + longitude
+        String key = "AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y";
+        float radius = 1600;
 
-        //TODO - replace the location with the current location & replace the type with the adapter
-        String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-                + "location=-33.8688197,151.2092955"
-                + "&radius=1800"
-                + "&type=art_gallery"
-                + "&keyword=aboriginal"
-                + "&key=AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y";
+        // get the base url from
+        String BASE_URL = RetrofitService.BASE_URL;
+        Log.d(TAG, "BASE_URL = " + BASE_URL);
 
-        // would need to do an if-else statement; you need to check if the current location is null
-        // or not
-        /*  if (currentLocation != null){} */
+        // Build the Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
-        placesService.getNearByPlaces(url).enqueue(new Callback<PlacesResponse>() {
+        RetrofitService service = retrofit.create(RetrofitService.class);
+
+        Call <PlacesMap> call = service.getNearbyPlaces(type, keyword, location, radius, key);
+
+        call.enqueue(new Callback<PlacesMap>() {
             @Override
-            public void onResponse(Call<PlacesResponse> call, Response<PlacesResponse> response) {
-                // check to see whether the call was successful or not
-                if (response.errorBody() == null && response.isSuccessful()){ // if the call is successful
-                    // Clear all the map and the arraylist (that will store the vales) first
-                    getPlaceModelList.clear();
-                    mMap.clear();
+            public void onResponse(@NonNull Call<PlacesMap> call, @NonNull Response<PlacesMap> response) {
+                if (response.isSuccessful() && response.errorBody() == null){
+                    if (response.body().getResults() != null && response.body().getResults().size() > 0){
+                        placesResultsList.clear();
+                        mMap.clear();
 
-                    // retrieve all the values first
-                    for (int i = 0; i < response.body().getMapPlaceList().size(); i++){
-                        // we then want to store all the responses (attributes) into an arrayList
-                        getPlaceModelList.add(response.body().getMapPlaceList().get(i));
-                        Log.d(TAG, response.toString());
-                        // now we want to add markers to the position of
-                        addMarker(response.body().getMapPlaceList().get(i));
-                    } // end of for method
+                        // Return the values now
+                        for (int i = 0; i < response.body().getResults().size(); i++){
+                            placesResultsList.add(response.body().getResults().get(i));
 
-                } else { // if there is an error in retrieving the values
-                    Log.d(TAG, "unable to retrieve the values" + response.errorBody());
-                    Toast.makeText(getApplicationContext(), "Error: " + response.errorBody(),
-                            Toast.LENGTH_SHORT).show();
-                } // end of if-else
+                            double lat = response.body().getResults().get(i).getGeometry().getLocation().getLat();
+                            double lng = response.body().getResults().get(i).getGeometry().getLocation().getLng();
+                            String placeName = response.body().getResults().get(i).getName();
+
+                            MarkerOptions markerOptions = new MarkerOptions();
+                            LatLng latLng = new LatLng(lat, lng);
+
+                            // adding the marker options
+                            markerOptions.position(latLng);
+                            markerOptions.title(placeName);
+                            Marker m = mMap.addMarker(markerOptions); // adding marker to camera
+
+                            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                            // move map camera
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                            mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+
+                            Log.d(TAG, "DATA RETRIEVED SUCCESSFULLY");
+                        }
+                    }
+
+                } else {
+                    Log.d(TAG, "ERROR WITHIN RESPONSE: " + response.errorBody());
+                }
             }
 
             @Override
-            public void onFailure(Call<PlacesResponse> call, Throwable t) {
-                Log.d(TAG, "Failed to connect to API");
+            public void onFailure(Call<PlacesMap> call, Throwable t) {
+                Log.d(TAG, "Failure" + t.toString());
             }
         }); // end of enqueue
 
-    } // end of getPlaces method
+    } // end of getPlacesData
 
-    // Now we want to be able to add in the markers for all the places
-    private void addMarker(PlacesModel placesModel) {
-    }
+
+
+
 
     /** DON'T TOUCH THE BOTTOM OF THE CODE **/
     private void getCurrentLocation() {
@@ -227,8 +233,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                         .title("Your Location");
 
                                 // move the camera and zoom in closer
-                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getLatLong, 16));
-                                mMap.addMarker(markerOptions);
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getLatLong, 10));
+//                                mMap.addMarker(markerOptions);
                             }
                         });
                     }
@@ -289,6 +295,18 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onLocationChanged(@NonNull Location location) {
     }
 
+    private boolean checkGooglePlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if(result != ConnectionResult.SUCCESS) {
+            if(googleAPI.isUserResolvableError(result)) {
+                googleAPI.getErrorDialog(this, result,
+                        0).show();
+            }
+            return false;
+        }
+        return true;
+    }
 }
 
 /*
