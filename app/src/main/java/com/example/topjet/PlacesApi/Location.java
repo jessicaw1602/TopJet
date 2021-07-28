@@ -3,32 +3,29 @@ package com.example.topjet.PlacesApi;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-// Return the latitude and longitude of each place
-public class LocationModel {
+public class Location {
 
     @SerializedName("lat")
     @Expose
-    private Double lat;
+    private float lat;
 
     @SerializedName("lng")
     @Expose
-    private Double lng;
+    private float lng;
 
     // Setters
-    public void setLat(Double lat) {
+    public void setLat(float lat) {
         this.lat = lat;
     }
-
-    public void setLng(Double lng) {
+    public void setLng(float lng) {
         this.lng = lng;
     }
 
     // Getters
-    public Double getLat() {
+    public float getLat() {
         return lat;
     }
-
-    public Double getLng() {
+    public float getLng() {
         return lng;
     }
 
