@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -108,7 +109,7 @@ public class QuizFragment extends Fragment {
         questionProgressBar = view.findViewById(R.id.questionProgressBar);
         questionProgressBar.setMax(maxQuestions);
 
-
+        setHasOptionsMenu(true);
 
         //set submit answer button to invisible
         submitAns.setVisibility((View.GONE));
@@ -375,6 +376,7 @@ public class QuizFragment extends Fragment {
 //            }
 //        }); // end of submitAns.setOnClickListener
         return view;
+
     } // end of onCreateView
 
 //    private void showCorrectAnswer() {
@@ -540,5 +542,21 @@ public class QuizFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     } // end of goToSearchFragment method
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                // Navigate to settings screen
+                break;
+            case R.id.fragment_frame:
+                // Save profile changes
+                return true;
+            default:
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

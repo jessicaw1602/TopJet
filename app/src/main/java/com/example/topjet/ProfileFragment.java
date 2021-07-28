@@ -3,9 +3,11 @@ package com.example.topjet;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ public class ProfileFragment extends Fragment {
     ProgressBar profileProgress;
     TextView tvPercentageDone;
     Button btEditProfile;
+    ImageView flagIdentify;
 
     // Access FireStore
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
@@ -52,13 +55,16 @@ public class ProfileFragment extends Fragment {
 
         tvGetProfileEmail = view.findViewById(R.id.tvGetProfileEmail);
         tvGetProfileUsername = view.findViewById(R.id.tvGetProfileUsername);
-        tvGetProfilePassword = view.findViewById(R.id.tvGetProfilePassword);
+        //tvGetProfilePassword = view.findViewById(R.id.tvGetProfilePassword);
         tvGetProfileIdentify = view.findViewById(R.id.tvEditIdentify);
         btEditProfile = view.findViewById(R.id.btEditProfileEdit);
+        flagIdentify = view.findViewById(R.id.firstNationIdentify);
 
         //Progress Bar
         profileProgress = view.findViewById(R.id.profileProgress);
         tvPercentageDone = view.findViewById(R.id.tvPercentageDone);
+
+        setHasOptionsMenu(true);
 
         // now that we have the username, we want to access Firebase and get all the information relating back to the user.
         retrieveUserInfo(email);
@@ -90,7 +96,12 @@ public class ProfileFragment extends Fragment {
 
                     tvGetProfileEmail.setText(keyEmail);
                     tvGetProfileUsername.setText(keyUsername);
-                    tvGetProfilePassword.setText("********");
+//                  tvGetProfilePassword.setText("********");
+                    if (keyIdentify.equals("No")) {
+                        flagIdentify.setImageResource(R.drawable.australia);
+                    } else {
+                        flagIdentify.setImageResource((R.drawable.aborigin));
+                    }
                     tvGetProfileIdentify.setText(keyIdentify);
                     tvPercentageDone.setText(keyScore + "/100");
 
@@ -118,6 +129,20 @@ public class ProfileFragment extends Fragment {
         fragmentTransaction.commit();
     }// end of goToEditProfile method
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                // Navigate to settings screen
+                break;
+            case R.id.fragment_frame:
+                // Save profile changes
+                return true;
+            default:
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
 

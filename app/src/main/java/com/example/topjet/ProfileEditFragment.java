@@ -3,6 +3,7 @@ package com.example.topjet;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,6 +56,8 @@ public class ProfileEditFragment extends Fragment {
         etEditPassword = view.findViewById(R.id.etEditPassword);
         etProfileUsername = view.findViewById(R.id.etProfileUsername);
         btEditProfileEdit = view.findViewById(R.id.btEditProfileEdit);
+
+        setHasOptionsMenu(true);
 
         retrieveUserInfo(email);
 
@@ -116,4 +119,19 @@ public class ProfileEditFragment extends Fragment {
         fragmentTransaction.commit();
 
     } // end of goToProfileFragment method
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                getActivity().onBackPressed();
+                // Navigate to settings screen
+                break;
+            case R.id.fragment_frame:
+                // Save profile changes
+                return true;
+            default:
+                return false;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
