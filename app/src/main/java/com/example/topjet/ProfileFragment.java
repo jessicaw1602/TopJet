@@ -56,7 +56,7 @@ public class ProfileFragment extends Fragment {
         tvGetProfileEmail = view.findViewById(R.id.tvGetProfileEmail);
         tvGetProfileUsername = view.findViewById(R.id.tvGetProfileUsername);
         //tvGetProfilePassword = view.findViewById(R.id.tvGetProfilePassword);
-        tvGetProfileIdentify = view.findViewById(R.id.tvEditIdentify);
+//        tvGetProfileIdentify = view.findViewById(R.id.tvEditIdentify);
         btEditProfile = view.findViewById(R.id.btEditProfileEdit);
         flagIdentify = view.findViewById(R.id.firstNationIdentify);
 

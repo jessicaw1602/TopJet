@@ -83,6 +83,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final int DEFAULT_ZOOM = 16;
     Marker allMarkers;
 
+
     // For Retrofit
     private List<PlacesResult> placesResultsList;
 
@@ -93,6 +94,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mapSpinner = findViewById(R.id.mapSpinner);
         btMapSearch = findViewById(R.id.btnMapSearch);
+
+
 
         // Set the Spinner Adapter
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,

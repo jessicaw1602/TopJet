@@ -49,8 +49,8 @@ public class ProfileEditFragment extends Fragment {
 
         // Things that can't be edited
         tvEditProfileEmail = view.findViewById(R.id.tvEditProfileEmail);
-        tvEditProfileIdentify = view.findViewById(R.id.tvEditIdentify);
-        tvEditIdentify = view.findViewById(R.id.tvEditIdentify);
+//        tvEditProfileIdentify = view.findViewById(R.id.tvEditIdentify);
+//        tvEditIdentify = view.findViewById(R.id.tvEditIdentify);
 
         // Things that we can edit
         etEditPassword = view.findViewById(R.id.etEditPassword);
@@ -89,7 +89,7 @@ public class ProfileEditFragment extends Fragment {
                     Log.d(TAG, "username is: " + keyUsername);
 
                     tvEditProfileEmail.setText(keyEmail);
-                    tvEditProfileIdentify.setText(keyIdentify);
+//                    tvEditProfileIdentify.setText(keyIdentify);
                     etProfileUsername.setText(keyUsername);
                     etEditPassword.setText(keyPassword);
                 }

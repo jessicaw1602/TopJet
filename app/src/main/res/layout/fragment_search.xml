@@ -40,34 +40,37 @@
             android:id="@+id/artsProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="151dp"
-            android:layout_height="26dp"
+            android:layout_height="5dp"
             android:layout_marginStart="136dp"
             android:layout_marginLeft="136dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="41dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
+            app:layout_constraintTop_toBottomOf="@+id/searchFragment"
+            android:progressDrawable="@drawable/orangeprogress"/>
 
         <ProgressBar
             android:id="@+id/cultureProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="151dp"
-            android:layout_height="26dp"
+            android:layout_height="5dp"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="36dp"
             app:layout_constraintStart_toEndOf="@+id/tvCulture"
-            app:layout_constraintTop_toBottomOf="@+id/rvArts" />
+            app:layout_constraintTop_toBottomOf="@+id/rvArts"
+            android:progressDrawable="@drawable/orangeprogress"/>
 
         <ProgressBar
             android:id="@+id/valuesProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="151dp"
-            android:layout_height="26dp"
+            android:layout_height="5dp"
             android:layout_marginStart="144dp"
             android:layout_marginLeft="144dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="37dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvCulture" />
+            app:layout_constraintTop_toBottomOf="@+id/rvCulture"
+            android:progressDrawable="@drawable/orangeprogress"/>
 
         <TextView
             android:id="@+id/tvCulture"
@@ -140,6 +143,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="32dp"
             android:text="% Completed"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/artsProgressBar"
             app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
 
@@ -151,6 +155,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="27dp"
             android:text="% Completed"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/cultureProgressBar"
             app:layout_constraintTop_toBottomOf="@+id/rvArts" />
 
@@ -162,6 +167,7 @@
             android:layout_marginLeft="18dp"
             android:layout_marginTop="29dp"
             android:text="% Completed"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/valuesProgressBar"
             app:layout_constraintTop_toBottomOf="@+id/rvCulture" />
 
