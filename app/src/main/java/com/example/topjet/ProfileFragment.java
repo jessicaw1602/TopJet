@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment {
                     } else {
                         flagIdentify.setImageResource((R.drawable.aborigin));
                     }
-                    tvGetProfileIdentify.setText(keyIdentify);
+//                    tvGetProfileIdentify.setText(keyIdentify);
                     tvPercentageDone.setText(keyScore + "/100");
 
                     // Set the values of the progress bar
