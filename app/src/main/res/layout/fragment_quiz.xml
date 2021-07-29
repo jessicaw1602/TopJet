@@ -30,13 +30,14 @@
             android:id="@+id/questionProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_height="5dp"
             android:layout_marginStart="40dp"
-            android:layout_marginLeft="48dp"
+            android:layout_marginLeft="40dp"
+            android:progressDrawable="@drawable/orangeprogress"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvQuizQuesCounter"
-            app:layout_constraintVertical_bias="0.309" />
+            app:layout_constraintVertical_bias="0.32" />
 
         <TextView
             android:id="@+id/tvQuizQuesCounter"
@@ -66,7 +67,7 @@
             android:id="@+id/btSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#FF9E3E"
             android:gravity="center"
             android:text="Submit Answer"

@@ -107,7 +107,7 @@ public class QuizFragment extends Fragment {
         submitAns = view.findViewById(R.id.btSubmit);
 
         questionProgressBar = view.findViewById(R.id.questionProgressBar);
-        questionProgressBar.setMax(maxQuestions);
+
 
         setHasOptionsMenu(true);
 
@@ -151,6 +151,7 @@ public class QuizFragment extends Fragment {
                                 listOfQuizQues.add(new QuizEntity(question, answerOne, answerTwo, answerThree, answerFour, correctAnswer));
                                 maxQuestions = listOfQuizQues.size(); // get the size of the list and save it as maxQuestions
                                 Log.d(TAG, "The number of pages is: " + maxQuestions);
+                                questionProgressBar.setMax(maxQuestions);
                             }
                             showNextQuestion(email, quizTopicArea, topicAreas);
 
