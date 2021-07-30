@@ -1,5 +1,6 @@
 package com.example.topjet;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -81,6 +84,8 @@ public class CommentFragment extends Fragment {
         rvShowComments.setLayoutManager(new LinearLayoutManager(getContext()));
         commentList = new ArrayList<CommentEntity>();
         commentAdapter = new CommentAdapter(commentList);
+
+ // reverse the order of the comment list
 
         //enable action bar
         setHasOptionsMenu(true);
@@ -179,6 +184,7 @@ public class CommentFragment extends Fragment {
 
         database.collectionGroup(postDocId).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
@@ -195,7 +201,15 @@ public class CommentFragment extends Fragment {
                                 String comment = commentMap.get("comment").toString();
                                 String postId = commentMap.get("postId").toString();
                                 commentList.add(new CommentEntity(docId, postId, username, date, comment));
+
+                                if (!commentList.isEmpty()){
+                                    commentList.sort(new CommentSorter());
+//                                    Collections.sort(commentList,Collections.reverseOrder());
+                                } else {
+
+                                }
                             }
+
                         } else {
                             Log.d(TAG, "Unsuccessful in Retrieving Data");
                         }

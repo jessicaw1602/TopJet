@@ -1,4 +1,4 @@
-package com.example.topjet;
+package com.example.topjet.Maps;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,44 +6,36 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.topjet.PlacesApi.PermissionUtils;
 import com.example.topjet.PlacesApi.PlacesMap;
 import com.example.topjet.PlacesApi.PlacesResult;
 import com.example.topjet.PlacesApi.RetrofitService;
+import com.example.topjet.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.net.PlacesClient;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,11 +52,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Select Current Place: https://developers.google.com/maps/documentation/android-sdk/current-place-tutorial
  */
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener, GoogleMap.OnMyLocationButtonClickListener,
-        GoogleMap.OnMyLocationClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener,
+        GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener,
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String TAG = "MapActivity";
-
 
     Button artGallery, museum;
     String mapType = "art_gallery"; // Set mapType to initially mapType
@@ -148,9 +140,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }); // end of btMapSearch
 
 
-        //    String artGalleryType = "art_gallery"; // Places API type
-        //    String museumsType = "museum"; // Places API type
-
     } // end of onCreate
 
     // This is where we can add markers or lines add listeners or move the camera.
@@ -162,6 +151,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
+
     } // end of onMapReady
 
     /* Code Below Adapted From: https://www.codeproject.com/Articles/1121069/Google-Maps-Nearby-Places-API-using-Retrofit-Andro
@@ -206,9 +196,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             Log.d(TAG, response.toString());
                             // now we want to add markers to the position of
 
+                            DecimalFormat df = new DecimalFormat();
+                            df.setMaximumFractionDigits(2);
+
                             double lat = response.body().getResults().get(i).getGeometry().getLocation().getLat();
                             double lng = response.body().getResults().get(i).getGeometry().getLocation().getLng();
                             String placeName = response.body().getResults().get(i).getName();
+                            float placeRating = response.body().getResults().get(i).getRating();
+                            String formattedRating = String.format("%.2f",placeRating);
+                            String vicinity = response.body().getResults().get(i).getVicinity();
 
                             MarkerOptions markerOptions = new MarkerOptions();
                             LatLng latLng = new LatLng(lat, lng);
@@ -216,11 +212,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             // adding the marker options
                             markerOptions.position(latLng);
                             markerOptions.title(placeName);
-                            markerOptions.snippet("HI THERE");
+                            markerOptions.snippet("Rating: " + formattedRating + android.R.drawable.btn_star_big_on
+                                    + "\nAddress: " + vicinity);
 
                             Marker m = mMap.addMarker(markerOptions); // adding marker to camera
 
                             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
+                            // increase the size of info window
+                            mMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MapActivity.this));
 
                             // move map camera
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(getLatLong, DEFAULT_ZOOM));
@@ -337,6 +337,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         return true;
     }
+
+
+
 }
 
 /*
