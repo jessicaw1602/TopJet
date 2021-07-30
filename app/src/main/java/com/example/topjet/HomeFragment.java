@@ -31,7 +31,6 @@ public class HomeFragment extends Fragment {
 
     private static final String KEY_USERNAME = "username"; // these are the names for the fields in FireStore
 
-
     ImageButton btEvents, btDiscussion, btContent, btMaps;
     TextView tvWelcome;
 

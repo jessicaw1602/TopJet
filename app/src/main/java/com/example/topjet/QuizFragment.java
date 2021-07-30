@@ -89,7 +89,8 @@ public class QuizFragment extends Fragment {
 
     private ProgressBar questionProgressBar;
 
-    String quizTopicArea = null; // this will be used for getting the topic of the quiz
+    String topicAreas = null; // this will be used for getting the topic of the quiz
+    String quizTopicArea = null; // essentially topicAreas + " Quiz"
 
     @Nullable
     @Override
@@ -122,7 +123,7 @@ public class QuizFragment extends Fragment {
         Log.d(TAG, "The user's email is: " + email);
 
         // Retrieve the topicArea's text from ViewContentFragment and retrieve the correct Quiz questions
-        String topicAreas = getArguments().getString("topicArea");
+        topicAreas = getArguments().getString("topicArea");
         quizTopicArea = topicAreas + " Quiz"; // quizTopicArea will be used to get the values form the DB
         Log.d(TAG, "Quiz topicArea is: " + quizTopicArea);
 
@@ -536,7 +537,7 @@ public class QuizFragment extends Fragment {
     private void showAlertDialog() {
         new AlertDialog.Builder(getContext())
                 .setTitle("Congratulations")
-                .setMessage("You have successfully completed " + quizTopicArea + "\n You have received " + testScore + " marks!")
+                .setMessage("You have successfully completed " + quizTopicArea + "\nYou have received " + testScore + " marks!")
                 .setPositiveButton("CLOSE", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {} })

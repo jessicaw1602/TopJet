@@ -29,11 +29,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Create alert
+        // Create alert dialog to alert Aboriginal & Torres Strait Islander Viewers
         new AlertDialog.Builder(this)
                 .setTitle("Warning")
                 .setMessage("Aboriginal and Torres Strait Islander viewers, listeners and readers " +
-                        "are advised that the application may contain images and voices of " +
+                        "are advised that this application may contain images and voices of " +
                         "people who have died.")
                 .setPositiveButton("OK PROCEED", new DialogInterface.OnClickListener() {
                     @Override

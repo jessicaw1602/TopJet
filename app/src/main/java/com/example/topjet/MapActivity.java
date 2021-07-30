@@ -27,6 +27,7 @@ import com.example.topjet.PlacesApi.PlacesResult;
 import com.example.topjet.PlacesApi.RetrofitService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -64,8 +65,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private static final String TAG = "MapActivity";
 
-    Spinner mapSpinner;
-    Button btMapSearch;
+
+    Button artGallery, museum;
+    String mapType = "art_gallery"; // Set mapType to initially mapType
+
+//    Spinner mapSpinner;
+//    Button btMapSearch;
 
     // Main elements for the maps activity
     private GoogleMap mMap;
@@ -93,14 +98,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        mapSpinner = findViewById(R.id.mapSpinner);
-        btMapSearch = findViewById(R.id.btnMapSearch);
+        artGallery = findViewById(R.id.artGallery);
+        museum = findViewById(R.id.museum);
+
+//        btMapSearch = findViewById(R.id.btnMapSearch);
+//        mapSpinner = findViewById(R.id.mapSpinner);
 
         // Set the Spinner Adapter
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.MapLocations));
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mapSpinner.setAdapter(spinnerAdapter);
+//        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.MapLocations));
+//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        mapSpinner.setAdapter(spinnerAdapter);
 
         // Build the map
         mapFragment = (SupportMapFragment) getSupportFragmentManager().
@@ -120,20 +128,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
         checkGooglePlayServices();
 
-        // & replace the String 'type' and get user request from the button
         enableMyLocation(); // enable user's location
         getCurrentLocation(); // get their current location and pass it into getPlaces data
 
-        btMapSearch.setOnClickListener(new View.OnClickListener() {
+        artGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mapType = "art_gallery";
                 getPlacesData();
             }
         }); // end of btMapSearch
 
+        museum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapType = "museum";
+                getPlacesData();
+            }
+        }); // end of btMapSearch
+
+
+        //    String artGalleryType = "art_gallery"; // Places API type
+        //    String museumsType = "museum"; // Places API type
+
     } // end of onCreate
-
-
 
     // This is where we can add markers or lines add listeners or move the camera.
     @Override
@@ -144,8 +162,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
-
-
     } // end of onMapReady
 
     /* Code Below Adapted From: https://www.codeproject.com/Articles/1121069/Google-Maps-Nearby-Places-API-using-Retrofit-Andro
@@ -155,9 +171,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         // get the values
         String getLatitude = String.valueOf(getLat);
         String getLongitude = String.valueOf(getLong);
-        String getSpinner = mapSpinner.getSelectedItem().toString();
-
-        String type = getSpinner; // you will have the opportunity to change this to museums
+//        String getSpinner = mapSpinner.getSelectedItem().toString();
+        String type = mapType;
+        Log.d(TAG, "the type is: " + mapType);
         String keyword = "aboriginal";
         String location = (getLatitude + "," + getLongitude);
         String key = "AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y";
