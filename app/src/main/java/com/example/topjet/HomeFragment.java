@@ -1,5 +1,7 @@
 package com.example.topjet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,6 +90,7 @@ public class HomeFragment extends Fragment {
 
         return view;
     } // end of onCreateView
+
 
     // go to the discussion page
     private void goToDiscussionFragment(String email){
