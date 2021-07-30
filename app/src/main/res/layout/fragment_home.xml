@@ -77,7 +77,7 @@
         android:backgroundTint="#F99746"
         app:layout_constraintStart_toStartOf="@+id/btContent"
         app:layout_constraintTop_toBottomOf="@+id/btContent"
-        app:srcCompat="@drawable/events" />
+        app:srcCompat="@drawable/events_home1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
