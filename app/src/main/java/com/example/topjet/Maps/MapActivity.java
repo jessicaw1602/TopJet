@@ -196,14 +196,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             Log.d(TAG, response.toString());
                             // now we want to add markers to the position of
 
-                            DecimalFormat df = new DecimalFormat();
+                            DecimalFormat df = new DecimalFormat("#.00");
                             df.setMaximumFractionDigits(2);
 
                             double lat = response.body().getResults().get(i).getGeometry().getLocation().getLat();
                             double lng = response.body().getResults().get(i).getGeometry().getLocation().getLng();
                             String placeName = response.body().getResults().get(i).getName();
                             float placeRating = response.body().getResults().get(i).getRating();
-                            String formattedRating = String.format("%.2f",placeRating);
                             String vicinity = response.body().getResults().get(i).getVicinity();
 
                             MarkerOptions markerOptions = new MarkerOptions();
@@ -212,7 +211,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                             // adding the marker options
                             markerOptions.position(latLng);
                             markerOptions.title(placeName);
-                            markerOptions.snippet("Rating: " + formattedRating + android.R.drawable.btn_star_big_on
+                            markerOptions.snippet("Rating: " + placeRating + android.R.drawable.btn_star_big_on
                                     + "\nAddress: " + vicinity);
 
                             Marker m = mMap.addMarker(markerOptions); // adding marker to camera
