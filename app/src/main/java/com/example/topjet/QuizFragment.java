@@ -11,10 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,13 +21,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.topjet.Entities.ContentEntity;
 import com.example.topjet.Entities.QuizEntity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,7 +34,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -106,7 +100,7 @@ public class QuizFragment extends Fragment {
 
         quizHeading = view.findViewById(R.id.tvQuizHeading);
         questionNum = view.findViewById(R.id.tvQuizQuesCounter);
-        question = view.findViewById(R.id.tvQuestion);
+        question = view.findViewById(R.id.tvInstructions);
         score = view.findViewById(R.id.tvQuizScore);
         showAnswer = view.findViewById(R.id.tvShowAns); // will show whether the user's answer is correct or incorrect
         submitAns = view.findViewById(R.id.btSubmit);

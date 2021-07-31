@@ -103,7 +103,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvQuizHeading">
 
             <TextView
-                android:id="@+id/tvQuestion"
+                android:id="@+id/tvInstructions"
                 android:layout_width="280dp"
                 android:layout_height="71dp"
                 android:layout_gravity="center"
@@ -172,7 +172,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
+                app:layout_constraintTop_toBottomOf="@+id/tvInstructions" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

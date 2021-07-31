@@ -72,7 +72,8 @@ public class HomeFragment extends Fragment {
         btEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToEventsFragment(email);
+//                goToEventsFragment(email);
+                goToInstructionsFragment(email);
             }
         }); // end of btDiscussion.setOnClickListener
 
@@ -151,6 +152,21 @@ public class HomeFragment extends Fragment {
         System.out.println("gameFragment works!");
     }
 
+    private void goToInstructionsFragment(String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        InstructionsFragment instructionsFragment = new InstructionsFragment(); // generate a new searchFragment
+
+        // send bundle for the Game Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        instructionsFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, instructionsFragment); // replace the current frame with gameFragment
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        System.out.println("InstructionsFragment works!");
+    }
 
 }
 

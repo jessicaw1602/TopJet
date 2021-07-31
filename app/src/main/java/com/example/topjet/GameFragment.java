@@ -17,6 +17,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.topjet.Entities.ContentEntity;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,6 +42,7 @@ public class GameFragment extends Fragment {
     Button tjiwaButton, seedsButton, tjungariButton;
 
     Button nextButton;
+    Button finishButton;
     ImageView ivGame;
     TextView tvTitle;
 
@@ -103,6 +106,7 @@ public class GameFragment extends Fragment {
         tjungariButton = view.findViewById(R.id.tjungariButton);
 
         nextButton = view.findViewById(R.id.nextButton);
+        finishButton = view.findViewById(R.id.finishButton);
         ivGame = view.findViewById(R.id.ivGame);
         tvTitle = view.findViewById(R.id.tvTitle);
 
@@ -150,12 +154,8 @@ public class GameFragment extends Fragment {
             public void onClick(View v) {
                 pageCounter++;
                 switch(pageCounter){
-                    case 1:
-                        ivGame.setImageResource(R.drawable.ceremony);
-                        //replace this code here with an instructions page
-                        break;
 
-                    case 2:
+                    case 1:
                         ivGame.setImageResource(R.drawable.ceremony_numbers);
                         tvTitle.setText("Name the objects:");
                         didgeridooButton.setVisibility(View.GONE);
@@ -201,7 +201,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
 
-                    case 3:
+                    case 2:
                         ivGame.setImageResource(R.drawable.uluru);
                         tvTitle.setText("Uluru");
                         didgeridooButton.setVisibility(View.GONE);
@@ -250,7 +250,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
 
-                    case 4:
+                    case 3:
                         ivGame.setImageResource(R.drawable.uluru_numbers);
                         tvTitle.setText("Name the objects:");
                         userInputOne.setVisibility(View.VISIBLE);
@@ -290,7 +290,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
 
-                    case 5:
+                    case 4:
                         ivGame.setImageResource(R.drawable.rockart);
                         tvTitle.setText("Rock Art");
                         uluruButton.setVisibility(View.GONE);
@@ -337,7 +337,7 @@ public class GameFragment extends Fragment {
                     });
                     break;
 
-                    case 6:
+                    case 5:
                         ivGame.setImageResource(R.drawable.rockart_numbers);
                         tvTitle.setText("Name the objects:");
                         userInputOne.setVisibility(View.VISIBLE);
@@ -377,7 +377,7 @@ public class GameFragment extends Fragment {
                             }
                         });
                         break;
-                    case 7:
+                    case 6:
                         ivGame.setImageResource(R.drawable.hut_depression);
                         tvTitle.setText("Hut Depression");
 
@@ -421,7 +421,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
 
-                    case 8:
+                    case 7:
                         ivGame.setImageResource(R.drawable.hut_numbers);
                         tvTitle.setText("Name the objects:");
                         hutDepressionButton.setVisibility(View.GONE);
@@ -460,7 +460,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
 
-                    case 9:
+                    case 8:
                         ivGame.setImageResource(R.drawable.rock);
                         tvTitle.setText("Grindstone");
 
@@ -502,7 +502,7 @@ public class GameFragment extends Fragment {
                         });
                         break;
 
-                    case 10:
+                    case 9:
                         ivGame.setImageResource(R.drawable.rock_numbers);
                         tvTitle.setText("Name the objects:");
 
@@ -539,30 +539,23 @@ public class GameFragment extends Fragment {
                                 }
                             }
                         });
-                        break;
+                            break;
+
+                    case 10:
+                        nextButton.setVisibility(View.GONE);
+                        finishButton.setVisibility(View.VISIBLE);
+
+                        finishButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                goToHomeFragment(email);
+                            }
+                        });
                 }
 //                getContent(email); // go to the next page. Now page counter = 2
                 Log.d(TAG, "new page counter is: " + pageCounter);
             }
         }); // end of btNext.setOnClickListener
-
-//        btBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (pageCounter == 0){
-//                    // go back to SearchFragment
-//                    goToSearchFragment(email);
-//                } else if (pageCounter >= 1 && pageCounter < maxPages){
-//                    Log.d(TAG, "The initial pageCounter is: " + pageCounter);
-//
-//                    pageCounter-=1;
-//
-//                    Log.d(TAG, "The after pageCounter is: " + pageCounter);
-//
-//                    getContent(email); // go to the next page. Now page counter = 2
-//                }
-//            }
-//        }); // end of btBack.setOnClickListener
 
         return view;
     } // end of onCreateView
@@ -596,6 +589,22 @@ public class GameFragment extends Fragment {
                 return false;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void goToHomeFragment(String email){
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        HomeFragment homeFragment = new HomeFragment(); // generate a new homeFragment
+
+        // send bundle for the Game Fragment
+        Bundle bundle = new Bundle();
+        bundle.putString("email", email);
+        homeFragment.setArguments(bundle);
+
+        fragmentTransaction.replace(R.id.fragment_frame, homeFragment); // replace the current frame with gameFragment
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        System.out.println("homeFragment works!");
     }
 
 //    // As the user goes through the content
