@@ -29,20 +29,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // Create alert dialog to alert Aboriginal & Torres Strait Islander Viewers
-        new AlertDialog.Builder(this)
-                .setTitle("Warning")
-                .setMessage("Aboriginal and Torres Strait Islander viewers, listeners and readers " +
-                        "are advised that this application may contain images and voices of " +
-                        "people who have died.")
-                .setPositiveButton("OK PROCEED", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "Alert has appeared");
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+        showDialog();
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottomNavigation);
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,6 +55,23 @@ public class HomeActivity extends AppCompatActivity {
 //         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_frame, new HomeFragment()).commit();
 
     } // end of onCreate method
+
+    private void showDialog() {
+        // Create alert dialog to alert Aboriginal & Torres Strait Islander Viewers
+        new AlertDialog.Builder(this)
+                .setTitle("Warning")
+                .setMessage("Aboriginal and Torres Strait Islander viewers, listeners and readers " +
+                        "are advised that this application may contain images and voices of " +
+                        "people who have died.")
+                .setPositiveButton("OK PROCEED", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Alert has appeared");
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
 
     // Create a method to check which menu item the user is on.
     private void checkMenuItem(MenuItem item){
