@@ -6,9 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.topjet.Maps.MapActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,7 +27,6 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment"; // create Log.d
 
     private static final String KEY_USERNAME = "username"; // these are the names for the fields in FireStore
-
 
     ImageButton btEvents, btDiscussion, btContent, btMaps;
     TextView tvWelcome;
@@ -82,13 +80,14 @@ public class HomeFragment extends Fragment {
         btMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),MapActivity.class);
+                Intent intent = new Intent(getContext(), MapActivity.class);
                 startActivity(intent);
             }
         }); // end of btMaps.setOnClickListener
 
         return view;
     } // end of onCreateView
+
 
     // go to the discussion page
     private void goToDiscussionFragment(String email){

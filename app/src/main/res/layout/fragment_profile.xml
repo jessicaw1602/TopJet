@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/custom_background_gradient">
+    android:background="@drawable/custom_background_gradient"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:scaleType="centerCrop"
+    android:id="@+id/container">
 
 
     <ImageView
@@ -24,7 +28,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="151dp"
         android:layout_height="26dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="60dp"
         android:layout_marginRight="60dp"
         app:layout_constraintEnd_toEndOf="parent"
