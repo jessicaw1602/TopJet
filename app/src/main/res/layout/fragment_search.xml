@@ -36,42 +36,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ProgressBar
-            android:id="@+id/artsProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="151dp"
-            android:layout_height="5dp"
-            android:layout_marginStart="136dp"
-            android:layout_marginLeft="136dp"
-            android:layout_marginTop="41dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchFragment"
-            android:progressDrawable="@drawable/orangeprogress"/>
-
-        <ProgressBar
-            android:id="@+id/cultureProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="151dp"
-            android:layout_height="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="36dp"
-            app:layout_constraintStart_toEndOf="@+id/tvCulture"
-            app:layout_constraintTop_toBottomOf="@+id/rvArts"
-            android:progressDrawable="@drawable/orangeprogress"/>
-
-        <ProgressBar
-            android:id="@+id/valuesProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="151dp"
-            android:layout_height="5dp"
-            android:layout_marginStart="144dp"
-            android:layout_marginLeft="144dp"
-            android:layout_marginTop="37dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvCulture"
-            android:progressDrawable="@drawable/orangeprogress"/>
-
         <TextView
             android:id="@+id/tvCulture"
             android:layout_width="wrap_content"
@@ -105,23 +69,8 @@
             android:layout_marginStart="28dp"
             android:layout_marginLeft="28dp"
             android:layout_marginTop="24dp"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCulture" />
-
-        <TextView
-            android:id="@+id/tvValues"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
-            android:text="Values"
-            android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvCulture" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvValues"
@@ -136,39 +85,17 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
-            android:id="@+id/tvArtsProgress"
+            android:id="@+id/tvValues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="32dp"
-            android:text="% Completed"
+            android:layout_marginStart="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:text="Values"
             android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/artsProgressBar"
-            app:layout_constraintTop_toBottomOf="@+id/searchFragment" />
-
-        <TextView
-            android:id="@+id/tvCultureProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="27dp"
-            android:text="% Completed"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/cultureProgressBar"
-            app:layout_constraintTop_toBottomOf="@+id/rvArts" />
-
-        <TextView
-            android:id="@+id/tvValuesProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginTop="29dp"
-            android:text="% Completed"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toEndOf="@+id/valuesProgressBar"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rvCulture" />
 
 

@@ -57,15 +57,13 @@ public class SearchFragment extends Fragment {
 
     private TopicAdapter artAdapter, cultureAdapter, valueAdapter;
 
-    private TextView tvArtsProgress, tvCultureProgress, tvValuesProgress; // this is used to display the % done
-    private ProgressBar artsProgressBar, cultureProgressBar, valuesProgressBar;
+//    private TextView tvArtsProgress, tvCultureProgress, tvValuesProgress; // this is used to display the % done
+//    private ProgressBar artsProgressBar, cultureProgressBar, valuesProgressBar;
 
     // Count how many quizzes the user has completed
-    int symbolsCounter, materialsCounter = 0, ceremonyCounter = 0, landCounter = 0, familyCounter = 0;
+    int symbolsCounter = 0, materialsCounter = 0, ceremonyCounter = 0, landCounter = 0, familyCounter = 0;
     int langCounter = 0, dreamCounter = 0, sitesCounter = 0, spiritCounter = 0;
 
-//    int symbolsCounter, materialsCounter, ceremonyCounter, landCounter, familyCounter;
-//    int langCounter, dreamCounter, sitesCounter, spiritCounter;
 
     // set the total number of quizzes by each category
     final String artsTotal = "2";
@@ -86,13 +84,13 @@ public class SearchFragment extends Fragment {
         rvCulture = view.findViewById(R.id.rvCulture);
         rvValues = view.findViewById(R.id.rvValues);
 
-        artsProgressBar = view.findViewById(R.id.artsProgressBar);
-        cultureProgressBar = view.findViewById(R.id.cultureProgressBar);
-        valuesProgressBar = view.findViewById(R.id.valuesProgressBar);
-
-        tvArtsProgress = view.findViewById(R.id.tvArtsProgress);
-        tvCultureProgress = view.findViewById(R.id.tvCultureProgress);
-        tvValuesProgress = view.findViewById(R.id.tvValuesProgress);
+//        artsProgressBar = view.findViewById(R.id.artsProgressBar);
+//        cultureProgressBar = view.findViewById(R.id.cultureProgressBar);
+//        valuesProgressBar = view.findViewById(R.id.valuesProgressBar);
+//
+//        tvArtsProgress = view.findViewById(R.id.tvArtsProgress);
+//        tvCultureProgress = view.findViewById(R.id.tvCultureProgress);
+//        tvValuesProgress = view.findViewById(R.id.tvValuesProgress);
 
         // Enable Action bar
         setHasOptionsMenu(true);
@@ -102,10 +100,6 @@ public class SearchFragment extends Fragment {
         topicCultureList = new ArrayList<TopicEntity>();
         topicValueList = new ArrayList<TopicEntity>();
 
-// View the progress of each of the text
-//         getArtsData(email);
-//        getCultureData(email);
-//        getValuesData(email);
 
         getSymbolData(email);
 
@@ -125,9 +119,9 @@ public class SearchFragment extends Fragment {
         rvCulture.setAdapter(cultureAdapter);
         rvValues.setAdapter(valueAdapter);
 
-        artsProgressBar.setMax(2);
-        cultureProgressBar.setMax(4);
-        valuesProgressBar.setMax(3);
+//        artsProgressBar.setMax(2);
+//        cultureProgressBar.setMax(4);
+//        valuesProgressBar.setMax(3);
 
         Log.d(TAG, "counter in main = " + symbolsCounter);
 
@@ -276,7 +270,6 @@ public class SearchFragment extends Fragment {
                 } getFamilyData(email, symbolsCounter, materialsCounter, ceremonyCounter);
             }
         });
-
     }
 
     private void getFamilyData(String email, int symbolsCounter, int materialsCounter, int ceremonyCounter) {
@@ -375,9 +368,6 @@ public class SearchFragment extends Fragment {
         });
     }
 
-
-    // process the values for the RecyclerView
-
     private void setListValues(String email, int symbolsCounter, int materialsCounter, int ceremonyCounter, int familyCounter, int landCounter, int langCounter, int dreamCounter, int sitesCounter, int spiritCounter){
         // set Horizontal RecyclerView Layout
         LinearLayoutManager artLayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -402,7 +392,6 @@ public class SearchFragment extends Fragment {
         String[] cultureNames = {"Land", "Family and Kinship", "Ceremony", "Language"};
         String[] valueNames = {"Dreamtime Stories", "Sacred Sites", "Spirituality"};
 
-
         // Progress Bar Values
         int[] artProgress = {symbolsCounter, materialsCounter};
         int[] cultureProgress = {landCounter, familyCounter, ceremonyCounter, langCounter};
@@ -425,8 +414,6 @@ public class SearchFragment extends Fragment {
         }
 
     } // end of setListValues Method
-
-
 
 
 }
