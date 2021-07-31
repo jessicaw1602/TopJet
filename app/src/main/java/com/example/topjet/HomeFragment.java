@@ -1,5 +1,6 @@
 package com.example.topjet;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,8 @@ public class HomeFragment extends Fragment {
     ImageButton btEvents, btDiscussion, btContent, btMaps;
     TextView tvWelcome;
 
+    String email;
+
     // Access FireStore
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -47,7 +50,7 @@ public class HomeFragment extends Fragment {
         btMaps = view.findViewById(R.id.btMaps);
 
         // Retrieve the fragment from HomeActivity
-        String email = getArguments().getString("email");
+        email = getArguments().getString("email");
         Log.d(TAG, "The user's email is: " + email);
 
         // get the email from the database and return the username and set the Welcome text to the username
@@ -81,6 +84,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MapActivity.class);
+                intent.putExtra(MapActivity.INTENT_MESSAGE, email);
                 startActivity(intent);
             }
         }); // end of btMaps.setOnClickListener

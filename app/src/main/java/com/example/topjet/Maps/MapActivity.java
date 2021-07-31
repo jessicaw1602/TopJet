@@ -1,20 +1,27 @@
 package com.example.topjet.Maps;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.topjet.HomeActivity;
+import com.example.topjet.HomeFragment;
 import com.example.topjet.PlacesApi.PermissionUtils;
 import com.example.topjet.PlacesApi.PlacesMap;
 import com.example.topjet.PlacesApi.PlacesResult;
@@ -85,6 +92,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     // For Retrofit
     private List<PlacesResult> placesResultsList;
 
+    // Intents
+    public static final String INTENT_MESSAGE = "package com.example.topjet.Maps.intent_message";
+    String email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +104,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         artGallery = findViewById(R.id.artGallery);
         museum = findViewById(R.id.museum);
 
+        // Back Button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Receive Intent
+        Intent intent = getIntent();
+        email = intent.getStringExtra(INTENT_MESSAGE);
 //        btMapSearch = findViewById(R.id.btnMapSearch);
 //        mapSpinner = findViewById(R.id.mapSpinner);
 
@@ -335,6 +352,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             return false;
         }
         return true;
+    }
+
+    // Help from: https://stackoverflow.com/questions/24032956/action-bar-back-button-not-working
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "onBackPressed" + email);
+        Intent intent = new Intent(MapActivity.this, HomeActivity.class);
+        intent.putExtra(HomeActivity.INTENT_EMAIL, email);
+        startActivity(intent);
+
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

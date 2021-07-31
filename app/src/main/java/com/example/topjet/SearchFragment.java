@@ -28,6 +28,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /*
 * IMAGE RECYCLERVIEW CODE ADAPTED FROM: https://www.youtube.com/watch?v=Ph3Ek6cLS4M
@@ -218,22 +220,27 @@ public class SearchFragment extends Fragment {
     }
 
     private void getSymbolData (String email) {
-        CollectionReference postsRef = database.collection("Quiz Attempts");
-        // perform query to get all the attempts made by the user.
-        Query quizArtSymbols = postsRef.whereEqualTo("email", email).whereEqualTo("quizTopic", "Arts Symbols Quiz");
-
-        // You cannot perform unique queries with Firestore database...
-        quizArtSymbols.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        executorService.execute(new Runnable() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (!value.isEmpty()){
-                    symbolsCounter = 1;
-                } else {
-                    symbolsCounter = 0;
-                } getMaterialData(email, symbolsCounter);
-            }
-        });
+            public void run() {
+                CollectionReference postsRef = database.collection("Quiz Attempts");
+                // perform query to get all the attempts made by the user.
+                Query quizArtSymbols = postsRef.whereEqualTo("email", email).whereEqualTo("quizTopic", "Arts Symbols Quiz");
 
+                // You cannot perform unique queries with Firestore database...
+                quizArtSymbols.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (!value.isEmpty()){
+                            symbolsCounter = 1;
+                        } else {
+                            symbolsCounter = 0;
+                        } getMaterialData(email, symbolsCounter);
+                    }
+                });
+            }
+        }); // end of new thread
 
     } // end of getArtsData method
 

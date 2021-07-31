@@ -14,9 +14,6 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.TopJet">
-        <activity
-            android:name=".MapDetailedActivity"
-            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -25,7 +22,8 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y" />
 
-        <activity android:name=".Maps.MapActivity" />
+        <activity android:name=".Maps.MapActivity"
+            android:parentActivityName=".HomeActivity"></activity>
         <activity android:name=".QuizActivity" />
         <activity android:name=".ViewContentActivity" />
         <activity android:name=".CommentActivity" />
