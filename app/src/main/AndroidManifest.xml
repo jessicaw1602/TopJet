@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.topjet">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
 
     <application
         android:allowBackup="true"
@@ -19,12 +18,11 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y"/>
+            android:value="AIzaSyCDho8QelBEkN-nkxAv8lCm1wnJ0bQl59Y" />
 
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".ViewContentActivity" />
         <activity android:name=".CommentActivity" />
@@ -32,8 +30,8 @@
         <activity android:name=".DiscussionAddActivity" />
         <activity android:name=".DiscussionActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".SearchActivity"/>
-        <activity android:name=".HomeActivity"/>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -42,7 +40,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
