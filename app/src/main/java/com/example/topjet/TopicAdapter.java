@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,8 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
 
         holder.tvTopicArea.setText(topicEntity.getNames());
         holder.ivIcon.setImageResource(topicEntity.getIcons());
+        holder.progressBar.setMax(1);
+        holder.progressBar.setProgress((topicEntity.getProgress())); // set the progress of the progressBar
 
         holder.itemView.setTag(topicEntity.getNames());
         // Log.d(TAG, "Name from TopicAdapter: " + topicEntity.getNames());
@@ -60,6 +63,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
 
         private TextView tvTopicArea;
         private ImageView ivIcon;
+        private ProgressBar progressBar;
         private TopicAdapter.RecyclerViewClickListener myListener;
 
         public TopicViewHolder(@NonNull View itemView, TopicAdapter.RecyclerViewClickListener listener) {
@@ -69,6 +73,7 @@ public class TopicAdapter extends RecyclerView.Adapter<TopicAdapter.TopicViewHol
 
             tvTopicArea = itemView.findViewById(R.id.tvTopicArea);
             ivIcon = itemView.findViewById(R.id.ivIcon);
+            progressBar = itemView.findViewById(R.id.progressBar);
         }
 
         @Override
