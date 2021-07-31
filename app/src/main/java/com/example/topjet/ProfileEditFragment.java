@@ -1,5 +1,7 @@
 package com.example.topjet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +36,8 @@ public class ProfileEditFragment extends Fragment {
     EditText etProfileUsername, etEditPassword;
     Button btEditProfileEdit;
 
+    String email = null;
+
     // Access FireStore
     private FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -44,7 +48,7 @@ public class ProfileEditFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
 
         // Retrieve the fragment from Profile Fragment
-        String email = getArguments().getString("email");
+        email = getArguments().getString("email");
         Log.d(TAG, "ProfileEditFragment email is: " + email);
 
         // Things that can't be edited
@@ -65,8 +69,7 @@ public class ProfileEditFragment extends Fragment {
         btEditProfileEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Go back to Profile Fragment
-                goToProfileFragment(email);
+                showAlertDialog(email); // show alert dialogue and make sure that they want to make changes
             }
         }); // end of btEditProfile.setOnClickListener
 
@@ -97,6 +100,27 @@ public class ProfileEditFragment extends Fragment {
         }); // end of FireStore connection
     } // end of retrieveUserInfo method
 
+    private void showAlertDialog(String email) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Warning")
+                .setMessage("Are you sure you want to make changes?")
+                .setPositiveButton("OK PROCEED", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        goToProfileFragment(email); // Go back to Profile Fragment
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Stay on the page
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
+    } // end of showAlertDialog
+
     private void goToProfileFragment(String email) {
 
         String getUsernameEdit = etProfileUsername.getText().toString();
@@ -123,8 +147,9 @@ public class ProfileEditFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                getActivity().onBackPressed();
+                showAlertDialog(email);
                 // Navigate to settings screen
+                // getActivity().onBackPressed();
                 break;
             case R.id.fragment_frame:
                 // Save profile changes

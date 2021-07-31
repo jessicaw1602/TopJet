@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             intent.putExtra(HomeActivity.INTENT_EMAIL, email); // pass the email to HomeActivity
                             startActivity(intent);
-                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(MainActivity.this, "Wrong username or password!", Toast.LENGTH_SHORT).show();
                         }

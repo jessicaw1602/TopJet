@@ -1,5 +1,7 @@
 package com.example.topjet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -87,6 +89,9 @@ public class QuizFragment extends Fragment {
 
     private ProgressBar questionProgressBar;
 
+    String topicAreas = null; // this will be used for getting the topic of the quiz
+    String quizTopicArea = null; // essentially topicAreas + " Quiz"
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -108,7 +113,6 @@ public class QuizFragment extends Fragment {
 
         questionProgressBar = view.findViewById(R.id.questionProgressBar);
 
-
         setHasOptionsMenu(true);
 
         //set submit answer button to invisible
@@ -119,8 +123,8 @@ public class QuizFragment extends Fragment {
         Log.d(TAG, "The user's email is: " + email);
 
         // Retrieve the topicArea's text from ViewContentFragment and retrieve the correct Quiz questions
-        String topicAreas = getArguments().getString("topicArea");
-        String quizTopicArea = topicAreas + " Quiz"; // quizTopicArea will be used to get the values form the DB
+        topicAreas = getArguments().getString("topicArea");
+        quizTopicArea = topicAreas + " Quiz"; // quizTopicArea will be used to get the values form the DB
         Log.d(TAG, "Quiz topicArea is: " + quizTopicArea);
 
         // Setting the values
@@ -512,6 +516,7 @@ public class QuizFragment extends Fragment {
                                     int updateUserScore = (currentUserScore + testScore);
                                     String updateScore = String.valueOf(updateUserScore);
                                     database.collection("Users").document(email).update(KEY_USER_SCORE, updateScore);
+                                    showAlertDialog();
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -528,6 +533,18 @@ public class QuizFragment extends Fragment {
         }); // end of document reference
 
     } // end of finishQuiz method
+
+    private void showAlertDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle("Congratulations")
+                .setMessage("You have successfully completed " + quizTopicArea + "\nYou have received " + testScore + " marks!")
+                .setPositiveButton("CLOSE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {} })
+                .setIcon(android.R.drawable.btn_star_big_on)
+                .show();
+
+    } // end of showAlertDialog
 
     private void goToSearchFragment(String email) {
         FragmentManager fragmentManager = getFragmentManager();
