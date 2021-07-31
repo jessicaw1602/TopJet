@@ -16,6 +16,9 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 
+/*
+Code Adapted from: https://github.com/googlemaps/android-samples/blob/master/ApiDemos/java/app/src/gms/java/com/example/mapdemo/PermissionUtils.java
+ */
 public class PermissionUtils {
 
     /**
