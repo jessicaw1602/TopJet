@@ -74,7 +74,7 @@ public class InstructionsFragment extends Fragment {
 
         instructionsButton = view.findViewById(R.id.instructionsButton);
         tvText = view.findViewById(R.id.tvText);
-
+        setHasOptionsMenu(true);
         tvText.setText("The aim of this game is to correctly identify and label the three objects in each of the following pictures. \n" +
                 "\nYou will firstly be prompted with a picture with three objects highlighted as red dots. Take note of what these objects are by clicking on the red dots that identify each object. \n" +
                 "\nUpon navigating to the next page, you will be tested on what the three objects were on the previous page.\n" +
