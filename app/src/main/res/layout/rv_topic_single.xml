@@ -44,7 +44,9 @@
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="5dp"
+                android:layout_marginTop="5dp"
+                android:progressDrawable="@drawable/orangeprogress" />
 
             <TextView
                 android:id="@+id/tvTopicArea"
